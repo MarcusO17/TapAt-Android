@@ -14,6 +14,9 @@ import android.nfc.tech.NdefFormatable;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.ByteArrayInputStream;
@@ -24,6 +27,10 @@ public class MainActivity extends AppCompatActivity {
 
     //Init NFC Adapter
     public NfcAdapter nfcAdapter;
+    String message;
+    EditText messageInput;
+    Button submitButton;
+    boolean submitted;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +38,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this); //Start NFC Adapter
+        messageInput =(EditText) findViewById(R.id.messageInput); //Text Field
+        submitButton = (Button) findViewById(R.id.submitButton);
 
         //Test if NFC is on or off
         if(nfcAdapter != null && nfcAdapter.isEnabled()){
+            submitButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    submitted = true;
+                    message = messageInput.getText().toString();
+                    Toast.makeText(MainActivity.this,"Scan your NFC Tag Now!",Toast.LENGTH_SHORT).show();
+                    enableForegroundDispatchSystem();
+
+                }
+            });
         }else{
             //Opens NFC Settings if NFC is Off
             Toast.makeText(this, "NFC Not Detected!, Please Turn On NFC!", Toast.LENGTH_LONG).show();
@@ -46,25 +65,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
-        //If Intent triggered has an NFC Tag! Run below
-        if(intent.hasExtra(NfcAdapter.EXTRA_TAG)){
-            Toast.makeText(this,"NFC Tag!", Toast.LENGTH_SHORT).show();
+        if(submitted == false){
+            Toast.makeText(this,"Type a message!",Toast.LENGTH_SHORT).show();
+            return;
+        }else{
+            //If Intent triggered has an NFC Tag! Run below
+            if(intent.hasExtra(NfcAdapter.EXTRA_TAG)){
+                Toast.makeText(this,"NFC Tag Found!", Toast.LENGTH_SHORT).show();
 
-            //Assign tag to the NFC Tag detected from the Intent.
-            Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-            //Message to be written.
-            NdefMessage ndefMessage = createNdefMessage("Testing! It Works! Use External App to Reset");
+                //Assign tag to the NFC Tag detected from the Intent.
+                Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+                //Message to be written.
+                NdefMessage ndefMessage = createNdefMessage(message);
 
-            writeNdefMessage(tag, ndefMessage);
+                writeNdefMessage(tag, ndefMessage);
+            }
         }
 
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        enableForegroundDispatchSystem();
     }
 
     @Override
@@ -130,6 +148,11 @@ public class MainActivity extends AppCompatActivity {
                 if(!ndef.isWritable()){
                     Toast.makeText(this, "Tag is not writable!", Toast.LENGTH_SHORT).show();
                     ndef.close();
+                    return;
+                }
+                if(message == null || message.length() == 0){
+                    Toast.makeText(this, "Tag Resetting!", Toast.LENGTH_SHORT).show();
+                    ndef.writeNdefMessage(new NdefMessage(new NdefRecord(NdefRecord.TNF_WELL_KNOWN, null, null, null)));
                     return;
                 }
 
