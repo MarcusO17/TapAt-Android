@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         //Intent ensures MainActivity is running , and prevents multiple calls to run MainActivity
         Intent intent = new Intent(this, MainActivity.class).addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_MUTABLE);
         //Conditions for NFC Tag(Now Empty)
         IntentFilter[] intentFilters = new IntentFilter[]{};
 
