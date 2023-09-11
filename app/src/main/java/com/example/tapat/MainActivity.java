@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     String message;
     EditText messageInput;
     Button submitButton;
+    Button readModeButton;
     boolean submitted;
 
     @Override
@@ -40,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
         nfcAdapter = NfcAdapter.getDefaultAdapter(this); //Start NFC Adapter
         messageInput =(EditText) findViewById(R.id.messageInput); //Text Field
         submitButton = (Button) findViewById(R.id.submitButton);
+        readModeButton = (Button) findViewById(R.id.readModeButton);
+
 
         //Test if NFC is on or off
         if(nfcAdapter != null && nfcAdapter.isEnabled()){
@@ -58,6 +61,18 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "NFC Not Detected!, Please Turn On NFC!", Toast.LENGTH_LONG).show();
             startActivity(new Intent(Settings.ACTION_NFC_SETTINGS));
         }
+
+        readModeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openReadModeActivity();
+            }
+        });
+    }
+
+    public void openReadModeActivity(){
+        Intent intent = new Intent(this, ReadModeActivity.class);
+        startActivity(intent);
     }
 
     //Called when something happens, bleh need better explanation.
@@ -193,4 +208,5 @@ public class MainActivity extends AppCompatActivity {
         NdefMessage ndefMessage = new NdefMessage(new NdefRecord[]{ndefRecord});
         return ndefMessage;
     }
+
 }
