@@ -2,6 +2,7 @@ package com.example.tapat;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -9,8 +10,8 @@ import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
-import android.nfc.tech.Ndef;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
@@ -18,14 +19,17 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import java.io.UnsupportedEncodingException;
 
+/********************************************************************
+ * *******************DOCUMENTATION NEEDED!!!!***********************
+ * ******************************************************************
+ */
 public class ReadModeActivity extends AppCompatActivity {
 
     Tag detectedTag;
     NfcAdapter nfcAdapter;
+    String contentMessage;
     TextView tagContentText;
     Button writeModeButton;
 
@@ -56,11 +60,34 @@ public class ReadModeActivity extends AppCompatActivity {
         super.onNewIntent(intent);
         Parcelable[] parcelables = intent.getParcelableArrayExtra(nfcAdapter.EXTRA_NDEF_MESSAGES);
         if (parcelables != null && parcelables.length > 0) {
-            readTextFromTag((NdefMessage) parcelables[0]);
+            contentMessage = readTextFromTag((NdefMessage) parcelables[0]);
+            contentDialog(contentMessage);
         } else {
             Toast.makeText(this, "No NDEF Messages Found!", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+
+    //Document : https://developer.android.com/develop/ui/views/components/dialogs
+    private void contentDialog(String message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message);
+        builder.setTitle("Scan Successful!");
+
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        //auto closing
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                dialog.cancel();
+            }
+        }, 1000);
     }
 
     @Override
@@ -82,17 +109,18 @@ public class ReadModeActivity extends AppCompatActivity {
         nfcAdapter.disableForegroundDispatch(this);
     }
 
-    private void readTextFromTag(NdefMessage ndefMessage){
+    private String readTextFromTag(NdefMessage ndefMessage){
         NdefRecord[] ndefRecords = ndefMessage.getRecords();
 
         if(ndefRecords != null && ndefRecords.length > 0){
             NdefRecord ndefRecord = ndefRecords[0];
 
             String tagContent = getTextfromNdefRecord(ndefRecord);
-            tagContentText.setText(tagContent);
+            return tagContent;
         }else{
             Toast.makeText(this, "No NDEF Records Found!", Toast.LENGTH_SHORT).show();
         }
+        return null;
     }
 
     public String getTextfromNdefRecord(NdefRecord ndefRecord){
