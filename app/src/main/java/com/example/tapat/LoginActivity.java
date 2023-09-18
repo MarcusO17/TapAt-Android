@@ -2,12 +2,14 @@ package com.example.tapat;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     EditText emailInputField;
     EditText passwordInputField;
@@ -16,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.login_activity);
 
         emailInputField = (EditText) findViewById(R.id.loginEmailInput);
         passwordInputField = (EditText) findViewById(R.id.loginPasswordInput);
@@ -33,7 +35,18 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);*/
                 }
                 else {
-                    /* maybe something like a red alert telling the user login failed on the bottom of the screen*/
+                    /* toast to alert the user that the login has failed*/
+                    String errorText = "";
+                    if(emailInputField.getText().toString() == "") {
+                        errorText = "Login Failed: Invalid Credentials";
+                    } else if (passwordInputField.getText().toString()=="") {
+                        errorText = "Login Failed: Invalid Password";
+                    }
+                    Toast loginToastError = Toast.makeText(view.getContext(), errorText, Toast.LENGTH_SHORT);
+                    View loginToastView = loginToastError.getView();
+                    loginToastView.setBackgroundColor(Color.parseColor("#ffc6c4"));
+
+                    loginToastError.show();
                 }
             }
         });
