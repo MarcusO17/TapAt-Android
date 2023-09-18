@@ -7,4 +7,5 @@
     <string name="student_list_button_text">Student List</string>
     <string name="lecturer_list_button_text">Lecturer List</string>
     <string name="course_list_button_text">Course List</string>
+    <string name="admin">Admin</string>
 </resources>

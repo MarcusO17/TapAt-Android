@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn= "navigation_view">
+
+    <group
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/side_navigation_home_button"
+            android:title="Homepage"
+            android:icon="@drawable/homepage_icon"/>
+        <item
+            android:id="@+id/side_navigation_student_list"
+            android:title="Student List"
+            android:icon="@drawable/student_list_icon"/>
+        <item
+            android:id="@+id/side_navigation_lecturer_list"
+            android:title="Lecturer List"
+            android:icon="@drawable/lecturer_list_icon"/>
+        <item
+            android:id="@+id/side_navigation_course_list"
+            android:title="Course List"
+            android:icon="@drawable/course_list_icon"/>
+        <item
+            android:id="@+id/side_navigation_nfc_read"
+            android:title="NFC Read"
+            android:icon="@drawable/nfc_read"/>
+        <item
+            android:id="@+id/side_navigation_nfc_write"
+            android:title="NFC Write"
+            android:icon="@drawable/nfc_write"/>
+    </group>
+
+    <!-- empty item to have more top padding -->
+    <item
+        android:title="">
+    </item>
+
+    <item
+        android:id="@+id/logout_button"
+        android:title="Logout"
+        android:icon="@drawable/logout_icon">
+    </item>
+
+
+
+</menu>
