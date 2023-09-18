@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">TapAt</string>
+    <string name="home_page_welcome_message">Hello Admin!</string>
+    <string name="home_page_title">Homepage</string>
+    <string name="nfc_read_button_text">NFC Read</string>
+    <string name="nfc_write_button_text">NFC Write</string>
+    <string name="student_list_button_text">Student List</string>
+    <string name="lecturer_list_button_text">Lecturer List</string>
+    <string name="course_list_button_text">Course List</string>
 </resources>
