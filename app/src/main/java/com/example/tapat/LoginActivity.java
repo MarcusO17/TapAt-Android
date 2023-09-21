@@ -1,7 +1,8 @@
 package com.example.tapat;
 
-import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.appcompat.app.AppCompatActivity;
+import com.example.tapat.helpers.dbHelper;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,8 @@ import android.widget.Toast;
 public class LoginActivity extends AppCompatActivity {
 
     EditText emailInputField;
+    String email;
+    String password;
     EditText passwordInputField;
     Button buttonLogin;
 
@@ -28,13 +31,12 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 /* change this to connect to the database when we implement database*/
-                if(emailInputField.getText().toString() == "1234" && passwordInputField.getText().toString() == "1234") {
+                 email = emailInputField.getText().toString();
+                 password = passwordInputField.getText().toString();
                     /* if correct send the user to the homepage*/
-
-                    /* Intent intent = new Intent(this, Homepage.class);
-                    startActivity(intent);*/
-                }
-                else {
+                if(dbHelper.authLogin(email,password)) {
+                    Toast.makeText(getApplicationContext(),"Successful!",Toast.LENGTH_SHORT).show();
+                }else {
                     /* toast to alert the user that the login has failed*/
                     String errorText = "";
                     if(emailInputField.getText().toString() == "") {
@@ -44,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     Toast loginToastError = Toast.makeText(view.getContext(), errorText, Toast.LENGTH_SHORT);
                     View loginToastView = loginToastError.getView();
-                    loginToastView.setBackgroundColor(Color.parseColor("#ffc6c4"));
+                    //loginToastView.setBackgroundColor(Color.parseColor("#ffc6c4"));
 
                     loginToastError.show();
                 }
