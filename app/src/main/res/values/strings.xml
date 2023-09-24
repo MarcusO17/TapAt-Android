@@ -3,4 +3,6 @@
     <string name="login">Login</string>
     <string name="input_email">Email</string>
     <string name="input_password">Password</string>
+    <string name="student_list_fragment_title">Student List</string>
+    <string name="create_student_button">Create Student</string>
 </resources>
