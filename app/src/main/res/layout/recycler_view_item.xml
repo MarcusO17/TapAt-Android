@@ -3,15 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="70dp"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:paddingTop="10dp"
     android:background="@color/black">
 
     <!-- this should be the item title, so student name or course name -->
-    <TextView
+    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:textColor="@color/white"
+        android:backgroundTint="@color/black"
         android:id="@+id/recycle_view_item_title"/>
 
 </LinearLayout>

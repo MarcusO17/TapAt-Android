@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
@@ -34,19 +35,30 @@ public class LecturerHomepageActivity extends AppCompatActivity {
         RecyclerItem course1 = new RecyclerItem("Android Development Skill");
         RecyclerItem course2 = new RecyclerItem("Data Science");
         RecyclerItem course3 = new RecyclerItem("Software Engineering");
+        RecyclerItem course4 = new RecyclerItem("Software Engineering");
+        RecyclerItem course5 = new RecyclerItem("Software Engineering");
+        RecyclerItem course6 = new RecyclerItem("Software Engineering");
 
         courseList.add(course1);
         courseList.add(course2);
         courseList.add(course3);
+        courseList.add(course4);
+        courseList.add(course5);
+        courseList.add(course6);
 
         //set up the recycler view so that it shows in here
-        GridLayoutManager gridLayoutManager = new GridLayoutManager
-                (this,1,GridLayoutManager.VERTICAL,false);
-        homepageCourseListRecyclerView.setLayoutManager(gridLayoutManager);
-        homepageCourseListRecyclerView.setHasFixedSize(false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager
+                (this, LinearLayoutManager.VERTICAL, false);
+        homepageCourseListRecyclerView.setLayoutManager(linearLayoutManager);
+        homepageCourseListRecyclerView.setHasFixedSize(true);
 
         RecyclerViewAdapter studentListAdapter = new RecyclerViewAdapter(courseList);
         homepageCourseListRecyclerView.setAdapter(studentListAdapter);
+
+
+
+
+
 
         //when you log in you have to change update the side navigation menu lecturer name
 
