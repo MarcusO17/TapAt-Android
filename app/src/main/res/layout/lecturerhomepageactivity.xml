@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".LecturerHomepageActivity"
     android:fitsSystemWindows="true"
     tools:openDrawer="start"
     android:id="@+id/side_navigation_layout">
@@ -59,75 +59,32 @@
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/julius_sans_one"
                 android:text="Course Subject"
-                android:textAlignment="textEnd"
                 android:textColor="#FF000000"
                 android:textStyle="bold"
                 android:textSize="26dp" />
 
-
-
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/button_layout"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/lecturerHomepageCourseList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:paddingTop="60dp"
             android:paddingLeft="40dp"
             android:paddingRight="40dp"
             android:orientation="vertical"
-            android:gravity="center_vertical"
-            android:weightSum="4">
-
-            <Button
-                android:id="@+id/student_list_button_admin"
-                android:layout_width="match_parent"
-                android:layout_height="90dp"
-                android:layout_marginBottom="10dp"
-                android:layout_weight="1"
-                android:backgroundTint="#1E1E1E"
-                android:fontFamily="@font/red_hat_text"
-                android:text="5001CEM : Software Engineering"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp"
-                tools:ignore="VisualLintButtonSize" />
-
-            <Button
-                android:id="@+id/mpu3193_philosophy_and_current_issues"
-                android:layout_width="match_parent"
-                android:layout_height="90dp"
-                android:layout_marginBottom="10dp"
-                android:layout_weight="1"
-                android:backgroundTint="#1E1E1E"
-                android:fontFamily="@font/red_hat_text"
-                android:text="MPU3193: Philosophy and Current Issues"
-                android:textColor="#FFFFFF"
-                android:textSize="20dp"
-                tools:ignore="VisualLintButtonSize" />
-
-            <Button
-                android:id="@+id/a202"
-                android:layout_width="match_parent"
-                android:layout_height="90dp"
-                android:layout_marginBottom="10dp"
-                android:layout_weight="1"
-                android:backgroundTint="#1E1E1E"
-                android:fontFamily="@font/red_hat_text"
-                android:text="A202SGI: Android Development Skill"
-                android:textColor="#FFFFFF"
-                android:textSize="20dp"
-                tools:ignore="VisualLintButtonSize" />
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:weightSum="2"/>
-
-        </LinearLayout>
+            android:gravity="center_vertical"/>
 
     </LinearLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/side_navigation_view"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/side_navigation_header"
+        app:menu="@menu/side_navigation_menu_lecturer"
+        android:maxWidth="275dp"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>
 
