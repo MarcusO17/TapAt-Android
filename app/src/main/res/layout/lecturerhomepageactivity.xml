@@ -23,7 +23,6 @@
             android:orientation="vertical"
             android:background="@android:color/transparent">
 
-            <!-- someone change the icon color to black i dont know why its purple -->
             <Button
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -35,33 +34,29 @@
                 android:id="@+id/homepagewelcome"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
                 android:layout_gravity="center"
                 android:layout_marginTop="100dp"
                 android:layout_marginBottom="20dp"
                 android:fontFamily="@font/julius_sans_one"
                 android:gravity="end"
                 android:paddingBottom="20dp"
-                android:text="HOMEPAGE"
+                android:text="@string/homepage"
                 android:textAlignment="textEnd"
                 android:textColor="#FF000000"
                 android:textStyle="normal"
-                android:textSize="44dp" />
+                android:textSize="44sp" />
 
             <TextView
                 android:id="@+id/homepagetitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/julius_sans_one"
-                android:text="Course Subject"
+                android:text="@string/course_subject"
                 android:textColor="#FF000000"
                 android:textStyle="bold"
-                android:textSize="26dp" />
+                android:textSize="26sp" />
 
         </LinearLayout>
 

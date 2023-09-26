@@ -3,6 +3,7 @@ package com.example.tapat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
@@ -13,20 +14,39 @@ import android.widget.Button;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LecturerHomepageActivity extends AppCompatActivity {
-
-    RecyclerView homepageCourseListRecyclerView;
-    List<RecyclerItem> courseList;
-
+    List<RecyclerItem> courseList = new ArrayList<>();
     DrawerLayout sideNavigationLayout;
     Button sideNavigationButton;
     NavigationView sideNavigationView;
+    RecyclerView homepageCourseListRecyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lecturerhomepageactivity);
+
+        homepageCourseListRecyclerView = findViewById(R.id.lecturerHomepageCourseList);
+
+        //query and put the courses in the list
+        RecyclerItem course1 = new RecyclerItem("Android Development Skill");
+        RecyclerItem course2 = new RecyclerItem("Data Science");
+        RecyclerItem course3 = new RecyclerItem("Software Engineering");
+
+        courseList.add(course1);
+        courseList.add(course2);
+        courseList.add(course3);
+
+        //set up the recycler view so that it shows in here
+        GridLayoutManager gridLayoutManager = new GridLayoutManager
+                (this,1,GridLayoutManager.VERTICAL,false);
+        homepageCourseListRecyclerView.setLayoutManager(gridLayoutManager);
+        homepageCourseListRecyclerView.setHasFixedSize(false);
+
+        RecyclerViewAdapter studentListAdapter = new RecyclerViewAdapter(courseList);
+        homepageCourseListRecyclerView.setAdapter(studentListAdapter);
 
         //when you log in you have to change update the side navigation menu lecturer name
 
@@ -56,13 +76,5 @@ public class LecturerHomepageActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-        homepageCourseListRecyclerView.findViewById(R.id.lecturerHomepageCourseList);
-
-        //query and put the courses in the list
-
-
-        RecyclerViewAdapter studentListAdapter = new RecyclerViewAdapter(courseList);
-        homepageCourseListRecyclerView.setAdapter(studentListAdapter);
     }
 }
