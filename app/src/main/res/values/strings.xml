@@ -5,4 +5,7 @@
     <string name="homepage">HOMEPAGE</string>
     <string name="course_subject">Course Subject</string>
     <string name="_5001Cem_software_engineering">5001CEM : Software Engineering</string>
+    <string name="login">Login</string>
+    <string name="input_email">Email</string>
+    <string name="input_password">Password</string>
 </resources>
