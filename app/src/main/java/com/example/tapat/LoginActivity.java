@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
                     /* if correct send the user to the homepage*/
 
                     /* Intent intent = new Intent(this, Homepage.class);
-                    startActivity(intent);*/
+                    startActivity(intent);*aaaaaaaaaaaaaaaaaaa/
                 }
                 else {
                     /* toast to alert the user that the login has failed*/
