@@ -14,14 +14,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:background="@drawable/ic_launcher_background">
+        android:background="@drawable/background_picture">
 
         <LinearLayout
             android:id="@+id/title_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@drawable/dark_green_background_placeholder">
+            android:background="@drawable/background_header">
 
             <!-- someone change the icon color to black i dont know why its purple -->
             <Button
@@ -35,30 +35,32 @@
                 android:id="@+id/homepagetitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
                 android:layout_gravity="end"
                 android:layout_marginTop="60dp"
                 android:layout_marginEnd="25dp"
+                android:fontFamily="@font/julius_sans_one"
                 android:text="@string/home_page_title"
                 android:textAlignment="textEnd"
                 android:textColor="#FFFFFF"
-                android:textSize="24dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"/>
+                android:textSize="24dp" />
 
             <TextView
                 android:id="@+id/homepagewelcome"
-                android:gravity="end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
                 android:layout_gravity="end"
                 android:layout_marginRight="20dp"
+                android:fontFamily="@font/julius_sans_one"
+                android:gravity="end"
+                android:paddingBottom="20dp"
                 android:text="@string/home_page_welcome_message"
                 android:textAlignment="textEnd"
                 android:textColor="#FFFFFF"
-                android:textSize="36dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:paddingBottom="20dp"/>
+                android:textSize="36dp" />
 
         </LinearLayout>
 
