@@ -30,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogin = (Button) findViewById(R.id.buttonLogin);
         db = new dbHelper(this);
         db.insertAdmin();
+        db.userTableUpdate();
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,13 +39,12 @@ public class LoginActivity extends AppCompatActivity {
                  email = emailInputField.getText().toString();
                  password = passwordInputField.getText().toString();
                     /* if correct send the user to the homepage*/
-                 boolean authPass = db.authLogin(email,password);
                  userRole = db.userAuthControl(email,password);
-                if(authPass) {
+                if(userRole.length()>0) {
                     Toast.makeText(getApplicationContext(),userRole,Toast.LENGTH_SHORT).show();
                 }else {
                     /* toast to alert the user that the login has failed*/
-                    String errorText = "";
+                    String errorText = "Invalid Cred";
                     if(emailInputField.getText().toString() == "") {
                         errorText = "Login Failed: Invalid Credentials";
                     } else if (passwordInputField.getText().toString()=="") {

@@ -13,7 +13,7 @@ public class dbHelper extends SQLiteOpenHelper {
      ***********************************************************************************************
      */
 
-    class Admin{
+    static class Admin{
         private static final String DATABASE_NAME = "TapAt.db";
         private static final String TABLE_NAME = "admins";
         private static final String COL_1 = "admin_ID";
@@ -21,7 +21,7 @@ public class dbHelper extends SQLiteOpenHelper {
         private static final String COL_3 = "admin_password";
     }
 
-    class Lecturer{
+    static class Lecturer{
         private static final String DATABASE_NAME = "TapAt.db";
         private static final String TABLE_NAME = "lecturers";
         private static final String COL_1 = "lecturer_ID";
@@ -31,7 +31,7 @@ public class dbHelper extends SQLiteOpenHelper {
         private static final String COL_5 = "course_list";
     }
 
-    class Student{
+    static class Student{
         private static final String DATABASE_NAME = "TapAt.db";
         private static final String TABLE_NAME = "students";
         private static final String COL_1 = "student_ID";
@@ -40,7 +40,7 @@ public class dbHelper extends SQLiteOpenHelper {
         private static final String COL_4 = "programme_name";
     }
 
-    class Course{
+    static class Course{
         private static final String DATABASE_NAME = "TapAt.db";
         private static final String TABLE_NAME = "courses";
         private static final String COL_1 = "course_ID";
@@ -48,6 +48,17 @@ public class dbHelper extends SQLiteOpenHelper {
         private static final String COL_2 = "course_name";
         private static final String COL_3 = "student_list";
     }
+
+    static class Users{
+        private static final String DATABASE_NAME = "TapAt.db";
+        private static final String TABLE_NAME = "users";
+        private static final String COL_1 = "ID";
+        private static final String COL_2 = "email";
+        private static final String COL_3 = "password";
+        private static final String COL_4 = "role";
+    }
+
+
 
     public dbHelper(Context context) {
         super(context, Admin.TABLE_NAME, null, 1);
@@ -59,13 +70,19 @@ public class dbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + Admin.TABLE_NAME+ " ( "
                 + Admin.COL_1 + " int PRIMARY KEY NOT NULL, "
-                + Admin.COL_2 + " varchar(255) NOT NULL UNIQUE, "
+                + Admin.COL_2 + " varchar(255) NOT NULL,"
                 + Admin.COL_3 + " varchar(255) NOT NULL"
                 + " )");
         db.execSQL("CREATE TABLE " + Lecturer.TABLE_NAME+ " ( "
                 + Lecturer.COL_1 + " int PRIMARY KEY NOT NULL, "
-                + Lecturer.COL_2 + " varchar(255) NOT NULL UNIQUE, "
+                + Lecturer.COL_2 + " varchar(255) NOT NULL,"
                 + Lecturer.COL_3 + " varchar(255) NOT NULL"
+                + " )");
+        db.execSQL("CREATE TABLE " + Users.TABLE_NAME+ " ( "
+                + Users.COL_1 + " int PRIMARY KEY NOT NULL, "
+                + Users.COL_2 + " varchar(255) NOT NULL,"
+                + Users.COL_3 + " varchar(255) NOT NULL,"
+                + Users.COL_4 + " varchar(255) NOT NULL"
                 + " )");
     }
 
@@ -82,61 +99,45 @@ public class dbHelper extends SQLiteOpenHelper {
     public void insertAdmin() {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put("adminID","0001");
-        cv.put("adminEmail", "admin1");
-        cv.put("adminPassword","admin");
+        cv.put(Admin.COL_1,"0001");
+        cv.put(Admin.COL_2, "admin1");
+        cv.put(Admin.COL_3,"admin");
         db.insert(Admin.TABLE_NAME,null,cv);
     }
 
+    public void userTableUpdate(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("INSERT INTO users (ID, email, password, role) " +
+                "SELECT admin_ID, admin_email, admin_password, 'admin' as role FROM admins ");
+        db.execSQL("INSERT INTO users (ID, email, password, role) " +
+                "SELECT lecturer_ID, lecturer_email, lecturer_password, 'lecturer' AS role FROM lecturers");
 
-    /**
-     *  To check login details in DB.
-     * @param e : Email
-     * @param p : Password
-     * @return if login is valid/not
-     */
-    public boolean authLogin(String e, String p){
+
+    }
+
+
+
+    public boolean authLogin(String email, String password){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor;
 
-        cursor = db.rawQuery("SELECT * FROM admins where admin_email = ? AND admin_password = ?",new String[] {e,p});
+        cursor = db.rawQuery("SELECT * FROM users where email = ? AND password = ?",new String[] {email,password});
         if(cursor == null){
             return false;
         }
-        if(cursor.getCount()>0){
-            return true;
-        }else{
-            return false;
-        }
+        return cursor.getCount() > 0;
     }
 
 
-
-    public boolean checkEmail(String email){
+    public String userAuthControl(String email,String password){
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("Select email from admins where email = ?", new String[] {email});
-        if(cursor.getCount()>0){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-    public String userAuthControl(String email, String password){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String role = "";
-        int roleCursor = 0;
         Cursor cursor;
 
-        cursor = db.rawQuery("SELECT * FROM (SELECT CONCAT(admin_email, lecturer_email) as email, CONCAT(admin_password, lecturer_password) as password, 'admin' as role FROM admins " +
-                                "UNION ALL " +
-                                "SELECT CONCAT(lecturer_email, admin_email) as email, CONCAT(lecturer_password, admin_password) as password, 'lecturer' as role FROM lecturers) " +
-                                "where email = ? AND password = ?",new String[] {email,password});
+        cursor = db.rawQuery("SELECT * FROM users " +
+                                "where email = ? and password = ?",new String[] {email,password});
 
         if(cursor!=null && cursor.moveToFirst()) {
-            roleCursor = cursor.getColumnIndex("role");
-            role = cursor.getString(roleCursor);
-            return role;
+            return cursor.getString(cursor.getColumnIndex("role"));
         }else{
             return "";
         }
