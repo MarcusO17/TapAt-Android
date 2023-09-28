@@ -18,6 +18,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText passwordInputField;
     Button buttonLogin;
     dbHelper db;
+    String userRole;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +39,9 @@ public class LoginActivity extends AppCompatActivity {
                  password = passwordInputField.getText().toString();
                     /* if correct send the user to the homepage*/
                  boolean authPass = db.authLogin(email,password);
+                 userRole = db.userAuthControl(email,password);
                 if(authPass) {
-                    Toast.makeText(getApplicationContext(),"Successful!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),userRole,Toast.LENGTH_SHORT).show();
                 }else {
                     /* toast to alert the user that the login has failed*/
                     String errorText = "";
