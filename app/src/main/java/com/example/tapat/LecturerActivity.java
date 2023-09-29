@@ -3,7 +3,6 @@ package com.example.tapat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,13 +11,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LecturerHomepageActivity extends AppCompatActivity {
+public class LecturerActivity extends AppCompatActivity {
     List<RecyclerItem> courseList = new ArrayList<>();
     DrawerLayout sideNavigationLayout;
     Button sideNavigationButton;
@@ -27,7 +25,7 @@ public class LecturerHomepageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.lecturerhomepageactivity);
+        setContentView(R.layout.lectureractivity);
 
         homepageCourseListRecyclerView = findViewById(R.id.lecturerHomepageCourseList);
 

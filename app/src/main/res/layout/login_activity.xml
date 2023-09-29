@@ -37,12 +37,12 @@
                 android:textColor="#3DDC84"/>
 
             <EditText
-                android:id="@+id/loginEmailInput"
+                android:id="@+id/loginIDInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/input_email"
                 android:layout_weight="1"
-                android:padding="16dp"/>
+                android:hint="ID"
+                android:padding="16dp" />
 
             <EditText
                 android:id="@+id/loginPasswordInput"

@@ -8,4 +8,5 @@
     <string name="login">Login</string>
     <string name="input_email">Email</string>
     <string name="input_password">Password</string>
+    <string name="input_id" />
 </resources>
