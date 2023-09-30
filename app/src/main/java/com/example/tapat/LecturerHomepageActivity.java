@@ -3,7 +3,6 @@ package com.example.tapat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,15 +10,17 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 
-import com.google.android.material.navigation.NavigationBarView;
+import com.example.tapat.adapter.CourseItemViewAdapter;
+import com.example.tapat.model.CourseItem;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class LecturerHomepageActivity extends AppCompatActivity {
-    List<RecyclerItem> courseList = new ArrayList<>();
+    List<CourseItem> courseList = new ArrayList<>();
     DrawerLayout sideNavigationLayout;
     Button sideNavigationButton;
     NavigationView sideNavigationView;
@@ -32,12 +33,12 @@ public class LecturerHomepageActivity extends AppCompatActivity {
         homepageCourseListRecyclerView = findViewById(R.id.lecturerHomepageCourseList);
 
         //query and put the courses in the list
-        RecyclerItem course1 = new RecyclerItem("Android Development Skill");
-        RecyclerItem course2 = new RecyclerItem("Data Science");
-        RecyclerItem course3 = new RecyclerItem("Software Engineering");
-        RecyclerItem course4 = new RecyclerItem("Software Engineering");
-        RecyclerItem course5 = new RecyclerItem("Software Engineering");
-        RecyclerItem course6 = new RecyclerItem("Software Engineering");
+        CourseItem course1 = new CourseItem("Android Development Skill", "A202SGI");
+        CourseItem course2 = new CourseItem("Data Science", "INT5005CEM");
+        CourseItem course3 = new CourseItem("Software Engineering","INT5001CEM");
+        CourseItem course4 = new CourseItem("Software Engineering","INT5001CEM");
+        CourseItem course5 = new CourseItem("Software Engineering","INT5001CEM");
+        CourseItem course6 = new CourseItem("Software Engineering","INT5001CEM");
 
         courseList.add(course1);
         courseList.add(course2);
@@ -52,7 +53,7 @@ public class LecturerHomepageActivity extends AppCompatActivity {
         homepageCourseListRecyclerView.setLayoutManager(linearLayoutManager);
         homepageCourseListRecyclerView.setHasFixedSize(true);
 
-        RecyclerViewAdapter studentListAdapter = new RecyclerViewAdapter(courseList);
+        CourseItemViewAdapter studentListAdapter = new CourseItemViewAdapter(courseList);
         homepageCourseListRecyclerView.setAdapter(studentListAdapter);
 
 
