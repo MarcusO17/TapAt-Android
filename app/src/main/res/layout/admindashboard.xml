@@ -1,14 +1,38 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<!-- fragment_admin_dashboard.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AdminDashboard">
+    android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!-- Add your buttons for Student, Lecturer, Course, NFC Reader, NFC Writer here -->
+    <Button
+        android:id="@+id/studentButton"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:text="Student" />
 
-</FrameLayout>
+    <Button
+        android:id="@+id/lecturerButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lecturer" />
+
+    <Button
+        android:id="@+id/courseButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Course" />
+
+    <Button
+        android:id="@+id/nfcReaderButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="NFC Reader" />
+
+    <Button
+        android:id="@+id/nfcWriterButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="NFC Writer" />
+</LinearLayout>
+

@@ -1,64 +1,87 @@
 package com.example.tapat;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AdminDashboard#newInstance} factory method to
- * create an instance of this fragment.
- */
+import androidx.fragment.app.Fragment;
+
 public class AdminDashboard extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public AdminDashboard() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AdminDashboard.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AdminDashboard newInstance(String param1, String param2) {
-        AdminDashboard fragment = new AdminDashboard();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.admindashboard, container, false);
+        View view = inflater.inflate(R.layout.admindashboard, container, false);
+
+        // Initialize buttons
+        Button studentButton = view.findViewById(R.id.studentButton);
+        Button lecturerButton = view.findViewById(R.id.lecturerButton);
+        Button courseButton = view.findViewById(R.id.courseButton);
+        Button nfcReaderButton = view.findViewById(R.id.nfcReaderButton);
+        Button nfcWriterButton = view.findViewById(R.id.nfcWriterButton);
+
+        // Set click listeners for buttons
+        studentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Handle Student button click
+                // Replace the fragment with AdminListFragment and pass data
+                replaceFragment(AdminList.newInstance("Student"));
+            }
+        });
+
+        lecturerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Handle Lecturer button click
+                // Replace the fragment with AdminListFragment and pass data
+                replaceFragment(AdminList.newInstance("Lecturer"));
+            }
+        });
+
+        courseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Handle Course button click
+                // Replace the fragment with AdminListFragment and pass data
+                replaceFragment(AdminList.newInstance("Course"));
+            }
+        });
+
+        nfcReaderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Handle NFC Reader button click
+                // Replace the fragment with AdminNFCReaderFragment
+                replaceFragment(new AdminNFCReader());
+            }
+        });
+
+        nfcWriterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Handle NFC Writer button click
+                // Replace the fragment with AdminNFCWriterFragment
+                replaceFragment(new AdminNFCwriter());
+            }
+        });
+
+        return view;
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentContainer, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 }
+
+
