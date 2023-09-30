@@ -40,6 +40,15 @@ public class dbCreateHelper {
         private static final String COL_3 = "student_list";
     }
 
+    class Users{
+        private static final String DATABASE_NAME = "TapAt.db";
+        private static final String TABLE_NAME = "users";
+        private static final String COL_1 = "ID";
+        private static final String COL_2 = "email";
+        private static final String COL_3 = "password";
+        private static final String COL_4 = "role";
+    }
+
 
 
 }

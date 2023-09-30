@@ -61,7 +61,7 @@ public class dbHelper extends SQLiteOpenHelper {
 
 
     public dbHelper(Context context) {
-        super(context, Admin.TABLE_NAME, null, 1);
+        super(context, Admin.DATABASE_NAME, null, 1);
         SQLiteDatabase db = this.getWritableDatabase();
     }
 
@@ -117,18 +117,6 @@ public class dbHelper extends SQLiteOpenHelper {
 
 
 
-    public boolean authLogin(String email, String password){
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor;
-
-        cursor = db.rawQuery("SELECT * FROM users where email = ? AND password = ?",new String[] {email,password});
-        if(cursor == null){
-            return false;
-        }
-        return cursor.getCount() > 0;
-    }
-
-
     public String userAuthControl(String email,String password){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor;
@@ -138,6 +126,18 @@ public class dbHelper extends SQLiteOpenHelper {
 
         if(cursor!=null && cursor.moveToFirst()) {
             return cursor.getString(cursor.getColumnIndex("role"));
+        }else{
+            return "";
+        }
+    }
+
+    public String getIDfromEmail(String email){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor;
+
+        cursor = db.rawQuery("SELECT ID FROM users WHERE email = ?", new String[]{email});
+        if(cursor!=null && cursor.moveToFirst()) {
+            return cursor.getString(cursor.getColumnIndex("ID"));
         }else{
             return "";
         }

@@ -3,6 +3,8 @@ package com.example.tapat;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.tapat.helpers.dbHelper;
+
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +21,7 @@ public class LoginActivity extends AppCompatActivity {
     Button buttonLogin;
     dbHelper db;
     String userRole;
+    String sessionID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,15 +44,22 @@ public class LoginActivity extends AppCompatActivity {
                     /* if correct send the user to the homepage*/
                  userRole = db.userAuthControl(email,password);
                 if(userRole.length()>0) {
-                    Toast.makeText(getApplicationContext(),userRole,Toast.LENGTH_SHORT).show();
+                    sessionID = db.getIDfromEmail(email);
+                    if(userRole.equals("admin")){
+                        Intent intent = new Intent(getApplicationContext(),null);
+                        intent.putExtra("sessionID",sessionID);
+                        startActivity(intent);
+                    }
                 }else {
                     /* toast to alert the user that the login has failed*/
-                    String errorText = "Invalid Cred";
-                    if(emailInputField.getText().toString() == "") {
-                        errorText = "Login Failed: Invalid Credentials";
-                    } else if (passwordInputField.getText().toString()=="") {
-                        errorText = "Login Failed: Invalid Password";
+                    String errorText = "Wrong Credentials";
+                    if(emailInputField.getText().toString().equals("")) {
+                        errorText = "Login Failed: Empty Credentials";
+                    } else if (passwordInputField.getText().toString().equals("")) {
+                        errorText = "Login Failed: Empty Password";
                     }
+                    emailInputField.setText("");
+                    passwordInputField.setText("");
                     Toast loginToastError = Toast.makeText(view.getContext(), errorText, Toast.LENGTH_SHORT);
                     View loginToastView = loginToastError.getView();
                     //loginToastView.setBackgroundColor(Color.parseColor("#ffc6c4"));
