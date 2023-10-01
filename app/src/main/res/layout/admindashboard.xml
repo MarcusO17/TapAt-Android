@@ -4,35 +4,62 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!-- Add your buttons for Student, Lecturer, Course, NFC Reader, NFC Writer here -->
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="Dashboard"
+        android:textStyle="bold"
+        android:layout_margin="10dp"
+        android:autoSizeTextType="uniform" />
+
+    <!-- Add your buttons for Student, Lecturer, Course here -->
     <Button
         android:id="@+id/studentButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
         android:text="Student" />
 
     <Button
         android:id="@+id/lecturerButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_margin="10dp"
         android:text="Lecturer" />
 
     <Button
         android:id="@+id/courseButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_margin="10dp"
         android:text="Course" />
 
-    <Button
-        android:id="@+id/nfcReaderButton"
+    <!-- Create a horizontal LinearLayout for NFC Reader and NFC Writer buttons -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="NFC Reader" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/nfcWriterButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="NFC Writer" />
+        <Button
+            android:id="@+id/nfcReaderButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:text="NFC Reader" />
+
+        <Button
+            android:id="@+id/nfcWriterButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:text="NFC Writer" />
+    </LinearLayout>
 </LinearLayout>
-
