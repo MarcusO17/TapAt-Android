@@ -1,7 +1,10 @@
 package com.example.tapat;
 
-import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.appcompat.app.AppCompatActivity;
+import com.example.tapat.helpers.dbHelper;
+
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -12,8 +15,13 @@ import android.widget.Toast;
 public class LoginActivity extends AppCompatActivity {
 
     EditText emailInputField;
+    String email;
+    String password;
     EditText passwordInputField;
     Button buttonLogin;
+    dbHelper db;
+    String userRole;
+    String sessionID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,28 +31,38 @@ public class LoginActivity extends AppCompatActivity {
         emailInputField = (EditText) findViewById(R.id.loginEmailInput);
         passwordInputField = (EditText) findViewById(R.id.loginPasswordInput);
         buttonLogin = (Button) findViewById(R.id.buttonLogin);
+        db = new dbHelper(this);
+        db.insertAdmin();
+        db.userTableUpdate();
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 /* change this to connect to the database when we implement database*/
-                if(emailInputField.getText().toString() == "1234" && passwordInputField.getText().toString() == "1234") {
+                 email = emailInputField.getText().toString();
+                 password = passwordInputField.getText().toString();
                     /* if correct send the user to the homepage*/
-
-                    /* Intent intent = new Intent(this, Homepage.class);
-                    startActivity(intent);*/
-                }
-                else {
-                    /* toast to alert the user that the login has failed*/
-                    String errorText = "";
-                    if(emailInputField.getText().toString() == "") {
-                        errorText = "Login Failed: Invalid Credentials";
-                    } else if (passwordInputField.getText().toString()=="") {
-                        errorText = "Login Failed: Invalid Password";
+                 userRole = db.userAuthControl(email,password);
+                if(userRole.length()>0) {
+                    sessionID = db.getIDfromEmail(email);
+                    if(userRole.equals("admin")){
+                        Intent intent = new Intent(getApplicationContext(),null);
+                        intent.putExtra("sessionID",sessionID);
+                        startActivity(intent);
                     }
+                }else {
+                    /* toast to alert the user that the login has failed*/
+                    String errorText = "Wrong Credentials";
+                    if(emailInputField.getText().toString().equals("")) {
+                        errorText = "Login Failed: Empty Credentials";
+                    } else if (passwordInputField.getText().toString().equals("")) {
+                        errorText = "Login Failed: Empty Password";
+                    }
+                    emailInputField.setText("");
+                    passwordInputField.setText("");
                     Toast loginToastError = Toast.makeText(view.getContext(), errorText, Toast.LENGTH_SHORT);
                     View loginToastView = loginToastError.getView();
-                    loginToastView.setBackgroundColor(Color.parseColor("#ffc6c4"));
+                    //loginToastView.setBackgroundColor(Color.parseColor("#ffc6c4"));
 
                     loginToastError.show();
                 }
