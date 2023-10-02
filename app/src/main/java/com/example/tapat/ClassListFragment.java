@@ -30,8 +30,19 @@ public class ClassListFragment extends Fragment implements CourseItemViewAdapter
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_class_list, container, false);
+        Bundle args = getArguments();
 
-        // query the items here
+        String courseName;
+        String courseCode;
+
+        if (args != null) {
+            courseName = args.getString("course_name");
+            courseCode = args.getString("course_code");
+            Log.d("ClassListFragment","course name: " + courseName);
+            Log.d("ClassListFragment","course code: " + courseCode);
+        }
+
+        // use the coursename and coursecode to query the items here
         ClassListItem class1 = new ClassListItem("Class 1", "c1");
         ClassListItem class2 = new ClassListItem("Class 2", "c2");
         ClassListItem class3 = new ClassListItem("Class 3", "c3");

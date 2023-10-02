@@ -17,6 +17,9 @@ import com.google.android.material.navigation.NavigationView;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ClassListDetails extends AppCompatActivity {
     DrawerLayout sideNavigationLayout;
     Button sideNavigationButton;
@@ -25,13 +28,18 @@ public class ClassListDetails extends AppCompatActivity {
     Button backButton;
     TextView classListTitle;
 
-    public void getIncomingIntent(){
-        if(getIntent().hasExtra("course_code")  && getIntent().hasExtra("course_name")){
+    public List getIncomingIntent(){
+        List<String> courseDetails = new ArrayList<>();
+        if(getIntent().hasExtra("course_code")  && getIntent().hasExtra("course_name")) {
             String courseCode = getIntent().getStringExtra("course_code");
             String courseName = getIntent().getStringExtra("course_name");
 
             setTitle(courseCode, courseName);
+            courseDetails.add(courseCode);
+            courseDetails.add(courseName);
+
         }
+        return courseDetails;
     }
 
     public void setTitle(String courseCode, String courseName){
@@ -42,9 +50,15 @@ public class ClassListDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class_list_details);
-        getIncomingIntent();
+        List<String> courseDetails = getIncomingIntent();
 
         ClassListFragment classListFragment = new ClassListFragment();
+
+        Bundle args = new Bundle();
+        args.putString("course_code",courseDetails.get(0));
+        args.putString("course_name",courseDetails.get(1));
+
+        classListFragment.setArguments(args);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
