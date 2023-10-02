@@ -45,6 +45,7 @@ public class CourseItemViewAdapter extends RecyclerView.Adapter<CourseItemViewAd
 
         holder.title.setText(coursecode + "-" + coursename);
 
+
     }
     @Override
     public int getItemCount() {
