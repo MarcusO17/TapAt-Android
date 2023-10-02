@@ -1,5 +1,6 @@
 package com.example.tapat.adapter;
 
+import android.content.Context;
 import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,13 +19,14 @@ import java.util.List;
 public class ClassListViewAdapter extends RecyclerView.Adapter<ClassListViewAdapter.ViewHolder>{
 
     List<ClassListItem> classList = new ArrayList<>();
-
     OnClickListener onclickListener;
+    Context context;
 
 
-    public ClassListViewAdapter(List<ClassListItem> classList, OnClickListener onclickListener) {
+    public ClassListViewAdapter(Context context, List<ClassListItem> classList, OnClickListener onclickListener) {
         this.classList = classList;
         this.onclickListener = onclickListener;
+        this.context = context;
     }
 
     @NonNull
@@ -46,7 +48,7 @@ public class ClassListViewAdapter extends RecyclerView.Adapter<ClassListViewAdap
 
     @Override
     public int getItemCount() {
-        return 0;
+        return classList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

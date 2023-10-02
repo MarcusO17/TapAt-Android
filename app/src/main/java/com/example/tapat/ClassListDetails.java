@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.example.tapat.model.ClassListItem;
 import com.google.android.material.navigation.NavigationView;
 
 import org.w3c.dom.Text;
@@ -52,11 +53,11 @@ public class ClassListDetails extends AppCompatActivity {
         setContentView(R.layout.activity_class_list_details);
         List<String> courseDetails = getIncomingIntent();
 
-        ClassListFragment classListFragment = new ClassListFragment();
-
         Bundle args = new Bundle();
         args.putString("course_code",courseDetails.get(0));
         args.putString("course_name",courseDetails.get(1));
+
+        ClassListFragment classListFragment = new ClassListFragment();
 
         classListFragment.setArguments(args);
 

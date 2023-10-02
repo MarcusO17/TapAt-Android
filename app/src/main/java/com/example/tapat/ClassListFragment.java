@@ -21,7 +21,9 @@ import java.util.List;
 
 public class ClassListFragment extends Fragment implements CourseItemViewAdapter.OnClickListener {
 
-    List<ClassListItem> classList = new ArrayList<>();
+
+    String courseName;
+    String courseCode;
     public ClassListFragment() {
         // Required empty public constructor
     }
@@ -30,10 +32,14 @@ public class ClassListFragment extends Fragment implements CourseItemViewAdapter
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_class_list, container, false);
+
+        RecyclerView classListRecyclerView = view.findViewById(R.id.classlistrecyclerview);
+        LinearLayoutManager classListLayout = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        classListRecyclerView.setHasFixedSize(true);
+        classListRecyclerView.setLayoutManager(classListLayout);
+
         Bundle args = getArguments();
 
-        String courseName;
-        String courseCode;
 
         if (args != null) {
             courseName = args.getString("course_name");
@@ -41,6 +47,7 @@ public class ClassListFragment extends Fragment implements CourseItemViewAdapter
             Log.d("ClassListFragment","course name: " + courseName);
             Log.d("ClassListFragment","course code: " + courseCode);
         }
+        List<ClassListItem> classList = new ArrayList<>();
 
         // use the coursename and coursecode to query the items here
         ClassListItem class1 = new ClassListItem("Class 1", "c1");
@@ -61,12 +68,7 @@ public class ClassListFragment extends Fragment implements CourseItemViewAdapter
 
         Log.d("ClassListFragment","classList size: " + classList.size());
 
-        ClassListViewAdapter adapter = new ClassListViewAdapter(classList, this::onClickListener);
-
-        RecyclerView classListRecyclerView = view.findViewById(R.id.classlistrecyclerview);
-        LinearLayoutManager classListLayout = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        classListRecyclerView.setLayoutManager(classListLayout);
-
+        ClassListViewAdapter adapter = new ClassListViewAdapter(getContext(),classList, this::onClickListener);
         classListRecyclerView.setAdapter(adapter);
         return view;
     }
