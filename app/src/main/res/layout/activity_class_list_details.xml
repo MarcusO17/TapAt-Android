@@ -50,17 +50,18 @@
             <TextView
                 android:id="@+id/classlisttitle"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp"
                 android:fontFamily="@font/julius_sans_one"
-                android:gravity="end"
+                android:gravity="center"
+                android:layout_margin="20dp"
                 android:paddingBottom="20dp"
                 android:text="@string/classlisttitle"
-                android:textAlignment="textEnd"
+                android:textAlignment="center"
                 android:textColor="#FF000000"
                 android:textStyle="normal"
-                android:textSize="44sp" />
+                android:textSize="20sp" />
 
         </LinearLayout>
 

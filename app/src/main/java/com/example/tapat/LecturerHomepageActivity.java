@@ -94,7 +94,8 @@ public class LecturerHomepageActivity extends AppCompatActivity implements Cours
 
         courseList.get(position);
         Intent intent = new Intent(this, ClassListDetails.class);
-
+        intent.putExtra("course_code", courseList.get(position).getCourseCode());
+        intent.putExtra("course_name", courseList.get(position).getName());
         startActivity(intent);
     }
 }

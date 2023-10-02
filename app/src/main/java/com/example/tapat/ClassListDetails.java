@@ -11,8 +11,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
+
+import org.w3c.dom.Text;
 
 public class ClassListDetails extends AppCompatActivity {
     DrawerLayout sideNavigationLayout;
@@ -20,10 +23,26 @@ public class ClassListDetails extends AppCompatActivity {
     NavigationView sideNavigationView;
     FrameLayout frameLayoutFragment;
     Button backButton;
+    TextView classListTitle;
+
+    public void getIncomingIntent(){
+        if(getIntent().hasExtra("course_code")  && getIntent().hasExtra("course_name")){
+            String courseCode = getIntent().getStringExtra("course_code");
+            String courseName = getIntent().getStringExtra("course_name");
+
+            setTitle(courseCode, courseName);
+        }
+    }
+
+    public void setTitle(String courseCode, String courseName){
+        classListTitle = (TextView) findViewById(R.id.classlisttitle);
+        classListTitle.setText(courseCode +" - " + courseName);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class_list_details);
+        getIncomingIntent();
 
         ClassListFragment classListFragment = new ClassListFragment();
 
@@ -69,5 +88,4 @@ public class ClassListDetails extends AppCompatActivity {
             }
         });
     }
-
 }
