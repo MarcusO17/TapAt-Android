@@ -6,11 +6,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 
 import com.example.tapat.adapter.CourseItemViewAdapter;
 import com.example.tapat.model.CourseItem;
@@ -19,12 +19,13 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LecturerHomepageActivity extends AppCompatActivity {
+public class LecturerHomepageActivity extends AppCompatActivity implements CourseItemViewAdapter.OnClickListener{
     List<CourseItem> courseList = new ArrayList<>();
     DrawerLayout sideNavigationLayout;
     Button sideNavigationButton;
     NavigationView sideNavigationView;
     RecyclerView homepageCourseListRecyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,11 +54,9 @@ public class LecturerHomepageActivity extends AppCompatActivity {
         homepageCourseListRecyclerView.setLayoutManager(linearLayoutManager);
         homepageCourseListRecyclerView.setHasFixedSize(true);
 
-        CourseItemViewAdapter studentListAdapter = new CourseItemViewAdapter(courseList);
-        homepageCourseListRecyclerView.setAdapter(studentListAdapter);
+        CourseItemViewAdapter courseItemAdapter = new CourseItemViewAdapter(courseList, this);
 
-
-
+        homepageCourseListRecyclerView.setAdapter(courseItemAdapter);
 
 
 
@@ -89,5 +88,12 @@ public class LecturerHomepageActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+    @Override
+    public void onClickListener(int position) {
+
+        courseList.get(position);
+        Intent intent = new Intent(this, ClassListDetails.class);
+        startActivity(intent);
     }
 }

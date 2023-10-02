@@ -2,6 +2,7 @@ package com.example.tapat;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -28,13 +29,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 /* change this to connect to the database when we implement database*/
-                if(emailInputField.getText().toString() == "1234" && passwordInputField.getText().toString() == "1234") {
-                    /* if correct send the user to the homepage*/
 
-                    /* Intent intent = new Intent(this, Homepage.class);
-                    startActivity(intent);*/
-                }
-                else {
+                Intent intent = new Intent(LoginActivity.this, LecturerHomepageActivity.class);
+                startActivity(intent);
                     /* toast to alert the user that the login has failed*/
                     String errorText = "";
                     if(emailInputField.getText().toString() == "") {
@@ -48,7 +45,6 @@ public class LoginActivity extends AppCompatActivity {
 
                     loginToastError.show();
                 }
-            }
         });
     }
 }

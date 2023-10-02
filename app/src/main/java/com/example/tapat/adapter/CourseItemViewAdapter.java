@@ -3,64 +3,69 @@
 // before throwing it into this adapter constructor to populate the items in the recycler view
 package com.example.tapat.adapter;
 
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.fragment.app.FragmentManager;
+import android.widget.TextView;
+
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.tapat.ClassListFragment;
 import com.example.tapat.R;
 import com.example.tapat.model.CourseItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class CourseItemViewAdapter extends RecyclerView.Adapter<CourseItemViewHolder> {
+public class CourseItemViewAdapter extends RecyclerView.Adapter<CourseItemViewAdapter.ViewHolder> {
 
     List<CourseItem> courseItemList;
+    OnClickListener onClickListener;
 
-    public CourseItemViewAdapter(List<CourseItem> items) {
-        this.courseItemList = courseItemList;
+    public CourseItemViewAdapter(List<CourseItem> items, OnClickListener onClickListener) {
+        this.courseItemList = items;
+        this.onClickListener = onClickListener;
     }
     //creating the items in the recycler view
     @NonNull
     @Override
-    public CourseItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new CourseItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_item,parent,false));
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup holder, int position) {
+
+        View view = LayoutInflater.from(holder.getContext()).inflate(R.layout.recycler_view_item,holder,false);
+        return new ViewHolder(view, onClickListener);
     }
 
     //setting the title of the item
     @Override
-    public void onBindViewHolder(@NonNull CourseItemViewHolder holder, int position) {
-        holder.courseItemViewTitle.setText(courseItemList.get(position).getName());
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        CourseItem courseitem = courseItemList.get(position);
+        String coursename = courseItemList.get(position).getName();
+        String coursecode = courseItemList.get(position).getCourseCode();
 
-        holder.courseItemViewTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CourseItem selectedCourse = courseItemList.get(position);
+        holder.title.setText(coursecode + "-" + coursename);
 
-                // create the fragment here
-                ClassListFragment fragment = new ClassListFragment();
-
-                Bundle args = new Bundle();
-                args.putSerializable("selected_course", selectedCourse);
-                fragment.setArguments(args);
-
-                // Replace the current fragment with StudentDetailFragment
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragmentContainer, new MyFragment());
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
-        });
     }
-
     @Override
     public int getItemCount() {
         return courseItemList.size();
+    }
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        TextView title;
+        OnClickListener onClickListener;
+        public ViewHolder(@NonNull View itemView, OnClickListener onClickListener) {
+            super(itemView);
+            title = itemView.findViewById(R.id.recycle_view_item_title);
+            this.onClickListener = onClickListener;
+
+            itemView.setOnClickListener(this);
+        }
+        @Override
+        public void onClick(View view) {
+            onClickListener.onClickListener(getAdapterPosition());
+        }
+    }
+    public interface OnClickListener{
+        void onClickListener(int position);
     }
 }

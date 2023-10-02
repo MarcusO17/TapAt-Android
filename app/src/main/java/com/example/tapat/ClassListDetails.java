@@ -19,6 +19,7 @@ public class ClassListDetails extends AppCompatActivity {
     Button sideNavigationButton;
     NavigationView sideNavigationView;
     FrameLayout frameLayoutFragment;
+    Button backButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +31,16 @@ public class ClassListDetails extends AppCompatActivity {
         FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.classlistframelayout, classListFragment);
         fragmentTransaction.commit();
+
+
+        backButton = (Button) findViewById(R.id.back_button);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //implement back button here
+            }
+        });
 
         sideNavigationButton = (Button) findViewById(R.id.side_navigation_button);
         sideNavigationLayout = (DrawerLayout) findViewById(R.id.side_navigation_layout);
