@@ -4,13 +4,45 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <!-- Title -->
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:gravity="center"
         android:text="Fragment Title"
         android:textSize="18sp" />
 
-    <!-- You can add a RecyclerView or other views to display your list data here -->
+    <!-- Search Bar -->
+    <EditText
+        android:id="@+id/searchEditText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:hint="Search"
+        android:inputType="text" />
+
+    <!-- Button List (Scrollable) -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7">
+        <LinearLayout
+            android:id="@+id/buttonListLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!-- Buttons will be dynamically added here -->
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Add Button -->
+    <Button
+        android:id="@+id/addButton"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="Add" />
+
 </LinearLayout>
