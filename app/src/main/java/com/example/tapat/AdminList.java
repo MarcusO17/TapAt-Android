@@ -3,24 +3,20 @@ package com.example.tapat;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.HorizontalScrollView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import java.util.Arrays;
 
 public class AdminList extends Fragment {
 
     private static final String ARG_FRAGMENT_TITLE = "fragmentTitle";
     private String[] dataArray;
-    private LinearLayout buttonListLayout;
+    private ButtonListAdapter buttonListAdapter;
     private String fragmentTitle;
 
     public AdminList() {
@@ -41,25 +37,32 @@ public class AdminList extends Fragment {
         View view = inflater.inflate(R.layout.adminlist, container, false);
 
         // Retrieve the fragment title from arguments
-        String fragmentTitle = getArguments().getString(ARG_FRAGMENT_TITLE);
+        fragmentTitle = getArguments().getString(ARG_FRAGMENT_TITLE);
 
-        // Set the fragment title in the TextView
-        TextView textView = view.findViewById(R.id.textView);
-        if (textView != null) {
-            textView.setText(fragmentTitle);
-        }
+        // Initialize RecyclerView
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+        // Initialize ButtonListAdapter
+        buttonListAdapter = new ButtonListAdapter(requireContext());
+
+        // Set the adapter for the RecyclerView
+        recyclerView.setAdapter(buttonListAdapter);
 
         // Initialize views
-        buttonListLayout = view.findViewById(R.id.buttonListLayout);
         EditText searchEditText = view.findViewById(R.id.searchEditText);
-        Button addButton = view.findViewById(R.id.addButton);
 
         // Set the button text for the Add button
-        addButton.setText("Add " + fragmentTitle);
+        buttonListAdapter.setOnItemClickListener(new ButtonListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(String buttonText) {
+                openAdminDisplayInfoFragment(fragmentTitle, buttonText);
+            }
+        });
 
         // Initialize and populate the button list
         dataArray = getDataArrayForFragment(fragmentTitle);
-        populateButtonList(dataArray);
+        buttonListAdapter.setData(Arrays.asList(dataArray));
 
         // Implement search functionality
         searchEditText.addTextChangedListener(new TextWatcher() {
@@ -71,35 +74,12 @@ public class AdminList extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // Filter the button list based on the search text
-                filterButtonList(s.toString());
+                buttonListAdapter.getFilter().filter(s);
             }
 
             @Override
             public void afterTextChanged(Editable s) {
                 // Not needed in this case
-            }
-        });
-
-        // Handle button clicks inside the button list
-        for (int i = 0; i < buttonListLayout.getChildCount(); i++) {
-            View buttonView = buttonListLayout.getChildAt(i);
-            if (buttonView instanceof HorizontalScrollView) {
-                Button button = (Button) ((HorizontalScrollView) buttonView).getChildAt(0);
-                final String buttonText = button.getText().toString();
-                button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        openAdminDisplayInfoFragment(fragmentTitle, buttonText);
-                    }
-                });
-            }
-        }
-
-        // Handle Add button click
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openAdminCreateFragment(fragmentTitle);
             }
         });
 
@@ -122,53 +102,6 @@ public class AdminList extends Fragment {
         }
     }
 
-    private void populateButtonList(String[] data) {
-        // Initialize and add buttons to the button list layout based on the data array
-        // Make sure to handle cases where text length exceeds the button width
-        if (data != null && data.length > 0) {
-            for (String item : data) {
-                addButtonToLayout(item);
-            }
-        }
-    }
-
-    private void addButtonToLayout(String text) {
-        // Create a horizontal scroll view for each button
-        HorizontalScrollView scrollView = new HorizontalScrollView(requireContext());
-        scrollView.setLayoutParams(new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-        // Create a button for the item, and if the text is too long, make it scroll horizontally
-        Button button = new Button(requireContext());
-        button.setLayoutParams(new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        button.setSingleLine(true);
-        button.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-        button.setMarqueeRepeatLimit(-1);
-        button.setSelected(true);
-        button.setText(text);
-
-        // Add the button to the scroll view, and the scroll view to the layout
-        scrollView.addView(button);
-        buttonListLayout.addView(scrollView);
-    }
-
-    private void filterButtonList(String searchText) {
-        // Implement logic to filter the button list based on the search text
-        // Show/hide buttons based on whether they match the search criteria
-        for (int i = 0; i < buttonListLayout.getChildCount(); i++) {
-            View view = buttonListLayout.getChildAt(i);
-            if (view instanceof HorizontalScrollView) {
-                Button button = (Button) ((HorizontalScrollView) view).getChildAt(0);
-                if (button.getText().toString().toLowerCase().contains(searchText.toLowerCase())) {
-                    view.setVisibility(View.VISIBLE);
-                } else {
-                    view.setVisibility(View.GONE);
-                }
-            }
-        }
-    }
-
     private void openAdminDisplayInfoFragment(String fragmentTitle, String buttonName) {
         // Create a new AdminDisplayInfo fragment and pass the necessary data
         AdminDisplayInfo adminDisplayInfoFragment = new AdminDisplayInfo();
@@ -178,24 +111,10 @@ public class AdminList extends Fragment {
         adminDisplayInfoFragment.setArguments(args);
 
         // Replace the current fragment with AdminDisplayInfo
-        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragmentContainer, adminDisplayInfoFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
-
-    private void openAdminCreateFragment(String fragmentTitle) {
-        // Create a new AdminCreate fragment and pass the necessary data
-        AdminCreate adminCreateFragment = new AdminCreate();
-        Bundle args = new Bundle();
-        args.putString("fragmentTitle", fragmentTitle);
-        adminCreateFragment.setArguments(args);
-
-        // Replace the current fragment with AdminCreate
-        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragmentContainer, adminCreateFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        requireActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentContainer, adminDisplayInfoFragment)
+                .addToBackStack(null)
+                .commit();
     }
 }
-
