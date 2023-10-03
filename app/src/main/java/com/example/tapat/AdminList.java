@@ -14,12 +14,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 public class AdminList extends Fragment {
 
     private static final String ARG_FRAGMENT_TITLE = "fragmentTitle";
     private String[] dataArray;
     private LinearLayout buttonListLayout;
+    private String fragmentTitle;
 
     public AdminList() {
         // Required empty public constructor
@@ -78,6 +80,29 @@ public class AdminList extends Fragment {
             }
         });
 
+        // Handle button clicks inside the button list
+        for (int i = 0; i < buttonListLayout.getChildCount(); i++) {
+            View buttonView = buttonListLayout.getChildAt(i);
+            if (buttonView instanceof HorizontalScrollView) {
+                Button button = (Button) ((HorizontalScrollView) buttonView).getChildAt(0);
+                final String buttonText = button.getText().toString();
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        openAdminDisplayInfoFragment(fragmentTitle, buttonText);
+                    }
+                });
+            }
+        }
+
+        // Handle Add button click
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openAdminCreateFragment(fragmentTitle);
+            }
+        });
+
         return view;
     }
 
@@ -85,11 +110,11 @@ public class AdminList extends Fragment {
         // Implement logic to get the appropriate data array based on the fragment title
         // For example, if fragmentTitle is "Students," return the students array
         // Similarly for "Lecturer" and "Courses"
-        if ("Students".equals(fragmentTitle)) {
+        if ("Student".equals(fragmentTitle)) {
             return new String[]{"Abu", "Ali", "Chisa", "Murta", "Marci", "John", "Baboon", "Dill", "Chloe", "Furn"};
         } else if ("Lecturer".equals(fragmentTitle)) {
             return new String[]{"Muka", "Ghili"};
-        } else if ("Courses".equals(fragmentTitle)) {
+        } else if ("Course".equals(fragmentTitle)) {
             return new String[]{"AG1001: Android Development", "AG1003: Software Engineering"};
         } else {
             // Handle other fragment titles or return an empty array as needed
@@ -143,4 +168,34 @@ public class AdminList extends Fragment {
             }
         }
     }
+
+    private void openAdminDisplayInfoFragment(String fragmentTitle, String buttonName) {
+        // Create a new AdminDisplayInfo fragment and pass the necessary data
+        AdminDisplayInfo adminDisplayInfoFragment = new AdminDisplayInfo();
+        Bundle args = new Bundle();
+        args.putString("fragmentTitle", fragmentTitle);
+        args.putString("buttonName", buttonName);
+        adminDisplayInfoFragment.setArguments(args);
+
+        // Replace the current fragment with AdminDisplayInfo
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragmentContainer, adminDisplayInfoFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    private void openAdminCreateFragment(String fragmentTitle) {
+        // Create a new AdminCreate fragment and pass the necessary data
+        AdminCreate adminCreateFragment = new AdminCreate();
+        Bundle args = new Bundle();
+        args.putString("fragmentTitle", fragmentTitle);
+        adminCreateFragment.setArguments(args);
+
+        // Replace the current fragment with AdminCreate
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragmentContainer, adminCreateFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 }
+

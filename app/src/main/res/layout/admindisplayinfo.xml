@@ -1,14 +1,27 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<!-- admindisplayinfo.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AdminDisplayInfo">
+    android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!-- Display Fragment Title -->
     <TextView
+        android:id="@+id/displayFragmentTitleTextView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Fragment Title"
+        android:textSize="18sp" />
 
-</FrameLayout>
+    <!-- Display Button Name -->
+    <TextView
+        android:id="@+id/displayButtonNameTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Button Name"
+        android:textSize="16sp" />
+
+    <!-- Add your UI elements for displaying admin information here -->
+
+</LinearLayout>
