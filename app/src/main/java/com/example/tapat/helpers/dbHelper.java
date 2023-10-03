@@ -12,6 +12,8 @@ public class dbHelper extends SQLiteOpenHelper {
      **********************************     TABLES!       ******************************************
      ***********************************************************************************************
      */
+    private static final String DATABASE_NAME = "TapAt.db";
+    private static final int DATABASE_VERSION = 1;
 
     static class Admin{
         private static final String DATABASE_NAME = "TapAt.db";
@@ -22,46 +24,61 @@ public class dbHelper extends SQLiteOpenHelper {
     }
 
     static class Lecturer{
-        private static final String DATABASE_NAME = "TapAt.db";
         private static final String TABLE_NAME = "lecturers";
         private static final String COL_1 = "lecturer_ID";
-        private static final String COL_2 = "lecturer_email";
-        private static final String COL_3 = "lecturer_password";
-        private static final String COL_4 = "lecturer_name";
-        private static final String COL_5 = "course_list";
+        private static final String COL_2 = "lecturer_name";
+        private static final String COL_3 = "lecturer_email";
+        private static final String COL_4 = "lecturer_password";
     }
 
     static class Student{
-        private static final String DATABASE_NAME = "TapAt.db";
         private static final String TABLE_NAME = "students";
         private static final String COL_1 = "student_ID";
         private static final String COL_2 = "student_name";
-        private static final String COL_3 = "programme_ID";
-        private static final String COL_4 = "programme_name";
+        private static final String COL_3 = "programme_code";
     }
 
     static class Course{
-        private static final String DATABASE_NAME = "TapAt.db";
         private static final String TABLE_NAME = "courses";
         private static final String COL_1 = "course_ID";
         private static final String COL_4 = "lecturer_ID";
         private static final String COL_2 = "course_name";
-        private static final String COL_3 = "student_list";
+        private static final String COL_3 = "programme_code";
     }
 
-    static class Users{
-        private static final String DATABASE_NAME = "TapAt.db";
-        private static final String TABLE_NAME = "users";
-        private static final String COL_1 = "ID";
-        private static final String COL_2 = "email";
-        private static final String COL_3 = "password";
-        private static final String COL_4 = "role";
+    static class Attendance{
+        private static final String TABLE_NAME = "attendance";
+        private static final String COL_1 = "attendance_ID";
+        private static final String COL_2 = "course_ID";
+        private static final String COL_3 = "datetime";
+
     }
+    static class AttendanceStudents{
+        private static final String TABLE_NAME = "attendance_students";
+        private static final String COL_1 = "attendance_ID";
+        private static final String COL_2= "course_ID";
+        private static final String COL_3 = "attendance_status";
+        private static final String COL_4 = "reason";
+    }
+
+    static class CourseStudents{
+        private static final String TABLE_NAME = "course_students";
+        private static final String COL_1= "course_ID";
+        private static final String COL_2 = "student_ID";
+
+
+    }
+
+
+    /***********************************************************************************************
+     ****************************     DB INITIALISATION       **************************************
+     ***********************************************************************************************
+     */
 
 
 
     public dbHelper(Context context) {
-        super(context, Admin.DATABASE_NAME, null, 1);
+        super(context, Admin.DATABASE_NAME, null, DATABASE_VERSION);
         SQLiteDatabase db = this.getWritableDatabase();
     }
 
@@ -69,7 +86,7 @@ public class dbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + Admin.TABLE_NAME+ " ( "
-                + Admin.COL_1 + " int PRIMARY KEY NOT NULL, "
+                + Admin.COL_1 + " INTEGER PRIMARY KEY NOT NULL, "
                 + Admin.COL_2 + " varchar(255) NOT NULL,"
                 + Admin.COL_3 + " varchar(255) NOT NULL"
                 + " )");
@@ -78,7 +95,7 @@ public class dbHelper extends SQLiteOpenHelper {
                 + Lecturer.COL_2 + " varchar(255) NOT NULL,"
                 + Lecturer.COL_3 + " varchar(255) NOT NULL"
                 + " )");
-        db.execSQL("CREATE TABLE " + Users.TABLE_NAME+ " ( "
+        db.execSQL("CREATE TABLE " + STUDENT.TABLE_NAME+ " ( "
                 + Users.COL_1 + " int PRIMARY KEY NOT NULL, "
                 + Users.COL_2 + " varchar(255) NOT NULL,"
                 + Users.COL_3 + " varchar(255) NOT NULL,"
@@ -92,6 +109,11 @@ public class dbHelper extends SQLiteOpenHelper {
     }
 
 
+
+    /***********************************************************************************************
+     ********************************     DB METHODS     ******************************************
+     ***********************************************************************************************
+     */
     /**
      *  Inserts Admin Account into DB
      *
