@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(userRole.length()>0) {
                     sessionID = db.getIDfromEmail(email);
                     if(userRole.equals("admin")){
-                        Intent intent = new Intent(getApplicationContext(),null);
+                        Intent intent = new Intent(getApplicationContext(), LecturerHomepageActivity.class);
                         intent.putExtra("sessionID",sessionID);
                         startActivity(intent);
                     }
