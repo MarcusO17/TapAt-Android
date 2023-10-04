@@ -12,6 +12,22 @@
         android:text="Add Fragment Title"
         android:textSize="18sp" />
 
-    <!-- Add your UI elements for creating admin data here -->
+    <!-- Container for UI elements -->
+    <LinearLayout
+        android:id="@+id/containerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Dynamically generated UI elements will be added here -->
+
+    </LinearLayout>
+
+    <!-- Add button -->
+    <Button
+        android:id="@+id/addButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add" />
 
 </LinearLayout>

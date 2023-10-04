@@ -1,16 +1,29 @@
 package com.example.tapat;
 
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 public class AdminCreate extends Fragment {
 
     private static final String ARG_FRAGMENT_TITLE = "fragmentTitle";
+
+    private String fragmentTitle;
+    private LinearLayout containerLayout;
+    private Button addButton;
+    private static final String[] programArray = {"BCSCUN", "DCS", "MCS03", "BCTCUN"};
 
     public AdminCreate() {
         // Required empty public constructor
@@ -30,16 +43,103 @@ public class AdminCreate extends Fragment {
         View view = inflater.inflate(R.layout.admincreate, container, false);
 
         // Retrieve the fragment title from arguments
-        String fragmentTitle = getArguments().getString(ARG_FRAGMENT_TITLE);
+        fragmentTitle = getArguments().getString(ARG_FRAGMENT_TITLE);
 
         // Set the fragment title in the TextView
-        TextView textView = view.findViewById(R.id.createTitleTextView);
-        if (textView != null) {
-            textView.setText("Add " + fragmentTitle);
-        }
+        TextView titleTextView = view.findViewById(R.id.createTitleTextView);
+        titleTextView.setText("Add " + fragmentTitle);
 
-        // You can add your UI elements and logic for creating admin data here
+        // Initialize UI elements based on the fragment title
+        containerLayout = view.findViewById(R.id.containerLayout);
+        addButton = view.findViewById(R.id.addButton);
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handleAddButtonClick();
+            }
+        });
+
+        // Generate the UI elements based on the fragment title
+        generateUI();
 
         return view;
+    }
+
+    private void generateUI() {
+        containerLayout.removeAllViews(); // Clear any existing UI elements
+
+        if ("Student".equals(fragmentTitle)) {
+            // Create UI for Student
+            EditText nameEditText = new EditText(requireContext());
+            nameEditText.setHint("Name");
+
+            EditText idEditText = new EditText(requireContext());
+            idEditText.setHint("ID Number");
+
+            Spinner programSpinner = new Spinner(requireContext());
+            ArrayAdapter<String> programAdapter = new ArrayAdapter<>(requireContext(),
+                    android.R.layout.simple_spinner_item, programArray);
+            programAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            programSpinner.setAdapter(programAdapter);
+
+            containerLayout.addView(nameEditText);
+            containerLayout.addView(idEditText);
+            containerLayout.addView(programSpinner);
+        } else if ("Lecturer".equals(fragmentTitle)) {
+            // Create UI for Lecturer
+            EditText nameEditText = new EditText(requireContext());
+            nameEditText.setHint("Name");
+
+            EditText idEditText = new EditText(requireContext());
+            idEditText.setHint("ID Number");
+
+            EditText emailEditText = new EditText(requireContext());
+            emailEditText.setHint("Email");
+
+            EditText passwordEditText = new EditText(requireContext());
+            passwordEditText.setHint("Password");
+            passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+
+            containerLayout.addView(nameEditText);
+            containerLayout.addView(idEditText);
+            containerLayout.addView(emailEditText);
+            containerLayout.addView(passwordEditText);
+        } else if ("Course".equals(fragmentTitle)) {
+            // Create UI for Course (No additional fields)
+        }
+    }
+
+    private void handleAddButtonClick() {
+        // Handle the logic for adding data to the respective arrays
+        if ("Student".equals(fragmentTitle)) {
+            String name = ((EditText) containerLayout.getChildAt(0)).getText().toString();
+            String id = ((EditText) containerLayout.getChildAt(1)).getText().toString();
+            String program = ((Spinner) containerLayout.getChildAt(2)).getSelectedItem().toString();
+            String[] studentData = {name, id, program};
+            // Add studentData to the student array
+
+            replaceFragment(AdminList.newInstance("Student"));
+        } else if ("Lecturer".equals(fragmentTitle)) {
+            String name = ((EditText) containerLayout.getChildAt(0)).getText().toString();
+            String id = ((EditText) containerLayout.getChildAt(1)).getText().toString();
+            String email = ((EditText) containerLayout.getChildAt(2)).getText().toString();
+            String password = ((EditText) containerLayout.getChildAt(3)).getText().toString();
+            String[] lecturerData = {name, id, email, password};
+            // Add lecturerData to the lecturer array
+
+            replaceFragment(AdminList.newInstance("Lecturer"));
+        } else if ("Course".equals(fragmentTitle)) {
+            // Handle adding a course (if needed)
+            replaceFragment(AdminList.newInstance("Course"));
+        }
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentContainer, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 }
