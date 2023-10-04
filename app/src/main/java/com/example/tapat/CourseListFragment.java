@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.tapat.adapter.CourseItemViewAdapter;
 import com.example.tapat.model.CourseItem;
@@ -61,8 +62,9 @@ public class CourseListFragment extends Fragment implements CourseItemViewAdapte
     @Override
     public void onClickListener(int position) {
 
-        // set title
-
+        // set title in fragment holder
+        TextView title = getActivity().findViewById(R.id.fragmentholdertitle);
+        title.setText(courseList.get(position).getCourseCode() + " - " + courseList.get(position).getName());
 
         Bundle args = new Bundle();
         args.putString("course_code",courseList.get(position).getCourseCode());
@@ -75,6 +77,7 @@ public class CourseListFragment extends Fragment implements CourseItemViewAdapte
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.classlistframelayout, classListFragment);
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 }
