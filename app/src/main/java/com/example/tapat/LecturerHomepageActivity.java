@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.example.tapat.adapter.CourseItemViewAdapter;
 import com.example.tapat.model.CourseItem;
@@ -22,7 +23,7 @@ import java.util.List;
 public class LecturerHomepageActivity extends AppCompatActivity implements CourseItemViewAdapter.OnClickListener{
     List<CourseItem> courseList = new ArrayList<>();
     DrawerLayout sideNavigationLayout;
-    Button sideNavigationButton;
+    ImageButton sideNavigationButton;
     NavigationView sideNavigationView;
     RecyclerView homepageCourseListRecyclerView;
 
@@ -62,7 +63,7 @@ public class LecturerHomepageActivity extends AppCompatActivity implements Cours
 
         //when you log in you have to change update the side navigation menu lecturer name
 
-        sideNavigationButton = (Button) findViewById(R.id.side_navigation_button);
+        sideNavigationButton = (ImageButton) findViewById(R.id.sidebar_button);
         sideNavigationLayout = (DrawerLayout) findViewById(R.id.side_navigation_layout);
         sideNavigationView = (NavigationView) findViewById(R.id.side_navigation_view);
 

@@ -30,20 +30,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 /* change this to connect to the database when we implement database*/
 
-                Intent intent = new Intent(LoginActivity.this, LecturerHomepageActivity.class);
+                Intent intent = new Intent(LoginActivity.this, FragmentHolderActivity.class);
                 startActivity(intent);
                     /* toast to alert the user that the login has failed*/
-                    String errorText = "";
-                    if(emailInputField.getText().toString() == "") {
-                        errorText = "Login Failed: Invalid Credentials";
-                    } else if (passwordInputField.getText().toString()=="") {
-                        errorText = "Login Failed: Invalid Password";
-                    }
-                    Toast loginToastError = Toast.makeText(view.getContext(), errorText, Toast.LENGTH_SHORT);
-                    View loginToastView = loginToastError.getView();
-                    loginToastView.setBackgroundColor(Color.parseColor("#ffc6c4"));
-
-                    loginToastError.show();
                 }
         });
     }

@@ -16,66 +16,8 @@
         android:gravity="center_horizontal"
         android:background="@drawable/background_picture">
 
-        <LinearLayout
-            android:id="@+id/title_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@android:color/transparent">
+        <include layout="@layout/actionbar"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Button
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="start"
-                    android:background="@drawable/baseline_menu_24"
-                    android:id="@+id/side_navigation_button"
-                    android:backgroundTint="@color/black" />
-
-                <Button
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="end"
-                    android:background="@drawable/baseline_arrow_back_24"
-                    android:id="@+id/back_button"
-                    android:backgroundTint="@color/black"/>
-
-            </LinearLayout>
-
-
-            <TextView
-                android:id="@+id/classlisttitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
-                android:fontFamily="@font/julius_sans_one"
-                android:gravity="center"
-                android:layout_margin="20dp"
-                android:paddingBottom="20dp"
-                android:text="@string/classlisttitle"
-                android:textAlignment="center"
-                android:textColor="#FF000000"
-                android:textStyle="normal"
-                android:textSize="20sp" />
-
-        </LinearLayout>
-
-        <FrameLayout
-            android:id="@+id/classlistframelayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="60dp"
-            android:paddingLeft="40dp"
-            android:paddingRight="40dp"
-            android:paddingBottom="97dp"
-            android:orientation="vertical"
-            android:gravity="center_vertical"
-            android:background="@color/black"/>
 
     </LinearLayout>
 

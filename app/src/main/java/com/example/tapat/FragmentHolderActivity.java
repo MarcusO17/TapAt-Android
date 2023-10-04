@@ -9,73 +9,31 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
-import com.example.tapat.model.ClassListItem;
 import com.google.android.material.navigation.NavigationView;
 
-import org.w3c.dom.Text;
+public class FragmentHolderActivity extends AppCompatActivity {
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class ClassListDetails extends AppCompatActivity {
+    NavigationView sideNavigationView;
     DrawerLayout sideNavigationLayout;
     ImageButton sideNavigationButton;
-    NavigationView sideNavigationView;
-    FrameLayout frameLayoutFragment;
     ImageButton backButton;
-    TextView classListTitle;
 
-    public List getIncomingIntent(){
-        List<String> courseDetails = new ArrayList<>();
-        if(getIntent().hasExtra("course_code")  && getIntent().hasExtra("course_name")) {
-            String courseCode = getIntent().getStringExtra("course_code");
-            String courseName = getIntent().getStringExtra("course_name");
-
-            setTitle(courseCode, courseName);
-            courseDetails.add(courseCode);
-            courseDetails.add(courseName);
-
-        }
-        return courseDetails;
-    }
-
-    public void setTitle(String courseCode, String courseName){
-        classListTitle = (TextView) findViewById(R.id.classlisttitle);
-        classListTitle.setText(courseCode +" - " + courseName);
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_class_list_details);
-        List<String> courseDetails = getIncomingIntent();
-
-        Bundle args = new Bundle();
-        args.putString("course_code",courseDetails.get(0));
-        args.putString("course_name",courseDetails.get(1));
-
-        ClassListFragment classListFragment = new ClassListFragment();
-
-        classListFragment.setArguments(args);
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.classlistframelayout, classListFragment);
-        fragmentTransaction.commit();
-
+        setContentView(R.layout.activity_fragment_holder);
 
         backButton = (ImageButton) findViewById(R.id.backbutton);
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //implement back button here
-            }
-        });
+        CourseListFragment courseListFragment = new CourseListFragment();
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.classlistframelayout, courseListFragment);
+        fragmentTransaction.commit();
 
         sideNavigationButton = (ImageButton) findViewById(R.id.sidebar_button);
         sideNavigationLayout = (DrawerLayout) findViewById(R.id.side_navigation_layout);
@@ -104,4 +62,5 @@ public class ClassListDetails extends AppCompatActivity {
             }
         });
     }
+
 }
