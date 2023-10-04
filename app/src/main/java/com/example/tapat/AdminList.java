@@ -6,8 +6,12 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.Arrays;
@@ -39,6 +43,12 @@ public class AdminList extends Fragment {
         // Retrieve the fragment title from arguments
         fragmentTitle = getArguments().getString(ARG_FRAGMENT_TITLE);
 
+        // Set the fragment title in the TextView
+        TextView textView = view.findViewById(R.id.textView);
+        if (textView != null) {
+            textView.setText(fragmentTitle);
+        }
+
         // Initialize RecyclerView
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -51,6 +61,10 @@ public class AdminList extends Fragment {
 
         // Initialize views
         EditText searchEditText = view.findViewById(R.id.searchEditText);
+        Button addButton = view.findViewById(R.id.addButton);
+
+        // Set the button text for the Add button
+        addButton.setText("Add " + fragmentTitle);
 
         // Set the button text for the Add button
         buttonListAdapter.setOnItemClickListener(new ButtonListAdapter.OnItemClickListener() {
@@ -80,6 +94,14 @@ public class AdminList extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 // Not needed in this case
+            }
+        });
+
+        // Handle Add button click
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openAdminCreateFragment(fragmentTitle);
             }
         });
 
@@ -116,5 +138,19 @@ public class AdminList extends Fragment {
                 .replace(R.id.fragmentContainer, adminDisplayInfoFragment)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    private void openAdminCreateFragment(String fragmentTitle) {
+        // Create a new AdminCreate fragment and pass the necessary data
+        AdminCreate adminCreateFragment = new AdminCreate();
+        Bundle args = new Bundle();
+        args.putString("fragmentTitle", fragmentTitle);
+        adminCreateFragment.setArguments(args);
+
+        // Replace the current fragment with AdminCreate
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragmentContainer, adminCreateFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }
