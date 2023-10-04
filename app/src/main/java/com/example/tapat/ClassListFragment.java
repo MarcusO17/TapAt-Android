@@ -3,6 +3,8 @@ package com.example.tapat;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,11 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 
 import com.example.tapat.adapter.ClassListViewAdapter;
 import com.example.tapat.adapter.CourseItemViewAdapter;
 import com.example.tapat.model.ClassListItem;
+import com.example.tapat.model.CourseItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +29,7 @@ public class ClassListFragment extends Fragment implements CourseItemViewAdapter
     String courseName;
     String courseCode;
     Button addClassButton;
+    List<ClassListItem> classList = new ArrayList<>();
     public ClassListFragment() {
         // Required empty public constructor
     }
@@ -50,7 +55,6 @@ public class ClassListFragment extends Fragment implements CourseItemViewAdapter
             Log.d("ClassListFragment","course name: " + courseName);
             Log.d("ClassListFragment","course code: " + courseCode);
         }
-        List<ClassListItem> classList = new ArrayList<>();
         // use the coursename and coursecode to query the items here
         ClassListItem class1 = new ClassListItem("Class 1", "c1");
         ClassListItem class2 = new ClassListItem("Class 2", "c2");
@@ -81,7 +85,21 @@ public class ClassListFragment extends Fragment implements CourseItemViewAdapter
 
     @Override
     public void onClickListener(int position) {
-        //open attendanceListDetails
-        //implement the same exact thing again
+        TextView title = getActivity().findViewById(R.id.fragmentholdertitle);
+        title.setText(classList.get(position).getClassID() + " - " + classList.get(position).getClassName());
+
+        Bundle args = new Bundle();
+        args.putString("class_id",classList.get(position).getClassID());
+        args.putString("class_name",classList.get(position).getClassName());
+
+        AttendanceListFragment attendanceListFragment = new AttendanceListFragment();
+
+        attendanceListFragment.setArguments(args);
+
+        FragmentManager fragmentManager = getParentFragmentManager();
+        FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.classlistframelayout, attendanceListFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 }

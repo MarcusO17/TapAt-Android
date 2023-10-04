@@ -1,6 +1,8 @@
 package com.example.tapat.model;
 
-public class ClassListItem {
+import java.io.Serializable;
+
+public class ClassListItem implements Serializable {
     String className;
     String classID;
 
