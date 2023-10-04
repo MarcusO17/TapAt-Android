@@ -5,12 +5,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@drawable/ic_launcher_background">
+    android:background="@drawable/background_picture">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_launcher_foreground"
+        android:src="@drawable/logo"
         android:layout_gravity="center"
         android:layout_marginTop="100dp"/>
 
@@ -31,10 +31,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:fontFamily="@font/julius_sans_one"
                 android:text="@string/login"
                 android:textAlignment="center"
-                android:textSize="36dp"
-                android:textColor="#3DDC84"/>
+                android:textColor="#000000"
+                android:textSize="36dp" />
 
             <EditText
                 android:id="@+id/loginEmailInput"
@@ -63,7 +64,7 @@
                 android:text="@string/login"
                 android:layout_marginTop="16dp"
                 android:layout_weight="1"
-                android:backgroundTint="#3DDC84"
+                android:backgroundTint="#000000"
                 />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
