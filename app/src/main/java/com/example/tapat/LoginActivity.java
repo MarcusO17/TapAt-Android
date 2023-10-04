@@ -20,7 +20,6 @@ public class LoginActivity extends AppCompatActivity {
     EditText passwordInputField;
     Button buttonLogin;
     dbHelper db;
-    boolean isValid;
     String sessionID;
 
     @Override
@@ -40,10 +39,9 @@ public class LoginActivity extends AppCompatActivity {
                  email = emailInputField.getText().toString();
                  password = passwordInputField.getText().toString();
                     /* if correct send the user to the homepage*/
-                 isValid = db.userAuthControl("admins",email,password);
-                if(isValid) {
-                    sessionID = db.getIDfromEmail("admins",email);
-                    if(isValid){
+                sessionID  = db.userAuthorization(email,password);
+                if(sessionID.length()>0) {
+                    if(sessionID.startsWith("A")){
                         Intent intent = new Intent(getApplicationContext(), LecturerHomepageActivity.class);
                         intent.putExtra("sessionID",sessionID);
                         startActivity(intent);
