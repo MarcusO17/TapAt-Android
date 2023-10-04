@@ -144,6 +144,7 @@ public class dbHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Attendance.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + AttendanceStudents.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + CourseStudents.TABLE_NAME);
+        insertAdmin(db);
         onCreate(db);
     }
 
@@ -157,23 +158,12 @@ public class dbHelper extends SQLiteOpenHelper {
      *  Inserts Admin Account into DB
      *
      */
-    public void insertAdmin() {
-        SQLiteDatabase db = this.getWritableDatabase();
+    public void insertAdmin(SQLiteDatabase db) {
         ContentValues cv = new ContentValues();
         cv.put(Admin.COL_1,"A0001");
         cv.put(Admin.COL_2, "admin1");
         cv.put(Admin.COL_3,"admin");
         db.insert(Admin.TABLE_NAME,null,cv);
-    }
-
-    public void userTableUpdate(){
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("INSERT INTO users (ID, email, password, role) " +
-                "SELECT admin_ID, admin_email, admin_password, 'admin' as role FROM admins ");
-        db.execSQL("INSERT INTO users (ID, email, password, role) " +
-                "SELECT lecturer_ID, lecturer_email, lecturer_password, 'lecturer' AS role FROM lecturers");
-
-
     }
 
 
@@ -182,8 +172,8 @@ public class dbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor;
 
-        cursor = db.rawQuery("SELECT * FROM ? " +
-                                "where email = ? and password = ?",new String[] {table,email,password});
+        cursor = db.rawQuery("SELECT * FROM "+ table + " "+
+                                "where email = ? and password = ?",new String[] {email,password});
 
         if(cursor!=null && cursor.moveToFirst()) {
             return cursor.getString(cursor.getColumnIndex("role"));
@@ -192,11 +182,11 @@ public class dbHelper extends SQLiteOpenHelper {
         }
     }
 
-    public String getIDfromEmail(String email){
+    public String getIDfromEmail(String table,String email){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor;
 
-        cursor = db.rawQuery("SELECT ID FROM users WHERE email = ?", new String[]{email});
+        cursor = db.rawQuery("SELECT ID FROM "+ table + " WHERE email = ?", new String[]{email});
         if(cursor!=null && cursor.moveToFirst()) {
             return cursor.getString(cursor.getColumnIndex("ID"));
         }else{

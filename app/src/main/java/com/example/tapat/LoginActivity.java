@@ -32,8 +32,6 @@ public class LoginActivity extends AppCompatActivity {
         passwordInputField = (EditText) findViewById(R.id.loginPasswordInput);
         buttonLogin = (Button) findViewById(R.id.buttonLogin);
         db = new dbHelper(this);
-        db.insertAdmin();
-        db.userTableUpdate();
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,9 +40,9 @@ public class LoginActivity extends AppCompatActivity {
                  email = emailInputField.getText().toString();
                  password = passwordInputField.getText().toString();
                     /* if correct send the user to the homepage*/
-                 userRole = db.userAuthControl(email,password);
+                 userRole = db.userAuthControl("admin",email,password);
                 if(userRole.length()>0) {
-                    sessionID = db.getIDfromEmail(email);
+                    sessionID = db.getIDfromEmail("admin",email);
                     if(userRole.equals("admin")){
                         Intent intent = new Intent(getApplicationContext(), LecturerHomepageActivity.class);
                         intent.putExtra("sessionID",sessionID);
