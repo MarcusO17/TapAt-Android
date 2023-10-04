@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 
 import com.example.tapat.adapter.ClassListViewAdapter;
@@ -21,9 +22,9 @@ import java.util.List;
 
 public class ClassListFragment extends Fragment implements CourseItemViewAdapter.OnClickListener {
 
-
     String courseName;
     String courseCode;
+    Button addClassButton;
     public ClassListFragment() {
         // Required empty public constructor
     }
@@ -32,6 +33,8 @@ public class ClassListFragment extends Fragment implements CourseItemViewAdapter
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_class_list, container, false);
+
+        addClassButton = view.findViewById(R.id.button_add_class);
 
         RecyclerView classListRecyclerView = view.findViewById(R.id.classlistrecyclerview);
         LinearLayoutManager classListLayout = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -48,28 +51,31 @@ public class ClassListFragment extends Fragment implements CourseItemViewAdapter
             Log.d("ClassListFragment","course code: " + courseCode);
         }
         List<ClassListItem> classList = new ArrayList<>();
-
         // use the coursename and coursecode to query the items here
         ClassListItem class1 = new ClassListItem("Class 1", "c1");
         ClassListItem class2 = new ClassListItem("Class 2", "c2");
         ClassListItem class3 = new ClassListItem("Class 3", "c3");
-        ClassListItem class4 = new ClassListItem("Class 4", "c4");
-        ClassListItem class5 = new ClassListItem("Class 5", "c5");
-        ClassListItem class6 = new ClassListItem("Class 6", "c6");
-        ClassListItem class7 = new ClassListItem("Class 7", "c7");
 
         classList.add(class1);
         classList.add(class2);
         classList.add(class3);
-        classList.add(class4);
-        classList.add(class5);
-        classList.add(class6);
-        classList.add(class7);
 
         Log.d("ClassListFragment","classList size: " + classList.size());
 
         ClassListViewAdapter adapter = new ClassListViewAdapter(getContext(),classList, this::onClickListener);
         classListRecyclerView.setAdapter(adapter);
+
+        addClassButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Integer size = classList.size()+1;
+                String className = "Class " + size;
+                String classID = "c" + size;
+                ClassListItem tempclass = new ClassListItem(className, classID);
+                classList.add(tempclass);
+                adapter.notifyDataSetChanged();
+            }
+        });
         return view;
     }
 
