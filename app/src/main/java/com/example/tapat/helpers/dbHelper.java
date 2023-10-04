@@ -168,17 +168,17 @@ public class dbHelper extends SQLiteOpenHelper {
 
 
 
-    public String userAuthControl(String table,String email,String password){
+    public boolean userAuthControl(String table,String email,String password){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor;
 
         cursor = db.rawQuery("SELECT * FROM "+ table + " "+
-                                "where email = ? and password = ?",new String[] {email,password});
+                                "where admin_email = ? and admin_password = ?",new String[] {email,password});
 
-        if(cursor!=null && cursor.moveToFirst()) {
-            return cursor.getString(cursor.getColumnIndex("role"));
+        if(cursor!=null && cursor.getCount()>0) {
+            return true;
         }else{
-            return "";
+            return false;
         }
     }
 
@@ -186,12 +186,14 @@ public class dbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor;
 
-        cursor = db.rawQuery("SELECT ID FROM "+ table + " WHERE email = ?", new String[]{email});
+        cursor = db.rawQuery("SELECT admin_ID FROM "+ table + " WHERE admin_email = ?", new String[]{email});
         if(cursor!=null && cursor.moveToFirst()) {
-            return cursor.getString(cursor.getColumnIndex("ID"));
+            return cursor.getString(cursor.getColumnIndex("admin_ID"));
         }else{
             return "";
         }
     }
+
+
 
 }
