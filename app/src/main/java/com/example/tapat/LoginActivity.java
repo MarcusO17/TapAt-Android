@@ -20,7 +20,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText passwordInputField;
     Button buttonLogin;
     dbHelper db;
-    String userRole;
+    boolean isValid;
     String sessionID;
 
     @Override
@@ -32,8 +32,6 @@ public class LoginActivity extends AppCompatActivity {
         passwordInputField = (EditText) findViewById(R.id.loginPasswordInput);
         buttonLogin = (Button) findViewById(R.id.buttonLogin);
         db = new dbHelper(this);
-        db.insertAdmin();
-        db.userTableUpdate();
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,11 +40,11 @@ public class LoginActivity extends AppCompatActivity {
                  email = emailInputField.getText().toString();
                  password = passwordInputField.getText().toString();
                     /* if correct send the user to the homepage*/
-                 userRole = db.userAuthControl(email,password);
-                if(userRole.length()>0) {
-                    sessionID = db.getIDfromEmail(email);
-                    if(userRole.equals("admin")){
-                        Intent intent = new Intent(getApplicationContext(),null);
+                 isValid = db.userAuthControl("admins",email,password);
+                if(isValid) {
+                    sessionID = db.getIDfromEmail("admins",email);
+                    if(isValid){
+                        Intent intent = new Intent(getApplicationContext(), LecturerHomepageActivity.class);
                         intent.putExtra("sessionID",sessionID);
                         startActivity(intent);
                     }
