@@ -15,6 +15,11 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AdminCreate extends Fragment {
 
@@ -106,7 +111,30 @@ public class AdminCreate extends Fragment {
             containerLayout.addView(emailEditText);
             containerLayout.addView(passwordEditText);
         } else if ("Course".equals(fragmentTitle)) {
-            // Create UI for Course (No additional fields)
+            EditText courseNameEditText = new EditText(requireContext());
+            courseNameEditText.setHint("Course Name");
+
+            EditText courseIdEditText = new EditText(requireContext());
+            courseIdEditText.setHint("Course ID");
+
+            String[] lecturerIdArray = {"L1000", "L1001", "L1002", "L1003", "L1004", "L1005", "L1006", "L1007", "L1008", "L1009", "L1010"};
+            Spinner lecturerIdSpinner = new Spinner(requireContext());
+            ArrayAdapter<String> lecturerIdAdapter = new ArrayAdapter<>(requireContext(),
+                    android.R.layout.simple_spinner_item, lecturerIdArray);
+            lecturerIdAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            lecturerIdSpinner.setAdapter(lecturerIdAdapter);
+
+            Spinner programSpinner = new Spinner(requireContext());
+            ArrayAdapter<String> programAdapter = new ArrayAdapter<>(requireContext(),
+                    android.R.layout.simple_spinner_item, programArray);
+            programAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            programSpinner.setAdapter(programAdapter);
+
+            // Add UI elements to the containerLayout
+            containerLayout.addView(courseNameEditText);
+            containerLayout.addView(courseIdEditText);
+            containerLayout.addView(lecturerIdSpinner);
+            containerLayout.addView(programSpinner);
         }
     }
 
@@ -130,7 +158,13 @@ public class AdminCreate extends Fragment {
 
             replaceFragment(AdminList.newInstance("Lecturer"));
         } else if ("Course".equals(fragmentTitle)) {
+            String coursename = ((EditText) containerLayout.getChildAt(0)).getText().toString();
+            String courseid = ((EditText) containerLayout.getChildAt(1)).getText().toString();
+            String lecturerid = ((Spinner) containerLayout.getChildAt(2)).getSelectedItem().toString();
+            String program = ((Spinner) containerLayout.getChildAt(3)).getSelectedItem().toString();
+            String[] courseData = {coursename, courseid, lecturerid, program};
             // Handle adding a course (if needed)
+
             replaceFragment(AdminList.newInstance("Course"));
         }
     }
