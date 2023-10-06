@@ -15,6 +15,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.tapat.R;
 
+import java.lang.reflect.Field;
+
 public class AdminDisplayInfo extends Fragment {
 
     private static final String ARG_BUTTON_NAME = "buttonName";
@@ -109,6 +111,8 @@ public class AdminDisplayInfo extends Fragment {
                 EditText idEditText = createEditText("ID Number");
                 Spinner programSpinner = createSpinner(programArray, studentData[2]);
 
+                handleSpinnerUI(programSpinner);
+
                 nameEditText.setText(studentData[0]);
                 idEditText.setText(studentData[1]);
 
@@ -143,6 +147,9 @@ public class AdminDisplayInfo extends Fragment {
                 Spinner lecturerIdSpinner = createSpinner(lecturerIdArray, courseData[2]);
                 Spinner programSpinner = createSpinner(programArray, courseData[3]);
 
+                handleSpinnerUI(lecturerIdSpinner);
+                handleSpinnerUI(programSpinner);
+
                 courseNameEditText.setText(courseData[0]);
                 courseIdEditText.setText(courseData[1]);
 
@@ -152,6 +159,24 @@ public class AdminDisplayInfo extends Fragment {
                 containerLayout.addView(programSpinner);
             }
         }
+    }
+
+    private Spinner handleSpinnerUI(Spinner spin){
+        try {
+            Field popup = Spinner.class.getDeclaredField("mPopup");
+            popup.setAccessible(true);
+
+            // Get private mPopup member variable and try cast to ListPopupWindow
+            android.widget.ListPopupWindow popupWindow = (android.widget.ListPopupWindow) popup.get(spin);
+
+            // Set popupWindow height to 500px
+            popupWindow.setHeight(500);
+
+        }
+        catch (NoClassDefFoundError | ClassCastException | NoSuchFieldException | IllegalAccessException e) {
+            // silently fail...
+        }
+        return spin;
     }
 
     private void handleEditButtonClick() {
@@ -239,7 +264,7 @@ public class AdminDisplayInfo extends Fragment {
     private String[] getLecturerData(String buttonName) {
         String[][] lecturerData = {
                 {"Muka","L1000","Muka@lecturer.college.edu.my","abc"},
-                {"Ghilli","L1001","Ghilli@lecturer.college.edu.my","135"}
+                {"Ghili","L1001","Ghilli@lecturer.college.edu.my","135"}
         };
 
         for (String[] lecturer : lecturerData) {

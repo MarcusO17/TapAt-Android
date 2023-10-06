@@ -1,18 +1,23 @@
 <!-- admindisplayinfo.xml -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#343541">
 
     <!-- Display Fragment Title -->
+
     <TextView
         android:id="@+id/displayFragmentTitleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Fragment Title"
-        android:textSize="18sp" />
+        android:textSize="20sp"
+        android:textColor="@color/white" />
 
+    <!-- Add your UI elements for displaying admin information here -->
     <LinearLayout
         android:id="@+id/containerLayout"
         android:layout_width="match_parent"
@@ -21,30 +26,54 @@
         <!-- Dynamically generated UI elements will be added here -->
     </LinearLayout>
 
-    <!-- Add/Edit button -->
-    <Button
-        android:id="@+id/editButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Edit" />
 
-    <!-- Save button (initially hidden) -->
-    <Button
-        android:id="@+id/saveButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Save"
-        android:visibility="gone" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="right"
+        android:orientation="horizontal">
 
-    <!-- Cancel button (initially hidden) -->
-    <Button
-        android:id="@+id/cancelButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cancel"
-        android:visibility="gone" />
+        <!-- Add/Edit button -->
+        <Button
+            android:id="@+id/editButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit"
+            android:layout_margin="10dp"
+            android:textColor="@color/white"
+            android:backgroundTint="#0Dffffff"
+            app:cornerRadius="10dp"
+            app:strokeColor="#1AFFFFFF"
+            app:strokeWidth="3dp"/>
 
+        <!-- Save button (initially hidden) -->
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:layout_margin="10dp"
+            android:textColor="@color/white"
+            android:backgroundTint="#0Dffffff"
+            app:cornerRadius="10dp"
+            app:strokeColor="#1AFFFFFF"
+            app:strokeWidth="3dp"
+            android:visibility="gone" />
 
-    <!-- Add your UI elements for displaying admin information here -->
+        <!-- Cancel button (initially hidden) -->
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:layout_margin="10dp"
+            android:textColor="@color/white"
+            android:backgroundTint="#0Dffffff"
+            app:cornerRadius="10dp"
+            app:strokeColor="#1AFFFFFF"
+            app:strokeWidth="3dp"
+            android:visibility="gone" />
+    </LinearLayout>
+
 
 </LinearLayout>

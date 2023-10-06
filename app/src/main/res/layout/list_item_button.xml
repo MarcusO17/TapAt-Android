@@ -6,18 +6,25 @@
     android:focusable="false"
     android:focusableInTouchMode="false"
     android:orientation="vertical"
-    android:paddingTop="10dp"
-    android:background="@color/black">
+    android:paddingTop="10dp">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#80ffffff"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="0dp"/>
 
     <Button
         android:id="@+id/buttonItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
-        android:focusable="false"
-        android:textSize="20sp"
+        android:focusable="true"
+        android:textSize="18sp"
         android:textColor="@color/white"
         android:backgroundTint="@android:color/transparent"
-        android:text="Button Text" />
+        android:text="Button Text"
+        android:layout_marginVertical="3dp"/>
 
 </LinearLayout>

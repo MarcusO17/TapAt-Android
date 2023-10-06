@@ -16,6 +16,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.tapat.R;
 
+import java.lang.reflect.Field;
+
 public class AdminCreate extends Fragment {
 
     private static final String ARG_FRAGMENT_TITLE = "fragmentTitle";
@@ -78,6 +80,7 @@ public class AdminCreate extends Fragment {
             idEditText.setHint("ID Number");
 
             Spinner programSpinner = new Spinner(requireContext());
+            handleSpinnerUI(programSpinner);
             ArrayAdapter<String> programAdapter = new ArrayAdapter<>(requireContext(),
                     android.R.layout.simple_spinner_item, programArray);
             programAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -114,12 +117,14 @@ public class AdminCreate extends Fragment {
 
             String[] lecturerIdArray = {"L1000", "L1001", "L1002", "L1003", "L1004", "L1005", "L1006", "L1007", "L1008", "L1009", "L1010"};
             Spinner lecturerIdSpinner = new Spinner(requireContext());
+            handleSpinnerUI(lecturerIdSpinner);
             ArrayAdapter<String> lecturerIdAdapter = new ArrayAdapter<>(requireContext(),
                     android.R.layout.simple_spinner_item, lecturerIdArray);
             lecturerIdAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             lecturerIdSpinner.setAdapter(lecturerIdAdapter);
 
             Spinner programSpinner = new Spinner(requireContext());
+            handleSpinnerUI(programSpinner);
             ArrayAdapter<String> programAdapter = new ArrayAdapter<>(requireContext(),
                     android.R.layout.simple_spinner_item, programArray);
             programAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -130,7 +135,26 @@ public class AdminCreate extends Fragment {
             containerLayout.addView(courseIdEditText);
             containerLayout.addView(lecturerIdSpinner);
             containerLayout.addView(programSpinner);
+
         }
+    }
+
+    private Spinner handleSpinnerUI(Spinner spin){
+        try {
+            Field popup = Spinner.class.getDeclaredField("mPopup");
+            popup.setAccessible(true);
+
+            // Get private mPopup member variable and try cast to ListPopupWindow
+            android.widget.ListPopupWindow popupWindow = (android.widget.ListPopupWindow) popup.get(spin);
+
+            // Set popupWindow height to 500px
+            popupWindow.setHeight(500);
+
+        }
+        catch (NoClassDefFoundError | ClassCastException | NoSuchFieldException | IllegalAccessException e) {
+            // silently fail...
+        }
+        return spin;
     }
 
     private void handleAddButtonClick() {
