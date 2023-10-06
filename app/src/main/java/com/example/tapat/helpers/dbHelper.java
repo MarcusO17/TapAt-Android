@@ -13,7 +13,7 @@ public class dbHelper extends SQLiteOpenHelper {
      ***********************************************************************************************
      */
     private static final String DATABASE_NAME = "TapAt.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
 
     static class Admin{
         private static final String TABLE_NAME = "admins";
@@ -95,7 +95,8 @@ public class dbHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + Lecturer.TABLE_NAME+ " ( "
                 + Lecturer.COL_1 + " TEXT PRIMARY KEY, "
                 + Lecturer.COL_2 + " TEXT NOT NULL,"
-                + Lecturer.COL_3 + " TEXT  NOT NULL"
+                + Lecturer.COL_3 + " TEXT  NOT NULL,"
+                + Lecturer.COL_4 + " TEXT  NOT NULL"
                 + " )");
 
         //Creating Student Table
@@ -124,7 +125,8 @@ public class dbHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + AttendanceStudents.TABLE_NAME+ " ( "
                 + AttendanceStudents.COL_1 + " TEXT PRIMARY KEY NOT NULL, "
                 + AttendanceStudents.COL_2 + " TEXT NOT NULL,"
-                + AttendanceStudents.COL_3 + " TEXT NOT NULL"
+                + AttendanceStudents.COL_3 + " TEXT NOT NULL,"
+                + AttendanceStudents.COL_4 + " TEXT NOT NULL"
                 + " )");
 
         //Creating CourseStudents Table
@@ -144,8 +146,8 @@ public class dbHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Attendance.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + AttendanceStudents.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + CourseStudents.TABLE_NAME);
-        insertAdmin(db);
         onCreate(db);
+        insertAdmin(db);
     }
 
 
@@ -173,7 +175,7 @@ public class dbHelper extends SQLiteOpenHelper {
         Cursor cursor;
 
         cursor = db.rawQuery("SELECT * FROM "+ table + " "+
-                                "where admin_email = ? and admin_password = ?",new String[] {email,password});
+                                "where email = ? and password = ?",new String[] {email,password});
 
         if(cursor!=null && cursor.getCount()>0) {
             return true;
@@ -186,12 +188,30 @@ public class dbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor;
 
-        cursor = db.rawQuery("SELECT admin_ID FROM "+ table + " WHERE admin_email = ?", new String[]{email});
+        cursor = db.rawQuery("SELECT ID FROM "+ table + " WHERE email = ?", new String[]{email});
         if(cursor!=null && cursor.moveToFirst()) {
-            return cursor.getString(cursor.getColumnIndex("admin_ID"));
+            return cursor.getString(cursor.getColumnIndex("ID"));
         }else{
             return "";
         }
+    }
+
+    public String userAuthorization(String email,String password){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String validSessionID = "";
+        db.execSQL("DROP VIEW IF EXISTS users");
+        db.execSQL("CREATE VIEW users AS SELECT admin_ID as ID, admin_email as email, admin_password as password, 'admin' as role FROM admins " +
+                        "UNION ALL " +
+                        "SELECT lecturer_ID as ID,lecturer_email as email, lecturer_password as password, 'lecturer' as role FROM lecturers");
+        if(userAuthControl("users",email,password)){
+            validSessionID = getIDfromEmail("users",email);
+            db.execSQL("DROP VIEW users");
+            return validSessionID;
+        }else{
+            return "";
+        }
+
+
     }
 
 

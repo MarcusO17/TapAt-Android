@@ -15,11 +15,8 @@ public class LoginActivity extends AppCompatActivity {
     EditText emailInputField;
     EditText passwordInputField;
     Button buttonLogin;
-
-    private final String lecturerId = "L1000";
-    private final String lecturerPassword = "abc";
-    private final String adminId = "A1000";
-    private final String adminPassword = "123";
+    dbHelper db;
+    String sessionID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,15 +33,17 @@ public class LoginActivity extends AppCompatActivity {
                 String enteredId = emailInputField.getText().toString();
                 String enteredPassword = passwordInputField.getText().toString();
                 /* change this to connect to the database when we implement database*/
-                if(enteredId.equals(lecturerId) && enteredPassword.equals(lecturerPassword)) {
-                    /// Navigate to the lecturer page
-                    Intent lecturerIntent = new Intent(LoginActivity.this, LecturerActivity.class);
-                    startActivity(lecturerIntent);
-                } else if (enteredId.equals(adminId) && enteredPassword.equals(adminPassword)) {
-                    // Navigate to the admin page
-                    Intent adminIntent = new Intent(LoginActivity.this, AdminActivity.class);
-                    startActivity(adminIntent);
-                } else {
+                 email = emailInputField.getText().toString();
+                 password = passwordInputField.getText().toString();
+                    /* if correct send the user to the homepage*/
+                sessionID  = db.userAuthorization(email,password);
+                if(sessionID.length()>0) {
+                    if(sessionID.startsWith("A")){
+                        Intent intent = new Intent(getApplicationContext(), LecturerHomepageActivity.class);
+                        intent.putExtra("sessionID",sessionID);
+                        startActivity(intent);
+                    }
+                }else {
                     /* toast to alert the user that the login has failed*/
                     String errorText = "";
                     if(emailInputField.getText().toString() == "") {
