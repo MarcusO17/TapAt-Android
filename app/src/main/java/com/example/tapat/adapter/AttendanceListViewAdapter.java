@@ -42,7 +42,7 @@ public class AttendanceListViewAdapter extends RecyclerView.Adapter<AttendanceLi
 
         holder.title.setText(attendanceList.get(position).getStudentName());
 
-        List<String> dropDownMenuItems = Arrays.asList("Late", "MC");
+        List<String> dropDownMenuItems = Arrays.asList("No Reason","Late", "MC");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 holder.itemView.getContext(),
                 android.R.layout.simple_spinner_item,

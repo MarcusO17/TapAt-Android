@@ -55,6 +55,7 @@ public class ClassListFragment extends Fragment implements CourseItemViewAdapter
             Log.d("ClassListFragment","course name: " + courseName);
             Log.d("ClassListFragment","course code: " + courseCode);
         }
+
         // use the coursename and coursecode to query the items here
         ClassListItem class1 = new ClassListItem("Class 1", "c1");
         ClassListItem class2 = new ClassListItem("Class 2", "c2");
@@ -78,9 +79,33 @@ public class ClassListFragment extends Fragment implements CourseItemViewAdapter
                 ClassListItem tempclass = new ClassListItem(className, classID);
                 classList.add(tempclass);
                 adapter.notifyDataSetChanged();
+
+                TextView title = getActivity().findViewById(R.id.fragmentholdertitle);
+                title.setText(classID + " - " + className);
+
+                Bundle args = new Bundle();
+                args.putString("class_id",classID);
+                args.putString("class_name",className);
+
+                AttendanceListFragment attendanceListFragment = new AttendanceListFragment();
+
+                attendanceListFragment.setArguments(args);
+
+                FragmentManager fragmentManager = getParentFragmentManager();
+                FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.classlistframelayout, attendanceListFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+
             }
         });
         return view;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        classList.clear();
     }
 
     @Override
@@ -92,13 +117,13 @@ public class ClassListFragment extends Fragment implements CourseItemViewAdapter
         args.putString("class_id",classList.get(position).getClassID());
         args.putString("class_name",classList.get(position).getClassName());
 
-        AttendanceListFragment attendanceListFragment = new AttendanceListFragment();
+        AttendanceViewFragment attendanceviewFragment = new AttendanceViewFragment();
 
-        attendanceListFragment.setArguments(args);
+        attendanceviewFragment.setArguments(args);
 
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.classlistframelayout, attendanceListFragment);
+        fragmentTransaction.replace(R.id.classlistframelayout, attendanceviewFragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }

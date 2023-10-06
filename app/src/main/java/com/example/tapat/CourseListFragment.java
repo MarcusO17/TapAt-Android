@@ -58,6 +58,11 @@ public class CourseListFragment extends Fragment implements CourseItemViewAdapte
 
         return view;
     }
+    @Override
+    public void onPause() {
+        super.onPause();
+        courseList.clear();
+    }
 
     @Override
     public void onClickListener(int position) {
