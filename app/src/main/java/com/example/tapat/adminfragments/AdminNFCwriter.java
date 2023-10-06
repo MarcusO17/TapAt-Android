@@ -8,6 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
+import android.view.Gravity;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -83,7 +88,23 @@ public class AdminNFCwriter extends Fragment {
         return view;
     }
 
-    private void writeNfc(String buttonName){
-        //nfc function
+    private void writeNfc(String buttonName) {
+        // Create and display the Toast message with the buttonName
+        Context context = requireContext(); // Get the context
+        Toast toast = Toast.makeText(context, buttonName, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
+
+        // Set a delay of 3 seconds to hide the Toast
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                toast.cancel(); // Hide the Toast after 3 seconds
+            }
+        }, 3000); // 3000 milliseconds = 3 seconds
+
+        // Your NFC writing logic can go here
+        // ...
     }
 }
