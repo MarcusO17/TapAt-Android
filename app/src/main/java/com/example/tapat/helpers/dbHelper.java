@@ -198,25 +198,46 @@ public class dbHelper extends SQLiteOpenHelper {
         }
     }
 
-    public String userAuthorization(String email,String password){
+    public String userAuthorization(String email,String password) {
         SQLiteDatabase db = this.getWritableDatabase();
         String validSessionID = "";
         try {
             db.execSQL("CREATE VIEW users AS SELECT admin_ID as ID, admin_email as email, admin_password as password, 'admin' as role FROM admins " +
                     "UNION ALL " +
                     "SELECT lecturer_ID as ID,lecturer_email as email, lecturer_password as password, 'lecturer' as role FROM lecturers");
-        }catch (SQLiteException e){}
-        if(userAuthControl("users",email,password)){
-            validSessionID = getIDfromEmail("users",email);
+        } catch (SQLiteException e) {
+        }
+        if (userAuthControl("users", email, password)) {
+            validSessionID = getIDfromEmail("users", email);
             db.execSQL("DROP VIEW users");
             return validSessionID;
-        }else{
+        } else {
             return "";
         }
 
 
     }
-
-
-
+    public String[] getStudentNames(){
+        String[] students = null;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT "+Student.COL_2+" FROM "+Student.TABLE_NAME,null);
+        //if cursor gets results
+        if(cursor.getCount()>0) {
+            students = new String[cursor.getCount()];
+            int counter = 0;
+            while(cursor.moveToNext()) {
+                students[counter] = cursor.getString(0);
+                counter++;
+            }
+        }
+        if(students == null) {
+            return new String[0];
+        }
+        return students;
+    }
 }
+
+
+
+
+
