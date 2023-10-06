@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
 import com.example.tapat.adapter.AttendanceListViewAdapter;
 import com.example.tapat.model.AttendanceListRowData;
 import com.example.tapat.model.Student;
@@ -23,6 +25,8 @@ public class AttendanceListFragment extends Fragment{
     List<AttendanceListRowData> attendanceList = new ArrayList<>();
     String className;
     String classID;
+    Button attendanceTakingButton;
+    Button submitButton;
 
     public AttendanceListFragment() {
         // Required empty public constructor
@@ -32,6 +36,26 @@ public class AttendanceListFragment extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_attendance_list, container, false);
+
+        attendanceTakingButton = view.findViewById(R.id.attendance_taking_button);
+        submitButton = view.findViewById(R.id.submit_attendance_button);
+
+        attendanceTakingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //go to NFC READING
+            }
+        });
+
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //send to database
+
+                //go exit this page when submitting
+                getActivity().onBackPressed();
+            }
+        });
 
         RecyclerView attendanceListRecyclerView = view.findViewById(R.id.attendancelistrecyclerview);
         LinearLayoutManager attendanceListLayout = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
