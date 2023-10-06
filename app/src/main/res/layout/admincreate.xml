@@ -1,0 +1,43 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="right"
+    android:background="#343541">
+
+    <!-- Create Title -->
+    <TextView
+        android:id="@+id/createTitleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Add Fragment Title"
+        android:textSize="20sp"
+        android:textColor="@color/white"/>
+
+    <!-- Container for UI elements -->
+    <LinearLayout
+        android:id="@+id/containerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Dynamically generated UI elements will be added here -->
+
+    </LinearLayout>
+
+    <!-- Add button -->
+    <Button
+        android:id="@+id/addButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add"
+        android:layout_margin="10dp"
+        android:textColor="@color/white"
+        android:backgroundTint="#0Dffffff"
+        app:cornerRadius="10dp"
+        app:strokeColor="#1AFFFFFF"
+        app:strokeWidth="3dp"/>
+
+</LinearLayout>

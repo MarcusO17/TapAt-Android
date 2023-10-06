@@ -1,0 +1,17 @@
+<!-- fragment_admin_nfc_reader.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/textViewNFCReader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AdminNFCReader"
+        android:textSize="18sp" />
+
+    <!-- Add NFC Reader related UI components here -->
+
+</LinearLayout>

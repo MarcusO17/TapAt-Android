@@ -1,0 +1,55 @@
+<!-- fragment_admin_list.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#343541">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Fragment Title"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+    <!-- Search Bar -->
+    <EditText
+        android:id="@+id/searchEditText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:hint="Search"
+        android:layout_margin="10dp"
+        android:textColor="@color/white"
+        android:textColorHint="#66ffffff"
+        android:inputType="text" />
+
+    <!-- RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7"
+        android:layout_margin="10dp"
+        android:background="#08ffffff"/>
+
+    <!-- Add Button -->
+    <Button
+        android:id="@+id/addButton"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_margin="10dp"
+        android:text="Add"
+        android:textColor="@color/white"
+        android:backgroundTint="#0Dffffff"
+        app:cornerRadius="20dp"
+        app:strokeColor="#1AFFFFFF"
+        app:strokeWidth="3dp"/>
+
+</LinearLayout>
