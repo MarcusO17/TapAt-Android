@@ -42,7 +42,10 @@ public class AttendanceViewAdapter extends RecyclerView.Adapter<AttendanceViewAd
     public int getItemCount() {
         return attendanceList.size();
     }
-
+    public void filteredList(List<AttendanceListRowData> list) {
+        attendanceList = list;
+        notifyDataSetChanged();
+    }
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView title;
         TextView reasonTextView;

@@ -6,10 +6,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.example.tapat.adapter.AttendanceViewAdapter;
 import com.example.tapat.model.AttendanceListRowData;
@@ -24,6 +27,8 @@ public class AttendanceViewFragment extends Fragment {
     List<AttendanceListRowData> attendanceList = new ArrayList<>();
     String className;
     String classID;
+    AttendanceViewAdapter attendanceListAdapter;
+    EditText searchbar;
 
     public AttendanceViewFragment() {
         // Required empty public constructor
@@ -39,6 +44,25 @@ public class AttendanceViewFragment extends Fragment {
         attendanceListRecyclerView.setLayoutManager(attendanceListLayout);
 
         Bundle args = getArguments();
+
+        searchbar = view.findViewById(R.id.attendanceviewsearchbar);
+
+        searchbar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                filter(editable.toString());
+            }
+        });
 
 
         if (args != null) {
@@ -64,11 +88,21 @@ public class AttendanceViewFragment extends Fragment {
         attendanceList.add(row4);
 
 
-        AttendanceViewAdapter attendanceListAdapter = new AttendanceViewAdapter(attendanceList);
+        attendanceListAdapter = new AttendanceViewAdapter(attendanceList);
 
         attendanceListRecyclerView.setAdapter(attendanceListAdapter);
 
         return view;
+
+    }
+    private void filter(String text){
+        ArrayList<AttendanceListRowData> filteredList= new ArrayList<>();
+        for (AttendanceListRowData item: attendanceList) {
+            if (item.getStudentName().toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(item);
+            }
+        }
+        attendanceListAdapter.filteredList(filteredList);
 
     }
 }

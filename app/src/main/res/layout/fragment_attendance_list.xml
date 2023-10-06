@@ -28,6 +28,7 @@
         android:id="@+id/attendancelistsearchbar"
         android:padding="10dp"
         android:background="@color/white"
+        android:hint="Search"
         android:layout_below="@id/attendance_taking_button"/>
 
     <!-- TODO: Update blank fragment layout -->
