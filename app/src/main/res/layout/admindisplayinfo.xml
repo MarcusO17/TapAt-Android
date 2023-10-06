@@ -13,14 +13,37 @@
         android:text="Fragment Title"
         android:textSize="18sp" />
 
-    <!-- Display Button Name -->
-    <TextView
-        android:id="@+id/displayButtonNameTextView"
+    <LinearLayout
+        android:id="@+id/containerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Button Name"
-        android:textSize="16sp" />
+        android:orientation="vertical">
+        <!-- Dynamically generated UI elements will be added here -->
+    </LinearLayout>
+
+    <!-- Add/Edit button -->
+    <Button
+        android:id="@+id/editButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit" />
+
+    <!-- Save button (initially hidden) -->
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:visibility="gone" />
+
+    <!-- Cancel button (initially hidden) -->
+    <Button
+        android:id="@+id/cancelButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:visibility="gone" />
+
 
     <!-- Add your UI elements for displaying admin information here -->
 
