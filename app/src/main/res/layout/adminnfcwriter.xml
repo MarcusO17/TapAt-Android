@@ -1,0 +1,39 @@
+<!-- fragment_admin_nfc_writer.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#343541">
+
+    <TextView
+        android:id="@+id/textViewNFCWriter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="AdminNFCWriter"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+    <!-- Search Bar -->
+    <EditText
+        android:id="@+id/searchEditText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:hint="Search"
+        android:layout_margin="10dp"
+        android:textColor="@color/white"
+        android:textColorHint="#66ffffff"
+        android:inputType="text"/>
+
+    <!-- RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        android:layout_margin="10dp"
+        android:background="#08ffffff"/>
+
+</LinearLayout>

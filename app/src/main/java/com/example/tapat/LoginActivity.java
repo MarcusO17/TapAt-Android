@@ -1,11 +1,9 @@
 package com.example.tapat;
 
-
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.tapat.helpers.dbHelper;
 
-import android.content.Intent;
 import android.graphics.Color;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,52 +13,48 @@ import android.widget.Toast;
 public class LoginActivity extends AppCompatActivity {
 
     EditText emailInputField;
-    String email;
-    String password;
     EditText passwordInputField;
     Button buttonLogin;
-    dbHelper db;
-    boolean isValid;
-    String sessionID;
+
+    private final String lecturerId = "L1000";
+    private final String lecturerPassword = "abc";
+    private final String adminId = "A1000";
+    private final String adminPassword = "123";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
 
-        emailInputField = (EditText) findViewById(R.id.loginEmailInput);
+        emailInputField = (EditText) findViewById(R.id.loginIDInput);
         passwordInputField = (EditText) findViewById(R.id.loginPasswordInput);
         buttonLogin = (Button) findViewById(R.id.buttonLogin);
-        db = new dbHelper(this);
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
+        @Override
             public void onClick(View view) {
+                String enteredId = emailInputField.getText().toString();
+                String enteredPassword = passwordInputField.getText().toString();
                 /* change this to connect to the database when we implement database*/
-                 email = emailInputField.getText().toString();
-                 password = passwordInputField.getText().toString();
-                    /* if correct send the user to the homepage*/
-                 isValid = db.userAuthControl("admins",email,password);
-                if(isValid) {
-                    sessionID = db.getIDfromEmail("admins",email);
-                    if(isValid){
-                        Intent intent = new Intent(getApplicationContext(), LecturerHomepageActivity.class);
-                        intent.putExtra("sessionID",sessionID);
-                        startActivity(intent);
-                    }
-                }else {
+                if(enteredId.equals(lecturerId) && enteredPassword.equals(lecturerPassword)) {
+                    /// Navigate to the lecturer page
+                    Intent lecturerIntent = new Intent(LoginActivity.this, LecturerActivity.class);
+                    startActivity(lecturerIntent);
+                } else if (enteredId.equals(adminId) && enteredPassword.equals(adminPassword)) {
+                    // Navigate to the admin page
+                    Intent adminIntent = new Intent(LoginActivity.this, AdminActivity.class);
+                    startActivity(adminIntent);
+                } else {
                     /* toast to alert the user that the login has failed*/
-                    String errorText = "Wrong Credentials";
-                    if(emailInputField.getText().toString().equals("")) {
-                        errorText = "Login Failed: Empty Credentials";
-                    } else if (passwordInputField.getText().toString().equals("")) {
-                        errorText = "Login Failed: Empty Password";
+                    String errorText = "";
+                    if(emailInputField.getText().toString() == "") {
+                        errorText = "Login Failed: Invalid Credentials";
+                    } else if (passwordInputField.getText().toString()=="") {
+                        errorText = "Login Failed: Invalid Password";
                     }
-                    emailInputField.setText("");
-                    passwordInputField.setText("");
                     Toast loginToastError = Toast.makeText(view.getContext(), errorText, Toast.LENGTH_SHORT);
                     View loginToastView = loginToastError.getView();
-                    //loginToastView.setBackgroundColor(Color.parseColor("#ffc6c4"));
+                    loginToastView.setBackgroundColor(Color.parseColor("#ffc6c4"));
 
                     loginToastError.show();
                 }
