@@ -6,11 +6,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.tapat.adapter.AttendanceListViewAdapter;
 import com.example.tapat.model.AttendanceListRowData;
@@ -27,6 +30,8 @@ public class AttendanceListFragment extends Fragment{
     String classID;
     Button attendanceTakingButton;
     Button submitButton;
+    EditText searchBar;
+    AttendanceListViewAdapter attendanceListAdapter;
 
     public AttendanceListFragment() {
         // Required empty public constructor
@@ -39,6 +44,24 @@ public class AttendanceListFragment extends Fragment{
 
         attendanceTakingButton = view.findViewById(R.id.attendance_taking_button);
         submitButton = view.findViewById(R.id.submit_attendance_button);
+        searchBar = view.findViewById(R.id.attendancelistsearchbar);
+
+        searchBar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                filter(editable.toString());
+            }
+        });
 
         attendanceTakingButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,10 +110,21 @@ public class AttendanceListFragment extends Fragment{
         attendanceList.add(row4);
 
 
-        AttendanceListViewAdapter attendanceListAdapter = new AttendanceListViewAdapter(attendanceList);
+        attendanceListAdapter = new AttendanceListViewAdapter(attendanceList);
 
         attendanceListRecyclerView.setAdapter(attendanceListAdapter);
 
         return view;
     }
+    private void filter(String text){
+        ArrayList<AttendanceListRowData> filteredList= new ArrayList<>();
+        for (AttendanceListRowData item: attendanceList) {
+            if (item.getStudentName().toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(item);
+            }
+        }
+        attendanceListAdapter.filteredList(filteredList);
+
+    }
+
 }

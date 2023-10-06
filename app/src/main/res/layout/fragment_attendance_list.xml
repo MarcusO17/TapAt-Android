@@ -22,13 +22,21 @@
         android:layout_toLeftOf="@+id/attendance_taking_button"
         />
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:id="@+id/attendancelistsearchbar"
+        android:padding="10dp"
+        android:background="@color/white"
+        android:layout_below="@id/attendance_taking_button"/>
+
     <!-- TODO: Update blank fragment layout -->
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/attendancelistrecyclerview"
         android:background="@color/white"
-        android:layout_below="@id/attendance_taking_button"
+        android:layout_below="@id/attendancelistsearchbar"
         />
 
 

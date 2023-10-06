@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.tapat.AttendanceListFragment;
 import com.example.tapat.R;
 import com.example.tapat.model.AttendanceListRowData;
 import com.example.tapat.model.ClassListItem;
@@ -55,6 +56,10 @@ public class AttendanceListViewAdapter extends RecyclerView.Adapter<AttendanceLi
     @Override
     public int getItemCount() {
         return attendanceList.size();
+    }
+    public void filteredList(List<AttendanceListRowData> list) {
+        attendanceList = list;
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
