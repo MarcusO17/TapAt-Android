@@ -116,10 +116,13 @@ public class AdminList extends Fragment {
         // For example, if fragmentTitle is "Students," return the students array
         // Similarly for "Lecturer" and "Courses"
         if ("Student".equals(fragmentTitle)) {
+            //find name of students
             return new String[]{"Abu", "Ali", "Chisa", "Murta", "Marci", "John", "Baboon", "Dill", "Chloe", "Furn"};
         } else if ("Lecturer".equals(fragmentTitle)) {
+            //find name for lecturer
             return new String[]{"Muka", "Ghili"};
         } else if ("Course".equals(fragmentTitle)) {
+            //string process
             return new String[]{"AG1001: Android Development", "AG1003: Software Engineering"};
         } else {
             // Handle other fragment titles or return an empty array as needed

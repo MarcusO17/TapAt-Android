@@ -140,6 +140,7 @@ public class AdminDisplayInfo extends Fragment {
             }
         } else if ("Course".equals(fragmentTitle)) {
             String[] courseData = getCourseData(buttonName);
+            //query
             String[] lecturerIdArray = {"L1000", "L1001", "L1002", "L1003", "L1004", "L1005", "L1006", "L1007", "L1008", "L1009", "L1010"};
             if (courseData != null) {
                 EditText courseNameEditText = createEditText("Course Name");
@@ -239,6 +240,7 @@ public class AdminDisplayInfo extends Fragment {
 
     //getting data
     private String[] getStudentData(String buttonName) {
+        //query single row
         String[][] studentData = {
                 {"Ali","P21013251","BCSCUN"},
                 {"Abu","P21013252","MCS03"},
@@ -262,6 +264,7 @@ public class AdminDisplayInfo extends Fragment {
     }
 
     private String[] getLecturerData(String buttonName) {
+        //query single row
         String[][] lecturerData = {
                 {"Muka","L1000","Muka@lecturer.college.edu.my","abc"},
                 {"Ghili","L1001","Ghilli@lecturer.college.edu.my","135"}
@@ -277,6 +280,7 @@ public class AdminDisplayInfo extends Fragment {
     }
 
     private String[] getCourseData(String buttonName) {
+        //query single row
         String[][] courseData = {
                 {"Android Development","AG1001","L1000","BCSCUN"},
                 {"Software Engineering","AG1003","L1001","DCS"}
@@ -294,6 +298,7 @@ public class AdminDisplayInfo extends Fragment {
 
     // Method to save Data(sql query)
     private void saveData() {
+
     }
 
     // Helper methods to create UI elements

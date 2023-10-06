@@ -115,6 +115,7 @@ public class AdminCreate extends Fragment {
             EditText courseIdEditText = new EditText(requireContext());
             courseIdEditText.setHint("Course ID");
 
+            //pull down the lecturer_id as array
             String[] lecturerIdArray = {"L1000", "L1001", "L1002", "L1003", "L1004", "L1005", "L1006", "L1007", "L1008", "L1009", "L1010"};
             Spinner lecturerIdSpinner = new Spinner(requireContext());
             handleSpinnerUI(lecturerIdSpinner);
