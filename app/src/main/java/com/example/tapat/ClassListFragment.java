@@ -107,6 +107,12 @@ public class ClassListFragment extends Fragment implements CourseItemViewAdapter
         super.onPause();
         classList.clear();
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        TextView title = getActivity().findViewById(R.id.fragmentholdertitle);
+        title.setText("Class List");
+    }
 
     @Override
     public void onClickListener(int position) {

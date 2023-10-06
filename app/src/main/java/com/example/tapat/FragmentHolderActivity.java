@@ -17,13 +17,14 @@ import com.google.android.material.navigation.NavigationView;
 
 import org.w3c.dom.Text;
 
+import java.util.Stack;
+
 public class FragmentHolderActivity extends AppCompatActivity {
 
     NavigationView sideNavigationView;
     DrawerLayout sideNavigationLayout;
     ImageButton sideNavigationButton;
     ImageButton backButton;
-
     @Override
     public void onBackPressed() {
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -50,7 +51,7 @@ public class FragmentHolderActivity extends AppCompatActivity {
         TextView title = (TextView) findViewById(R.id.fragmentholdertitle);
         TextView actionBarTitle = (TextView) findViewById(R.id.titleactionbar);
         title.setText("Course List");
-        actionBarTitle.setText("Homepage");
+        actionBarTitle.setText("");
 
         CourseListFragment courseListFragment = new CourseListFragment();
 

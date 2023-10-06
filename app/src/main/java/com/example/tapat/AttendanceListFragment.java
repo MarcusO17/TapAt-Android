@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.tapat.adapter.AttendanceListViewAdapter;
 import com.example.tapat.model.AttendanceListRowData;
@@ -116,6 +117,13 @@ public class AttendanceListFragment extends Fragment{
 
         return view;
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        TextView title = getActivity().findViewById(R.id.fragmentholdertitle);
+        title.setText("Attendance List");
+    }
+
     private void filter(String text){
         ArrayList<AttendanceListRowData> filteredList= new ArrayList<>();
         for (AttendanceListRowData item: attendanceList) {

@@ -65,6 +65,13 @@ public class CourseListFragment extends Fragment implements CourseItemViewAdapte
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        TextView title = getActivity().findViewById(R.id.fragmentholdertitle);
+        title.setText("Course List");
+    }
+
+    @Override
     public void onClickListener(int position) {
 
         // set title in fragment holder
