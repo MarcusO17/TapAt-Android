@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class dbHelper extends SQLiteOpenHelper {
@@ -13,7 +14,7 @@ public class dbHelper extends SQLiteOpenHelper {
      ***********************************************************************************************
      */
     private static final String DATABASE_NAME = "TapAt.db";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 6;
 
     static class Admin{
         private static final String TABLE_NAME = "admins";
@@ -146,6 +147,7 @@ public class dbHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Attendance.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + AttendanceStudents.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + CourseStudents.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS users");
         onCreate(db);
         insertAdmin(db);
     }
@@ -199,10 +201,11 @@ public class dbHelper extends SQLiteOpenHelper {
     public String userAuthorization(String email,String password){
         SQLiteDatabase db = this.getWritableDatabase();
         String validSessionID = "";
-        db.execSQL("DROP VIEW IF EXISTS users");
-        db.execSQL("CREATE VIEW users AS SELECT admin_ID as ID, admin_email as email, admin_password as password, 'admin' as role FROM admins " +
-                        "UNION ALL " +
-                        "SELECT lecturer_ID as ID,lecturer_email as email, lecturer_password as password, 'lecturer' as role FROM lecturers");
+        try {
+            db.execSQL("CREATE VIEW users AS SELECT admin_ID as ID, admin_email as email, admin_password as password, 'admin' as role FROM admins " +
+                    "UNION ALL " +
+                    "SELECT lecturer_ID as ID,lecturer_email as email, lecturer_password as password, 'lecturer' as role FROM lecturers");
+        }catch (SQLiteException e){}
         if(userAuthControl("users",email,password)){
             validSessionID = getIDfromEmail("users",email);
             db.execSQL("DROP VIEW users");
