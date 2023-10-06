@@ -1,4 +1,4 @@
-package com.example.tapat;
+package com.example.tapat.adminfragments;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,9 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.tapat.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
