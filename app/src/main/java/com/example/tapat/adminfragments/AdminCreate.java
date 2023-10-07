@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -122,17 +123,22 @@ public class AdminCreate extends Fragment {
 
             //pull down the lecturer_id as array
             String[] lecturerIdArray = db.getID("Lecturer");
+
             Spinner lecturerIdSpinner = new Spinner(requireContext());
+
             handleSpinnerUI(lecturerIdSpinner);
             ArrayAdapter<String> lecturerIdAdapter = new ArrayAdapter<>(requireContext(),
-                    android.R.layout.simple_spinner_item, lecturerIdArray);
+                                                    android.R.layout.simple_spinner_item, lecturerIdArray);
+
             lecturerIdAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             lecturerIdSpinner.setAdapter(lecturerIdAdapter);
 
             Spinner programSpinner = new Spinner(requireContext());
+
             handleSpinnerUI(programSpinner);
             ArrayAdapter<String> programAdapter = new ArrayAdapter<>(requireContext(),
-                    android.R.layout.simple_spinner_item, programArray);
+                                                     android.R.layout.simple_spinner_item, programArray);
+
             programAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             programSpinner.setAdapter(programAdapter);
 
@@ -169,8 +175,15 @@ public class AdminCreate extends Fragment {
             String name = ((EditText) containerLayout.getChildAt(0)).getText().toString();
             String id = ((EditText) containerLayout.getChildAt(1)).getText().toString();
             String program = ((Spinner) containerLayout.getChildAt(2)).getSelectedItem().toString();
-            String[] studentData = {name, id, program};
+            String[] studentData = {id, name, program};
+            //Error Handling
+            if(studentData[0].equals("") || studentData[1].equals("")){
+                Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
+            }else if(db.insertStudentData(studentData)) {
             // Add studentData to the student array
+                Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
+            }
+
 
             replaceFragment(AdminList.newInstance("Student"));
         } else if ("Lecturer".equals(fragmentTitle)) {
@@ -178,7 +191,7 @@ public class AdminCreate extends Fragment {
             String id = ((EditText) containerLayout.getChildAt(1)).getText().toString();
             String email = ((EditText) containerLayout.getChildAt(2)).getText().toString();
             String password = ((EditText) containerLayout.getChildAt(3)).getText().toString();
-            String[] lecturerData = {name, id, email, password};
+            String[] lecturerData = { id,name, email, password};
             // Add lecturerData to the lecturer array
 
             replaceFragment(AdminList.newInstance("Lecturer"));

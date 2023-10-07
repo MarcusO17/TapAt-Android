@@ -9,7 +9,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.SimpleTimeZone;
 
 public class dbHelper extends SQLiteOpenHelper {
 
@@ -310,7 +309,15 @@ public class dbHelper extends SQLiteOpenHelper {
         }
         return idList.toArray(new String[]{});
     }
-
+    public boolean insertStudentData(String[] student){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(Student.COL_1,student[0]); //Insert Student ID
+        cv.put(Student.COL_2,student[1]); //Insert Student Name
+        cv.put(Student.COL_3,student[2]); //Insert Student Programme
+        long result = db.insert(Student.TABLE_NAME,null,cv);
+        return result != -1;
+    }
 }
 
 
