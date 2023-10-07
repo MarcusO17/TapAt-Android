@@ -341,8 +341,45 @@ public class dbHelper extends SQLiteOpenHelper {
         return result != -1;
     }
 
+    public String[] getSingularData(String className, String buttonName){
+        List<String> rowInfo = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        switch(className){
+            case "Student":{
+                cursor = db.rawQuery("SELECT * FROM students where student_name = ? ", new String[] {buttonName});
+                if(cursor!=null && cursor.moveToFirst())
+                    for(int i= 0; i < cursor.getColumnCount(); i++)
+                        rowInfo.add(cursor.getString(i));
+
+                break;
+            }
+            case "Lecturer":{
+                cursor = db.rawQuery("SELECT * FROM lecturers where lecturer_name = ? ", new String[] {buttonName});
+                if(cursor!=null && cursor.moveToFirst()){
+                    for(int i= 0; i < cursor.getColumnCount(); i++)
+                        rowInfo.add(cursor.getString(i));
+                }
+                break;
+            }
+            case "Course":{
+                buttonName = buttonName.split(":")[0].trim();
+                cursor = db.rawQuery("SELECT * FROM courses where course_ID = ? ", new String[] {buttonName});
+                if(cursor!=null && cursor.moveToFirst())
+                    for(int i= 0; i < cursor.getColumnCount(); i++)
+                        rowInfo.add(cursor.getString(i));
+                }
+                break;
+            default:{
+                return new String[]{};
+            }
+        }
+        return rowInfo.toArray(new String[]{});
+    }
 
 }
+
+
 
 
 

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.tapat.R;
+import com.example.tapat.helpers.dbHelper;
 
 import java.lang.reflect.Field;
 
@@ -30,6 +31,7 @@ public class AdminDisplayInfo extends Fragment {
     private Button editButton;
     private Button saveButton;
     private Button cancelButton;
+    private dbHelper db;
 
     public AdminDisplayInfo() {
         // Required empty public constructor
@@ -48,6 +50,9 @@ public class AdminDisplayInfo extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.admindisplayinfo, container, false);
+
+        //Init DB
+        db = new dbHelper(getContext());
 
         // Retrieve the buttonName and fragmentTitle from arguments
         fragmentTitle = getArguments().getString(ARG_FRAGMENT_TITLE);
@@ -105,7 +110,7 @@ public class AdminDisplayInfo extends Fragment {
         containerLayout.removeAllViews(); // Clear any existing UI elements
 
         if ("Student".equals(fragmentTitle)) {
-            String[] studentData = getStudentData(buttonName);
+            String[] studentData = db.getSingularData("Student",buttonName);
             if (studentData != null) {
                 EditText nameEditText = createEditText("Name");
                 EditText idEditText = createEditText("ID Number");
@@ -121,7 +126,7 @@ public class AdminDisplayInfo extends Fragment {
                 containerLayout.addView(programSpinner);
             }
         } else if ("Lecturer".equals(fragmentTitle)) {
-            String[] lecturerData = getLecturerData(buttonName);
+            String[] lecturerData = db.getSingularData("Lecturer",buttonName);
             if (lecturerData != null) {
                 EditText nameEditText = createEditText("Name");
                 EditText idEditText = createEditText("ID Number");
@@ -139,9 +144,9 @@ public class AdminDisplayInfo extends Fragment {
                 containerLayout.addView(passwordEditText);
             }
         } else if ("Course".equals(fragmentTitle)) {
-            String[] courseData = getCourseData(buttonName);
+            String[] courseData = db.getSingularData("Course",buttonName);
             //query
-            String[] lecturerIdArray = {"L1000", "L1001", "L1002", "L1003", "L1004", "L1005", "L1006", "L1007", "L1008", "L1009", "L1010"};
+            String[] lecturerIdArray = db.getID("Lecturer");
             if (courseData != null) {
                 EditText courseNameEditText = createEditText("Course Name");
                 EditText courseIdEditText = createEditText("Course ID");
