@@ -184,24 +184,37 @@ public class AdminCreate extends Fragment {
                 Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
             }
 
-
             replaceFragment(AdminList.newInstance("Student"));
+
         } else if ("Lecturer".equals(fragmentTitle)) {
             String name = ((EditText) containerLayout.getChildAt(0)).getText().toString();
             String id = ((EditText) containerLayout.getChildAt(1)).getText().toString();
             String email = ((EditText) containerLayout.getChildAt(2)).getText().toString();
             String password = ((EditText) containerLayout.getChildAt(3)).getText().toString();
             String[] lecturerData = { id,name, email, password};
-            // Add lecturerData to the lecturer array
+            if(lecturerData[0].equals("") || lecturerData[1].equals("")){
+                Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
+            }else if(db.insertLecturerData(lecturerData)) {
+                // Add studentData to the student array
+                Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
+            }
 
             replaceFragment(AdminList.newInstance("Lecturer"));
+
+
         } else if ("Course".equals(fragmentTitle)) {
-            String coursename = ((EditText) containerLayout.getChildAt(0)).getText().toString();
-            String courseid = ((EditText) containerLayout.getChildAt(1)).getText().toString();
-            String lecturerid = ((Spinner) containerLayout.getChildAt(2)).getSelectedItem().toString();
+            String courseName = ((EditText) containerLayout.getChildAt(0)).getText().toString();
+            String courseID= ((EditText) containerLayout.getChildAt(1)).getText().toString();
+            String lecturerID = ((Spinner) containerLayout.getChildAt(2)).getSelectedItem().toString();
             String program = ((Spinner) containerLayout.getChildAt(3)).getSelectedItem().toString();
-            String[] courseData = {coursename, courseid, lecturerid, program};
+            String[] courseData = {courseID,lecturerID,courseName,program};
             // Handle adding a course (if needed)
+            if(courseData[0].equals("") || courseData[2].equals("")){
+                Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
+            }else if(db.insertCourseData(courseData)) {
+                // Add studentData to the student array
+                Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
+            }
 
             replaceFragment(AdminList.newInstance("Course"));
         }

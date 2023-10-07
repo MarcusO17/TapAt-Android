@@ -318,6 +318,30 @@ public class dbHelper extends SQLiteOpenHelper {
         long result = db.insert(Student.TABLE_NAME,null,cv);
         return result != -1;
     }
+
+    public boolean insertLecturerData(String[] lecturer){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(Lecturer.COL_1,lecturer[0]); //Insert Lecturer ID
+        cv.put(Lecturer.COL_2,lecturer[1]); //Insert Lecturer Name
+        cv.put(Lecturer.COL_3,lecturer[2]); //Insert Lecturer Email
+        cv.put(Lecturer.COL_4,lecturer[3]);//Insert Lecturer Password
+        long result = db.insert(Lecturer.TABLE_NAME,null,cv);
+        return result != -1;
+    }
+
+    public boolean insertCourseData(String[] course){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(Course.COL_1,course[0]); //Insert Lecturer ID
+        cv.put(Course.COL_2,course[1]); //Insert Lecturer Name
+        cv.put(Course.COL_3,course[2]); //Insert Lecturer Email
+        cv.put(Course.COL_4,course[3]);//Insert Lecturer Password
+        long result = db.insert(Course.TABLE_NAME,null,cv);
+        return result != -1;
+    }
+
+
 }
 
 
