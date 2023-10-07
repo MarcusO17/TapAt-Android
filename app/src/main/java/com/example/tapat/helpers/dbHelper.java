@@ -18,7 +18,7 @@ public class dbHelper extends SQLiteOpenHelper {
      ***********************************************************************************************
      */
     private static final String DATABASE_NAME = "TapAt.db";
-    private static final int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 8;
 
     static class Admin{
         private static final String TABLE_NAME = "admins";
@@ -190,6 +190,7 @@ public class dbHelper extends SQLiteOpenHelper {
                                 "where email = ? and password = ?",new String[] {email,password});
 
         if(cursor!=null && cursor.getCount()>0) {
+            cursor.close();
             return true;
         }else{
             return false;
@@ -269,6 +270,45 @@ public class dbHelper extends SQLiteOpenHelper {
             }
         //if cursor gets results
         return namesList.toArray(new String[]{});
+    }
+
+    public String[] getID(String className){
+        List<String> idList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        switch(className){
+            case "Student":{
+                cursor = db.rawQuery("SELECT student_ID FROM students", null);
+                if(cursor!=null){
+                    while(cursor.moveToNext()){
+                        idList.add(cursor.getString(cursor.getColumnIndex("student_ID")));
+                    }
+                }
+                break;
+            }
+            case "Lecturer":{
+                cursor = db.rawQuery("SELECT lecturer_ID FROM lecturers", null);
+                if(cursor!=null){
+                    while(cursor.moveToNext()){
+                        idList.add(cursor.getString(cursor.getColumnIndex("lecturer_ID")));
+                    }
+                }
+                break;
+            }
+            case "Course":{
+                cursor = db.rawQuery("SELECT course_ID FROM students", null);
+                if(cursor!=null){
+                    while(cursor.moveToNext()){
+                        idList.add(cursor.getString(cursor.getColumnIndex("course_ID")));
+                    }
+                }
+                break;
+            }
+            default:{
+                return new String[]{};
+            }
+        }
+        return idList.toArray(new String[]{});
     }
 
 }

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.tapat.R;
+import com.example.tapat.helpers.dbHelper;
 
 import java.lang.reflect.Field;
 
@@ -25,6 +26,8 @@ public class AdminCreate extends Fragment {
     private String fragmentTitle;
     private LinearLayout containerLayout;
     private Button addButton;
+
+    private dbHelper db;
     private static final String[] programArray = {"BCSCUN", "DCS", "MCS03", "BCTCUN"};
 
     public AdminCreate() {
@@ -43,6 +46,8 @@ public class AdminCreate extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.admincreate, container, false);
+        //Init DB
+        db = new dbHelper(getContext());
 
         // Retrieve the fragment title from arguments
         fragmentTitle = getArguments().getString(ARG_FRAGMENT_TITLE);
@@ -116,7 +121,7 @@ public class AdminCreate extends Fragment {
             courseIdEditText.setHint("Course ID");
 
             //pull down the lecturer_id as array
-            String[] lecturerIdArray = {"L1000", "L1001", "L1002", "L1003", "L1004", "L1005", "L1006", "L1007", "L1008", "L1009", "L1010"};
+            String[] lecturerIdArray = db.getID("Lecturer");
             Spinner lecturerIdSpinner = new Spinner(requireContext());
             handleSpinnerUI(lecturerIdSpinner);
             ArrayAdapter<String> lecturerIdAdapter = new ArrayAdapter<>(requireContext(),
