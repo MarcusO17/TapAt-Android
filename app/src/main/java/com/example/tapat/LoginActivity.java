@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,23 +16,35 @@ public class LoginActivity extends AppCompatActivity {
     EditText emailInputField;
     EditText passwordInputField;
     Button buttonLogin;
+    dbHelper db;
+    String sessionID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
 
-        emailInputField = (EditText) findViewById(R.id.loginEmailInput);
+        emailInputField = (EditText) findViewById(R.id.loginIDInput);
         passwordInputField = (EditText) findViewById(R.id.loginPasswordInput);
         buttonLogin = (Button) findViewById(R.id.buttonLogin);
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
+        @Override
             public void onClick(View view) {
+                String enteredId = emailInputField.getText().toString();
+                String enteredPassword = passwordInputField.getText().toString();
                 /* change this to connect to the database when we implement database*/
-
-                Intent intent = new Intent(LoginActivity.this, FragmentHolderActivity.class);
-                startActivity(intent);
+                 email = emailInputField.getText().toString();
+                 password = passwordInputField.getText().toString();
+                    /* if correct send the user to the homepage*/
+                sessionID  = db.userAuthorization(email,password);
+                if(sessionID.length()>0) {
+                    if(sessionID.startsWith("A")){
+                        Intent intent = new Intent(getApplicationContext(), LecturerHomepageActivity.class);
+                        intent.putExtra("sessionID",sessionID);
+                        startActivity(intent);
+                    }
+                }else {
                     /* toast to alert the user that the login has failed*/
                 }
         });

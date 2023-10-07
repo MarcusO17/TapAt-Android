@@ -24,6 +24,15 @@
         <activity
             android:name=".LecturerHomepageActivity"
             android:exported="false" />
+       <activity
+            android:name=".StudentListAdapter"
+            android:exported="false" />
+        <activity
+            android:name=".AdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LecturerActivity"
+            android:exported="false"></activity>
         <activity
             android:name=".LoginActivity"
             android:exported="true">

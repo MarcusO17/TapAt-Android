@@ -1,0 +1,144 @@
+<!-- adminsidemenu.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sideMenu"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:minWidth="240dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/headSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="#202123">
+
+        <TextView
+            android:id="@+id/adminNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Admin Name"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#ffffff"/>
+
+        <TextView
+            android:id="@+id/adminRoleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Admin"
+            android:textSize="14sp"
+            android:textColor="#ffffff"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/navigationSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="7"
+        android:orientation="vertical"
+        android:background="#343541">
+
+        <!-- Dashboard -->
+        <Button
+            android:id="@+id/dashboardButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/transparent"
+            android:layout_margin="5dp"
+            app:cornerRadius="5dp"
+            app:strokeColor="#1AFFFFFF"
+            app:strokeWidth="1dp"
+            android:text="Dashboard" />
+
+        <!-- Student -->
+        <Button
+            android:id="@+id/studentButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/transparent"
+            android:layout_margin="5dp"
+            app:cornerRadius="5dp"
+            app:strokeColor="#1AFFFFFF"
+            app:strokeWidth="1dp"
+            android:text="Student" />
+
+        <!-- Lecturer -->
+        <Button
+            android:id="@+id/lecturerButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/transparent"
+            android:layout_margin="5dp"
+            app:cornerRadius="5dp"
+            app:strokeColor="#1AFFFFFF"
+            app:strokeWidth="1dp"
+            android:text="Lecturer" />
+
+        <!-- Course -->
+        <Button
+            android:id="@+id/courseButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/transparent"
+            android:layout_margin="5dp"
+            app:cornerRadius="5dp"
+            app:strokeColor="#1AFFFFFF"
+            app:strokeWidth="1dp"
+            android:text="Course" />
+
+        <!-- NFC Reader -->
+        <Button
+            android:id="@+id/nfcReaderButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:backgroundTint="@android:color/transparent"
+            android:insetTop="4dp"
+            android:text="NFC Reader"
+            app:cornerRadius="5dp"
+            app:strokeColor="#1AFFFFFF"
+            app:strokeWidth="1dp" />
+
+        <!-- NFC Writer -->
+        <Button
+            android:id="@+id/nfcWriterButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:backgroundTint="@android:color/transparent"
+            android:text="NFC Writer"
+            app:cornerRadius="5dp"
+            app:strokeColor="#1AFFFFFF"
+            app:strokeWidth="1dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/logoutSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:background="#343541">
+
+        <!-- Logout -->
+        <Button
+            android:id="@+id/logoutButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:backgroundTint="@android:color/transparent"
+            android:layout_margin="5dp"
+            app:cornerRadius="5dp"
+            app:strokeColor="#1AFFFFFF"
+            app:strokeWidth="1dp"
+            android:text="Logout" />
+
+    </LinearLayout>
+
+</LinearLayout>
