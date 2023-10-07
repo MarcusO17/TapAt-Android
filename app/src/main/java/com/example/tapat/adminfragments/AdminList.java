@@ -121,13 +121,13 @@ public class AdminList extends Fragment {
         // Similarly for "Lecturer" and "Courses"
         if ("Student".equals(fragmentTitle)) {
             //find name of students
-            return db.getStudentNames();
+            return db.getNames("Students");
         } else if ("Lecturer".equals(fragmentTitle)) {
             //find name for lecturer
-            return new String[]{"Muka", "Ghili"};
+            return db.getNames("Lecturers");
         } else if ("Course".equals(fragmentTitle)) {
             //string process
-            return new String[]{"AG1001: Android Development", "AG1003: Software Engineering"};
+            return db.getNames("Courses");
         } else {
             // Handle other fragment titles or return an empty array as needed
             return new String[]{};

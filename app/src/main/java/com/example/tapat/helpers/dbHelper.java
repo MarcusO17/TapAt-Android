@@ -7,6 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.SimpleTimeZone;
+
 public class dbHelper extends SQLiteOpenHelper {
 
     /***********************************************************************************************
@@ -14,7 +18,7 @@ public class dbHelper extends SQLiteOpenHelper {
      ***********************************************************************************************
      */
     private static final String DATABASE_NAME = "TapAt.db";
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 7;
 
     static class Admin{
         private static final String TABLE_NAME = "admins";
@@ -102,38 +106,44 @@ public class dbHelper extends SQLiteOpenHelper {
 
         //Creating Student Table
         db.execSQL("CREATE TABLE " + Student.TABLE_NAME+ " ( "
-                + Student.COL_1 + " TEXT PRIMARY KEY NOT NULL, "
+                + Student.COL_1 + " TEXT PRIMARY KEY, "
                 + Student.COL_2 + " TEXT NOT NULL,"
                 + Student.COL_3 + " TEXT NOT NULL"
                 + " )");
 
         //Creating Course Table
         db.execSQL("CREATE TABLE " + Course.TABLE_NAME+ " ( "
-                + Course.COL_1 + " TEXT PRIMARY KEY NOT NULL, "
+                + Course.COL_1 + " TEXT PRIMARY KEY, "
                 + Course.COL_2 + " TEXT  NOT NULL,"
                 + Course.COL_3 + " TEXT NOT NULL,"
-                + Course.COL_4 + " TEXT NOT NULL"
+                + Course.COL_4 + " TEXT NOT NULL,"
+                + " FOREIGN KEY (lecturer_ID) REFERENCES lecturers(lecturer_ID)"
                 + " )");
 
         //Creating Attendance Table
         db.execSQL("CREATE TABLE " + Attendance.TABLE_NAME+ " ( "
-                + Attendance.COL_1 + " TEXT PRIMARY KEY NOT NULL, "
+                + Attendance.COL_1 + " TEXT PRIMARY KEY, "
                 + Attendance.COL_2 + " TEXT NOT NULL,"
-                + Attendance.COL_3 + " DATETIME NOT NULL"
+                + Attendance.COL_3 + " DATETIME NOT NULL,"
+                + " FOREIGN KEY (course_ID) REFERENCES courses(course_ID)"
                 + " )");
 
         //Creating AttendanceStudents Table
         db.execSQL("CREATE TABLE " + AttendanceStudents.TABLE_NAME+ " ( "
-                + AttendanceStudents.COL_1 + " TEXT PRIMARY KEY NOT NULL, "
+                + AttendanceStudents.COL_1 + " TEXT NOT NULL, "
                 + AttendanceStudents.COL_2 + " TEXT NOT NULL,"
                 + AttendanceStudents.COL_3 + " TEXT NOT NULL,"
-                + AttendanceStudents.COL_4 + " TEXT NOT NULL"
+                + AttendanceStudents.COL_4 + " TEXT NOT NULL,"
+                + " FOREIGN KEY (attendance_ID) REFERENCES attendance(attendance_ID),"
+                + " FOREIGN KEY (course_ID) REFERENCES courses(course_ID)"
                 + " )");
 
         //Creating CourseStudents Table
         db.execSQL("CREATE TABLE " + CourseStudents.TABLE_NAME+ " ( "
-                + CourseStudents.COL_1 + " TEXT PRIMARY KEY NOT NULL, "
-                + CourseStudents.COL_2 + " TEXT NOT NULL"
+                + CourseStudents.COL_1 + " TEXT NOT NULL, "
+                + CourseStudents.COL_2 + " TEXT NOT NULL,"
+                + " FOREIGN KEY (course_ID) REFERENCES courses(course_ID),"
+                + " FOREIGN KEY (student_ID) REFERENCES students(student_ID)"
                 + " )");
 
     }
@@ -217,24 +227,50 @@ public class dbHelper extends SQLiteOpenHelper {
 
 
     }
-    public String[] getStudentNames(){
-        String[] students = null;
+
+    /**
+     * Get Student Names
+     * @return List of Students (Array)
+     */
+    public String[] getNames(String className){
+        List<String> namesList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT "+Student.COL_2+" FROM "+Student.TABLE_NAME,null);
-        //if cursor gets results
-        if(cursor.getCount()>0) {
-            students = new String[cursor.getCount()];
-            int counter = 0;
-            while(cursor.moveToNext()) {
-                students[counter] = cursor.getString(0);
-                counter++;
+        Cursor cursor = null;
+        if(className == "Students") {
+            cursor = db.rawQuery("SELECT student_name FROM students", null);
+        } else if (className == "Lecturers") {
+            cursor = db.rawQuery("SELECT lecturer_name FROM lecturers", null);
+        } else if (className == "Courses") {
+            cursor = db.rawQuery("SELECT course_ID,course_name FROM courses", null);
+        }else{
+            return namesList.toArray(new String[]{});
+        }
+        if(cursor != null){
+                switch (className) {
+                    case "Students":
+                        while (cursor.moveToNext()) {
+                            namesList.add(cursor.getString(cursor.getColumnIndex("student_name")));
+                        }
+                        break;
+                    case "Lecturers":
+                        while (cursor.moveToNext()) {
+                            namesList.add(cursor.getString(cursor.getColumnIndex("lecturer_name")));
+                        }
+                        break;
+                    case "Courses":
+                        while (cursor.moveToNext()) {
+                            String courseID = cursor.getString(cursor.getColumnIndex("course_ID"));
+                            String courseName = cursor.getString(cursor.getColumnIndex("course_name"));
+                            namesList.add(courseID + " : " + courseName);
+                        }
+                        break;
+                }
+            cursor.close();
             }
-        }
-        if(students == null) {
-            return new String[0];
-        }
-        return students;
+        //if cursor gets results
+        return namesList.toArray(new String[]{});
     }
+
 }
 
 
