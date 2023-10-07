@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FragmentHolderActivity"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start"
+    android:id="@+id/side_navigation_layout">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:background="@drawable/background_picture">
+        <include layout="@layout/actionbar"/>
+
+        <LinearLayout
+            android:id="@+id/title_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@android:color/transparent">
+
+            <TextView
+                android:id="@+id/fragmentholdertitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/julius_sans_one"
+                android:gravity="center"
+                android:layout_margin="20dp"
+                android:paddingBottom="20dp"
+                android:text="@string/classlisttitle"
+                android:textAlignment="center"
+                android:textColor="#FF000000"
+                android:textStyle="normal"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/classlistframelayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="60dp"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:paddingBottom="97dp"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:background="@color/black"/>
+
+    </LinearLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/side_navigation_view"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/side_navigation_header"
+        app:menu="@menu/side_navigation_menu_lecturer"
+        android:maxWidth="275dp"/>
+
+</androidx.drawerlayout.widget.DrawerLayout>

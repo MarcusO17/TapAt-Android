@@ -2,6 +2,7 @@ package com.example.tapat;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.content.Intent;
 import android.os.Bundle;
@@ -45,19 +46,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }else {
                     /* toast to alert the user that the login has failed*/
-                    String errorText = "";
-                    if(emailInputField.getText().toString() == "") {
-                        errorText = "Login Failed: Invalid Credentials";
-                    } else if (passwordInputField.getText().toString()=="") {
-                        errorText = "Login Failed: Invalid Password";
-                    }
-                    Toast loginToastError = Toast.makeText(view.getContext(), errorText, Toast.LENGTH_SHORT);
-                    View loginToastView = loginToastError.getView();
-                    loginToastView.setBackgroundColor(Color.parseColor("#ffc6c4"));
-
-                    loginToastError.show();
                 }
-            }
         });
     }
 }

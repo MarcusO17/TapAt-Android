@@ -13,6 +13,18 @@
         android:theme="@style/Theme.TapAt"
         tools:targetApi="31">
         <activity
+            android:name=".AttendanceViewFragment"
+            android:exported="false" />
+        <activity
+            android:name=".FragmentHolderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ClassListDetails"
+            android:exported="false" />
+        <activity
+            android:name=".LecturerHomepageActivity"
+            android:exported="false" />
+       <activity
             android:name=".StudentListAdapter"
             android:exported="false" />
         <activity
