@@ -120,7 +120,7 @@ public class AdminDisplayInfo extends Fragment {
 
                 handleSpinnerUI(programSpinner);
 
-                nameEditText.setText(studentData[1]);
+                nameEditText.setText(studentData[1]); //InsertName
                 idEditText.setText(studentData[0]);
 
                 containerLayout.addView(nameEditText);
@@ -253,7 +253,7 @@ public class AdminDisplayInfo extends Fragment {
             String name = ((EditText) containerLayout.getChildAt(0)).getText().toString();
             String id = ((EditText) containerLayout.getChildAt(1)).getText().toString();
             String program = ((Spinner) containerLayout.getChildAt(2)).getSelectedItem().toString();
-            String[] studentData = {name, id, program};
+            String[] studentData = {id,name,program};
             // Change studentData on the student array
             if(studentData[0].equals("") || studentData[1].equals("")){
                 Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
