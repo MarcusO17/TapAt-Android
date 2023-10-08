@@ -2,6 +2,7 @@ package com.example.tapat;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.tapat.helpers.dbHelper;
+import android.content.Intent;
 import android.graphics.Color;
 import android.content.Intent;
 import android.os.Bundle;
@@ -59,11 +60,9 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     Toast loginToastError = Toast.makeText(view.getContext(), errorText, Toast.LENGTH_SHORT);
                     View loginToastView = loginToastError.getView();
-                    loginToastView.setBackgroundColor(Color.parseColor("#ffc6c4"));
-
                     loginToastError.show();
+
                 }
-            }
         });
     }
 }
