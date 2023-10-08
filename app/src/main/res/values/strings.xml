@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">TapAt</string>
+    <string name="_5001cem_software_engineering">5001CEM : Software Engineering</string>
+    <string name="mpu3193_philosophy_and_current_issues">MPU3193: Philosophy and Current Issues</string>
+    <string name="homepage">HOMEPAGE</string>
+    <string name="course_subject">Course Subject</string>
+    <string name="_5001Cem_software_engineering">5001CEM : Software Engineering</string>
+    <string name="login">Login</string>
+    <string name="input_email">Email</string>
+    <string name="input_password">Password</string>
+    <string name="createclassbutton">Create Class</string>
+    <string name="classlisttitle">Class List</string>
+    <string name="addclassbutton">Add New Class</string>
+    <string name="starttakingattendance">Start Taking Attendance</string>
+    <string name="submit">Submit</string>
+    <string name="input_id" />
 </resources>
