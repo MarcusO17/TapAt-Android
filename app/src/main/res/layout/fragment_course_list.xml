@@ -3,14 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CourseListFragment">
+    tools:context=".CourseListFragment"
+    android:background="@drawable/background_picture">
 
     <!-- TODO: Update blank fragment layout -->
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:id="@+id/courselistrecyclerview"
-        android:background="@color/white"
-        />
+        android:layout_width="350dp"
+        android:layout_height="750dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/scroll_frame" />
 
 </FrameLayout>
