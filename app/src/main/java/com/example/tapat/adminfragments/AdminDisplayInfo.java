@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -366,7 +367,35 @@ public class AdminDisplayInfo extends Fragment {
 
     // Method to save Data(sql query)
     private void saveData() {
+        //Get specific User.
+        buttonName = getArguments().getString(ARG_BUTTON_NAME);
 
+        if ("Student".equals(fragmentTitle)) {
+            String name = ((EditText) ((LinearLayout) containerLayout.getChildAt(0)).getChildAt(1)).getText().toString();
+            String id = ((EditText) ((LinearLayout) containerLayout.getChildAt(1)).getChildAt(1)).getText().toString();
+            String program = ((Spinner) ((LinearLayout) containerLayout.getChildAt(2)).getChildAt(1)).getSelectedItem().toString();
+            String[] studentData = {id,name,program};
+
+            replaceFragment(AdminList.newInstance("Student"));
+
+        } else if ("Lecturer".equals(fragmentTitle)) {
+            String name = ((EditText) ((LinearLayout) containerLayout.getChildAt(0)).getChildAt(1)).getText().toString();
+            String id = ((EditText) ((LinearLayout) containerLayout.getChildAt(1)).getChildAt(1)).getText().toString();
+            String email = ((EditText) ((LinearLayout) containerLayout.getChildAt(2)).getChildAt(1)).getText().toString();
+            String password = ((EditText) ((LinearLayout) containerLayout.getChildAt(3)).getChildAt(1)).getText().toString();
+            String[] lecturerData = {id,name, email, password};
+
+            replaceFragment(AdminList.newInstance("Lecturer"));
+
+        } else if ("Course".equals(fragmentTitle)) {
+            String coursename = ((EditText) ((LinearLayout) containerLayout.getChildAt(0)).getChildAt(1)).getText().toString();
+            String courseid = ((EditText) ((LinearLayout) containerLayout.getChildAt(1)).getChildAt(1)).getText().toString();
+            String lecturerid = ((Spinner) ((LinearLayout) containerLayout.getChildAt(2)).getChildAt(1)).getSelectedItem().toString();
+            String program = ((Spinner) ((LinearLayout) containerLayout.getChildAt(3)).getChildAt(1)).getSelectedItem().toString();
+            String[] courseData = {courseid, lecturerid,coursename, program};
+
+            replaceFragment(AdminList.newInstance("Course"));
+        }
     }
 
     // Helper methods to create UI elements
