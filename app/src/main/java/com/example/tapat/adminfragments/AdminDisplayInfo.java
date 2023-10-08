@@ -1,6 +1,9 @@
 package com.example.tapat.adminfragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.InputType;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -108,7 +111,15 @@ public class AdminDisplayInfo extends Fragment {
             String[] studentData = getStudentData(buttonName);
             if (studentData != null) {
                 EditText nameEditText = createEditText("Name");
+                nameEditText.setTextColor(Color.parseColor("#ffffff"));
+                nameEditText.setHintTextColor(Color.parseColor("#66ffffff"));
+                nameEditText.setTextSize(18);
+
                 EditText idEditText = createEditText("ID Number");
+                idEditText.setTextColor(Color.parseColor("#ffffff"));
+                idEditText.setHintTextColor(Color.parseColor("#66ffffff"));
+                idEditText.setTextSize(18);
+
                 Spinner programSpinner = createSpinner(programArray, studentData[2]);
 
                 handleSpinnerUI(programSpinner);
@@ -116,27 +127,43 @@ public class AdminDisplayInfo extends Fragment {
                 nameEditText.setText(studentData[0]);
                 idEditText.setText(studentData[1]);
 
-                containerLayout.addView(nameEditText);
-                containerLayout.addView(idEditText);
-                containerLayout.addView(programSpinner);
+                containerLayout.addView(editSection("Name",nameEditText));
+                containerLayout.addView(editSection("ID",idEditText));
+                containerLayout.addView(editSection("Program",programSpinner));
             }
         } else if ("Lecturer".equals(fragmentTitle)) {
             String[] lecturerData = getLecturerData(buttonName);
             if (lecturerData != null) {
                 EditText nameEditText = createEditText("Name");
+                nameEditText.setTextColor(Color.parseColor("#ffffff"));
+                nameEditText.setHintTextColor(Color.parseColor("#66ffffff"));
+                nameEditText.setTextSize(18);
+
                 EditText idEditText = createEditText("ID Number");
+                idEditText.setTextColor(Color.parseColor("#ffffff"));
+                idEditText.setHintTextColor(Color.parseColor("#66ffffff"));
+                idEditText.setTextSize(18);
+
                 EditText emailEditText = createEditText("Email");
+                emailEditText.setTextColor(Color.parseColor("#ffffff"));
+                emailEditText.setHintTextColor(Color.parseColor("#66ffffff"));
+                emailEditText.setTextSize(18);
+
                 EditText passwordEditText = createEditText("Password");
+                passwordEditText.setTextColor(Color.parseColor("#ffffff"));
+                passwordEditText.setHintTextColor(Color.parseColor("#66ffffff"));
+                passwordEditText.setTextSize(18);
+                passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
                 nameEditText.setText(lecturerData[0]);
                 idEditText.setText(lecturerData[1]);
                 emailEditText.setText(lecturerData[2]);
                 passwordEditText.setText(lecturerData[3]);
 
-                containerLayout.addView(nameEditText);
-                containerLayout.addView(idEditText);
-                containerLayout.addView(emailEditText);
-                containerLayout.addView(passwordEditText);
+                containerLayout.addView(editSection("Name",nameEditText));
+                containerLayout.addView(editSection("ID",idEditText));
+                containerLayout.addView(editSection("Email",emailEditText));
+                containerLayout.addView(editSection("Password",passwordEditText));
             }
         } else if ("Course".equals(fragmentTitle)) {
             String[] courseData = getCourseData(buttonName);
@@ -144,7 +171,15 @@ public class AdminDisplayInfo extends Fragment {
             String[] lecturerIdArray = {"L1000", "L1001", "L1002", "L1003", "L1004", "L1005", "L1006", "L1007", "L1008", "L1009", "L1010"};
             if (courseData != null) {
                 EditText courseNameEditText = createEditText("Course Name");
+                courseNameEditText.setTextColor(Color.parseColor("#ffffff"));
+                courseNameEditText.setHintTextColor(Color.parseColor("#66ffffff"));
+                courseNameEditText.setTextSize(18);
+
                 EditText courseIdEditText = createEditText("Course ID");
+                courseIdEditText.setTextColor(Color.parseColor("#ffffff"));
+                courseIdEditText.setHintTextColor(Color.parseColor("#66ffffff"));
+                courseIdEditText.setTextSize(18);
+
                 Spinner lecturerIdSpinner = createSpinner(lecturerIdArray, courseData[2]);
                 Spinner programSpinner = createSpinner(programArray, courseData[3]);
 
@@ -154,12 +189,50 @@ public class AdminDisplayInfo extends Fragment {
                 courseNameEditText.setText(courseData[0]);
                 courseIdEditText.setText(courseData[1]);
 
-                containerLayout.addView(courseNameEditText);
-                containerLayout.addView(courseIdEditText);
-                containerLayout.addView(lecturerIdSpinner);
-                containerLayout.addView(programSpinner);
+                containerLayout.addView(editSection("Course Name",courseNameEditText));
+                containerLayout.addView(editSection("Course ID",courseIdEditText));
+                containerLayout.addView(editSection("Lecturer",lecturerIdSpinner));
+                containerLayout.addView(editSection("Program",programSpinner));
             }
         }
+    }
+
+    private LinearLayout editSection(String label, View widget) {
+        // Create a new horizontal LinearLayout
+        LinearLayout linearLayout = new LinearLayout(getContext());
+        linearLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        ));
+        linearLayout.setMinimumHeight(150);
+        linearLayout.setVerticalGravity(Gravity.CENTER);
+        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+
+        // Create a TextView for the label (1:1 ratio)
+        TextView labelTextView = new TextView(getContext());
+        labelTextView.setLayoutParams(new LinearLayout.LayoutParams(
+                0, // Width set to 0 for weight-based distribution
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                2 // Weight 2 for 2:2 ratio
+        ));
+        labelTextView.setText(label);
+        labelTextView.setTextColor(Color.parseColor("#ffffff"));
+        labelTextView.setTextSize(18);
+
+        // Add the label TextView to the LinearLayout
+        linearLayout.addView(labelTextView);
+
+        // Set up the widget (2:1 ratio)
+        widget.setLayoutParams(new LinearLayout.LayoutParams(
+                0, // Width set to 0 for weight-based distribution
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                3 // Weight 3 for 3:2 ratio
+        ));
+
+        // Add the widget to the LinearLayout
+        linearLayout.addView(widget);
+
+        return linearLayout;
     }
 
     private Spinner handleSpinnerUI(Spinner spin){
@@ -173,6 +246,8 @@ public class AdminDisplayInfo extends Fragment {
             // Set popupWindow height to 500px
             popupWindow.setHeight(500);
 
+            spin.setBackgroundColor(Color.parseColor("#66ffffff"));
+
         }
         catch (NoClassDefFoundError | ClassCastException | NoSuchFieldException | IllegalAccessException e) {
             // silently fail...
@@ -184,10 +259,16 @@ public class AdminDisplayInfo extends Fragment {
         // Enable editing of EditText and Spinner fields
         for (int i = 0; i < containerLayout.getChildCount(); i++) {
             View child = containerLayout.getChildAt(i);
-            if (child instanceof EditText) {
-                ((EditText) child).setEnabled(true);
-            } else if (child instanceof Spinner) {
-                ((Spinner) child).setEnabled(true);
+            if (child instanceof LinearLayout) {
+                LinearLayout horizontalLayout = (LinearLayout) child;
+                for (int j = 0; j < horizontalLayout.getChildCount(); j++) {
+                    View innerChild = horizontalLayout.getChildAt(j);
+                    if (innerChild instanceof EditText) {
+                        ((EditText) innerChild).setEnabled(true);
+                    } else if (innerChild instanceof Spinner) {
+                        ((Spinner) innerChild).setEnabled(true);
+                    }
+                }
             }
         }
 
@@ -198,24 +279,11 @@ public class AdminDisplayInfo extends Fragment {
     }
 
     private void handleSaveButtonClick() {
-        // Disable editing of EditText and Spinner fields
-        for (int i = 0; i < containerLayout.getChildCount(); i++) {
-            View child = containerLayout.getChildAt(i);
-            if (child instanceof EditText) {
-                ((EditText) child).setEnabled(false);
-            } else if (child instanceof Spinner) {
-                ((Spinner) child).setEnabled(false);
-            }
-        }
-
-
-        // Hide Save and Cancel buttons, show Edit button
-        editButton.setVisibility(View.VISIBLE);
-        saveButton.setVisibility(View.GONE);
-        cancelButton.setVisibility(View.GONE);
-
         // Call a method to save the edited data
         saveData();
+
+        // Replace the fragment with AdminList
+        replaceFragment(AdminList.newInstance(fragmentTitle));
     }
 
     private void handleCancelButtonClick() {
@@ -327,5 +395,13 @@ public class AdminDisplayInfo extends Fragment {
             }
         }
         return 0; // Default to the first item if not found
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentContainer, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 }
