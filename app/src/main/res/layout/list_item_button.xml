@@ -6,8 +6,7 @@
     android:focusable="false"
     android:focusableInTouchMode="false"
     android:orientation="vertical"
-    android:paddingTop="10dp"
-    android:background="@drawable/background_header">
+    android:paddingTop="10dp">
 
     <View
         android:layout_width="match_parent"
