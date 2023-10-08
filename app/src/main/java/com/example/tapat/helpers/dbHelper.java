@@ -315,8 +315,12 @@ public class dbHelper extends SQLiteOpenHelper {
         cv.put(Student.COL_1,student[0]); //Insert Student ID
         cv.put(Student.COL_2,student[1]); //Insert Student Name
         cv.put(Student.COL_3,student[2]); //Insert Student Programme
-        long result = db.insert(Student.TABLE_NAME,null,cv);
-        return result != -1;
+        try{
+            long result = db.insert(Student.TABLE_NAME,null,cv);
+            return result != -1;
+        }catch(SQLiteException e){
+            return false;
+        }
     }
 
     public boolean insertLecturerData(String[] lecturer){
@@ -326,8 +330,12 @@ public class dbHelper extends SQLiteOpenHelper {
         cv.put(Lecturer.COL_2,lecturer[1]); //Insert Lecturer Name
         cv.put(Lecturer.COL_3,lecturer[2]); //Insert Lecturer Email
         cv.put(Lecturer.COL_4,lecturer[3]);//Insert Lecturer Password
-        long result = db.insert(Lecturer.TABLE_NAME,null,cv);
-        return result != -1;
+        try{
+            long result = db.insert(Lecturer.TABLE_NAME,null,cv);
+            return result != -1;
+        }catch(SQLiteException e){
+            return false;
+        }
     }
 
     public boolean insertCourseData(String[] course){
@@ -337,8 +345,12 @@ public class dbHelper extends SQLiteOpenHelper {
         cv.put(Course.COL_2,course[1]); //Insert Lecturer Name
         cv.put(Course.COL_3,course[2]); //Insert Lecturer Email
         cv.put(Course.COL_4,course[3]);//Insert Lecturer Password
-        long result = db.insert(Course.TABLE_NAME,null,cv);
-        return result != -1;
+        try{
+            long result = db.insert(Course.TABLE_NAME,null,cv);
+            return result != -1;
+        }catch(SQLiteException e){
+            return false;
+        }
     }
 
     public String[] getSingularData(String className, String buttonName){
@@ -376,6 +388,70 @@ public class dbHelper extends SQLiteOpenHelper {
         }
         return rowInfo.toArray(new String[]{});
     }
+
+    public boolean updateStudentData(String[] student,String target){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv= new ContentValues();
+        cv.put(Student.COL_1,student[0]); //Insert Student ID
+        cv.put(Student.COL_2,student[1]); //Insert Student Name
+        cv.put(Student.COL_3,student[2]); //Insert Student Programme
+        try {
+            long result = db.update(Student.TABLE_NAME,cv,"student_name=?", new String[]{target});
+            return result != -1;
+        }catch(SQLiteException e){
+            return false;
+        }
+    }
+    public boolean updateLecturerData(String[] lecturer,String target){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(Lecturer.COL_1,lecturer[0]); //Insert Lecturer ID
+        cv.put(Lecturer.COL_2,lecturer[1]); //Insert Lecturer Name
+        cv.put(Lecturer.COL_3,lecturer[2]); //Insert Lecturer Email
+        cv.put(Lecturer.COL_4,lecturer[3]);//Insert Lecturer Password
+        try {
+            long result = db.update(Lecturer.TABLE_NAME,cv,"lecturer_name=?", new String[]{target});
+            return result != -1;
+        }catch(SQLiteException e){
+            return false;
+        }
+    }
+
+    public boolean updateCourseData(String[] course,String target){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(Course.COL_1,course[0]); //Insert Course ID
+        cv.put(Course.COL_2,course[1]); //Insert Lecturer ID
+        cv.put(Course.COL_3,course[2]); //Insert Course ID
+        cv.put(Course.COL_4,course[3]);//Insert Programme Code
+        target = target.split(":")[1].trim();
+        try {
+            long result = db.update(Course.TABLE_NAME, cv, "course_name=?", new String[]{target});
+            return result != -1;
+        }catch(SQLiteException e){
+            return false;
+        }
+    }
+
+    /**
+     * WIP
+     */
+        /*
+    public String[] getProgrammeData() {
+        List<String> rowInfo = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+
+
+        cursor = db.rawQuery("SELECT DISTINCT(programme_code) FROM students",null);
+        if (cursor != null && cursor.moveToFirst())
+            for (int i = 0; i < cursor.getColumnCount(); i++)
+                rowInfo.add(cursor.getString(i));
+
+        return  rowInfo.toArray(new String[]{});
+    }
+    */
+
 
 }
 

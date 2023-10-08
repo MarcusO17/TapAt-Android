@@ -179,7 +179,7 @@ public class AdminCreate extends Fragment {
             //Error Handling
             if(studentData[0].equals("") || studentData[1].equals("")){
                 Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
-            }else if(db.insertStudentData(studentData)) {
+            }else if(!db.insertStudentData(studentData)) {
             // Add studentData to the student array
                 Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
             }
@@ -194,7 +194,7 @@ public class AdminCreate extends Fragment {
             String[] lecturerData = { id,name, email, password};
             if(lecturerData[0].equals("") || lecturerData[1].equals("")){
                 Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
-            }else if(db.insertLecturerData(lecturerData)) {
+            }else if(!db.insertLecturerData(lecturerData)) {
                 // Add studentData to the student array
                 Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
             }
@@ -211,7 +211,7 @@ public class AdminCreate extends Fragment {
             // Handle adding a course (if needed)
             if(courseData[0].equals("") || courseData[2].equals("")){
                 Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
-            }else if(db.insertCourseData(courseData)) {
+            }else if(!db.insertCourseData(courseData)) {
                 // Add studentData to the student array
                 Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
             }

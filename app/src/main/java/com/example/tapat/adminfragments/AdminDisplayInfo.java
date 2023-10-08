@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -109,6 +110,7 @@ public class AdminDisplayInfo extends Fragment {
     private void generateUI() {
         containerLayout.removeAllViews(); // Clear any existing UI elements
 
+        /** FIX DISPLAY ISSUES **/
         if ("Student".equals(fragmentTitle)) {
             String[] studentData = db.getSingularData("Student",buttonName);
             if (studentData != null) {
@@ -118,8 +120,8 @@ public class AdminDisplayInfo extends Fragment {
 
                 handleSpinnerUI(programSpinner);
 
-                nameEditText.setText(studentData[0]);
-                idEditText.setText(studentData[1]);
+                nameEditText.setText(studentData[1]);
+                idEditText.setText(studentData[0]);
 
                 containerLayout.addView(nameEditText);
                 containerLayout.addView(idEditText);
@@ -133,8 +135,8 @@ public class AdminDisplayInfo extends Fragment {
                 EditText emailEditText = createEditText("Email");
                 EditText passwordEditText = createEditText("Password");
 
-                nameEditText.setText(lecturerData[0]);
-                idEditText.setText(lecturerData[1]);
+                nameEditText.setText(lecturerData[1]);
+                idEditText.setText(lecturerData[0]);
                 emailEditText.setText(lecturerData[2]);
                 passwordEditText.setText(lecturerData[3]);
 
@@ -150,14 +152,14 @@ public class AdminDisplayInfo extends Fragment {
             if (courseData != null) {
                 EditText courseNameEditText = createEditText("Course Name");
                 EditText courseIdEditText = createEditText("Course ID");
-                Spinner lecturerIdSpinner = createSpinner(lecturerIdArray, courseData[2]);
+                Spinner lecturerIdSpinner = createSpinner(lecturerIdArray, courseData[1]);
                 Spinner programSpinner = createSpinner(programArray, courseData[3]);
 
                 handleSpinnerUI(lecturerIdSpinner);
                 handleSpinnerUI(programSpinner);
 
-                courseNameEditText.setText(courseData[0]);
-                courseIdEditText.setText(courseData[1]);
+                courseNameEditText.setText(courseData[2]);
+                courseIdEditText.setText(courseData[0]);
 
                 containerLayout.addView(courseNameEditText);
                 containerLayout.addView(courseIdEditText);
@@ -213,7 +215,6 @@ public class AdminDisplayInfo extends Fragment {
             }
         }
 
-
         // Hide Save and Cancel buttons, show Edit button
         editButton.setVisibility(View.VISIBLE);
         saveButton.setVisibility(View.GONE);
@@ -243,67 +244,58 @@ public class AdminDisplayInfo extends Fragment {
         generateUI();
     }
 
-    //getting data
-    private String[] getStudentData(String buttonName) {
-        //query single row
-        String[][] studentData = {
-                {"Ali","P21013251","BCSCUN"},
-                {"Abu","P21013252","MCS03"},
-                {"Chisa","P21013253","BCSCUN"},
-                {"Murta","P21013254","DCS"},
-                {"Marci","P21013255","BCTCUN"},
-                {"John","P21013256","DCS"},
-                {"Baboon","P21013257","BCSCUN"},
-                {"Dill","P21013258","BCSCUN"},
-                {"Chloe","P21013259","MCS03"},
-                {"Furn","P21013260","MCS03"}
-        };
-
-        for (String[] student : studentData) {
-            if (student[0].equals(buttonName)) {
-                return student;
-            }
-        }
-
-        return null; // Return null if data not found
-    }
-
-    private String[] getLecturerData(String buttonName) {
-        //query single row
-        String[][] lecturerData = {
-                {"Muka","L1000","Muka@lecturer.college.edu.my","abc"},
-                {"Ghili","L1001","Ghilli@lecturer.college.edu.my","135"}
-        };
-
-        for (String[] lecturer : lecturerData) {
-            if (lecturer[0].equals(buttonName)) {
-                return lecturer;
-            }
-        }
-
-        return null; // Return null if data not found
-    }
-
-    private String[] getCourseData(String buttonName) {
-        //query single row
-        String[][] courseData = {
-                {"Android Development","AG1001","L1000","BCSCUN"},
-                {"Software Engineering","AG1003","L1001","DCS"}
-        };
-
-        for (String[] course : courseData) {
-            if (course[0].equals(buttonName.split(": ")[1])) {
-                return course;
-            }
-        }
-
-        return null; // Return null if data not found
-    }
-
-
     // Method to save Data(sql query)
     private void saveData() {
+        //Get specific User.
+        buttonName = getArguments().getString(ARG_BUTTON_NAME);
 
+        if ("Student".equals(fragmentTitle)) {
+            String name = ((EditText) containerLayout.getChildAt(0)).getText().toString();
+            String id = ((EditText) containerLayout.getChildAt(1)).getText().toString();
+            String program = ((Spinner) containerLayout.getChildAt(2)).getSelectedItem().toString();
+            String[] studentData = {name, id, program};
+            // Change studentData on the student array
+            if(studentData[0].equals("") || studentData[1].equals("")){
+                Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
+            }else if(!db.updateStudentData(studentData,buttonName)) {
+                // Add studentData to the student array
+                Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
+            }
+
+            replaceFragment(AdminList.newInstance("Student"));
+
+        } else if ("Lecturer".equals(fragmentTitle)) {
+            String name = ((EditText) containerLayout.getChildAt(0)).getText().toString();
+            String id = ((EditText) containerLayout.getChildAt(1)).getText().toString();
+            String email = ((EditText) containerLayout.getChildAt(2)).getText().toString();
+            String password = ((EditText) containerLayout.getChildAt(3)).getText().toString();
+            String[] lecturerData = {id,name, email, password};
+            // Change lecturerData on the lecturer array
+            if(lecturerData[0].equals("") || lecturerData[1].equals("")){
+                Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
+            }else if(!db.updateLecturerData(lecturerData,buttonName)) {
+                // Add studentData to the student array
+                Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
+            }
+
+            replaceFragment(AdminList.newInstance("Lecturer"));
+
+        } else if ("Course".equals(fragmentTitle)) {
+            String coursename = ((EditText) containerLayout.getChildAt(0)).getText().toString();
+            String courseid = ((EditText) containerLayout.getChildAt(1)).getText().toString();
+            String lecturerid = ((Spinner) containerLayout.getChildAt(2)).getSelectedItem().toString();
+            String program = ((Spinner) containerLayout.getChildAt(3)).getSelectedItem().toString();
+            String[] courseData = {courseid, lecturerid,coursename, program};
+            // Change course data
+            if(courseData[0].equals("") || courseData[1].equals("")){
+                Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
+            }else if(!db.updateCourseData(courseData,buttonName)) {
+                // Add studentData to the student array
+                Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
+            }
+
+            replaceFragment(AdminList.newInstance("Course"));
+        }
     }
 
     // Helper methods to create UI elements
@@ -332,5 +324,13 @@ public class AdminDisplayInfo extends Fragment {
             }
         }
         return 0; // Default to the first item if not found
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentContainer, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 }
