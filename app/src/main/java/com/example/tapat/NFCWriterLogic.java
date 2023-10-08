@@ -19,11 +19,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+public class NFCWriterLogic extends AppCompatActivity {
 
     //Init NFC Adapter
     public NfcAdapter nfcAdapter;
@@ -51,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     submitted = true;
                     message = messageInput.getText().toString();
-                    Toast.makeText(MainActivity.this,"Scan your NFC Tag Now!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NFCWriterLogic.this,"Scan your NFC Tag Now!",Toast.LENGTH_SHORT).show();
                     enableForegroundDispatchSystem();
 
                 }
@@ -71,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openReadModeActivity(){
-        Intent intent = new Intent(this, ReadModeActivity.class);
+        Intent intent = new Intent(this, NFCReaderLogic.class);
         startActivity(intent);
     }
 
@@ -111,8 +110,8 @@ public class MainActivity extends AppCompatActivity {
     //Prepares App to accept NFC Detection/Activity
     private void enableForegroundDispatchSystem(){
 
-        //Intent ensures MainActivity is running , and prevents multiple calls to run MainActivity
-        Intent intent = new Intent(this, MainActivity.class).addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING);
+        //Intent ensures NFCWriterLogic is running , and prevents multiple calls to run NFCWriterLogic
+        Intent intent = new Intent(this, NFCWriterLogic.class).addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_MUTABLE);
         //Conditions for NFC Tag(Now Empty)

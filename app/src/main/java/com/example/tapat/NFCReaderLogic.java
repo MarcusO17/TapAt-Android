@@ -25,7 +25,7 @@ import java.io.UnsupportedEncodingException;
  * *******************DOCUMENTATION NEEDED!!!!***********************
  * ******************************************************************
  */
-public class ReadModeActivity extends AppCompatActivity {
+public class NFCReaderLogic extends AppCompatActivity {
 
     Tag detectedTag;
     NfcAdapter nfcAdapter;
@@ -51,7 +51,7 @@ public class ReadModeActivity extends AppCompatActivity {
     }
 
     public void openWriteModeActivity(){
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, NFCWriterLogic.class);
         startActivity(intent);
     }
 
@@ -93,8 +93,8 @@ public class ReadModeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //Intent ensures MainActivity is running , and prevents multiple calls to run MainActivity
-        Intent intent = new Intent(this, ReadModeActivity.class).addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING);
+        //Intent ensures NFCWriterLogic is running , and prevents multiple calls to run NFCWriterLogic
+        Intent intent = new Intent(this, NFCReaderLogic.class).addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_MUTABLE);
         //Conditions for NFC Tag(Now Empty)

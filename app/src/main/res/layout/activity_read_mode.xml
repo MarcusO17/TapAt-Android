@@ -5,7 +5,7 @@
     android:id="@+id/nfcContent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ReadModeActivity">
+    tools:context=".NFCReaderLogic">
 
     <TextView
         android:id="@+id/tagContentText"
