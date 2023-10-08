@@ -4,19 +4,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="right"
-    android:background="@drawable/background_picture">
+    android:background="#343541">
 
     <!-- Create Title -->
     <TextView
         android:id="@+id/createTitleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/julius_sans_one"
         android:gravity="center"
         android:text="Add Fragment Title"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:textColor="@color/white"/>
 
     <!-- Container for UI elements -->
     <LinearLayout
