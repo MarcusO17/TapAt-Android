@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tapat.R;
+import com.example.tapat.helpers.dbHelper;
 
 import java.util.Arrays;
 
@@ -25,6 +26,8 @@ public class AdminList extends Fragment {
     private String[] dataArray;
     private ButtonListAdapter buttonListAdapter;
     private String fragmentTitle;
+
+    private dbHelper db;
 
     public AdminList() {
         // Required empty public constructor
@@ -45,6 +48,7 @@ public class AdminList extends Fragment {
 
         // Retrieve the fragment title from arguments
         fragmentTitle = getArguments().getString(ARG_FRAGMENT_TITLE);
+        db = new dbHelper(getContext());
 
         // Set the fragment title in the TextView
         TextView textView = view.findViewById(R.id.textView);
@@ -117,13 +121,13 @@ public class AdminList extends Fragment {
         // Similarly for "Lecturer" and "Courses"
         if ("Student".equals(fragmentTitle)) {
             //find name of students
-            return new String[]{"Abu", "Ali", "Chisa", "Murta", "Marci", "John", "Baboon", "Dill", "Chloe", "Furn"};
+            return db.getNames("Students");
         } else if ("Lecturer".equals(fragmentTitle)) {
             //find name for lecturer
-            return new String[]{"Muka", "Ghili"};
+            return db.getNames("Lecturers");
         } else if ("Course".equals(fragmentTitle)) {
             //string process
-            return new String[]{"AG1001: Android Development", "AG1003: Software Engineering"};
+            return db.getNames("Courses");
         } else {
             // Handle other fragment titles or return an empty array as needed
             return new String[]{};

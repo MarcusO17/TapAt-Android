@@ -19,12 +19,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tapat.R;
+import com.example.tapat.helpers.dbHelper;
 
 import java.util.Arrays;
 
 public class AdminNFCwriter extends Fragment {
 
     private ButtonListAdapter buttonListAdapter;
+    private dbHelper db;
 
     public AdminNFCwriter() {
         // Required empty public constructor
@@ -34,6 +36,8 @@ public class AdminNFCwriter extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.adminnfcwriter, container, false);
+        //Init DB
+        db = new dbHelper(getContext());
 
         // Set the title in the TextView
         TextView textView = view.findViewById(R.id.textViewNFCWriter);
@@ -41,7 +45,7 @@ public class AdminNFCwriter extends Fragment {
             textView.setText("AdminNFCWriter");
         }
 
-        String [] student = new String[]{"Abu", "Ali", "Chisa", "Murta", "Marci", "John", "Baboon", "Dill", "Chloe", "Furn"};
+        String [] student = db.getNames("Students");
 
         // Initialize RecyclerView
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
