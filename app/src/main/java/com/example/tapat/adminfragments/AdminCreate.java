@@ -243,9 +243,9 @@ public class AdminCreate extends Fragment {
         // Handle the logic for adding data to the respective arrays
         if ("Student".equals(fragmentTitle)) {
           
-            String name = ((EditText) containerLayout.getChildAt(0)).getChildAt(1)).getText().toString();
-            String id = ((EditText) containerLayout.getChildAt(1)).getChildAt(1)).getText().toString();
-            String program = ((Spinner) containerLayout.getChildAt(2)).getChildAt(1)).getSelectedItem().toString();
+            String name = ((EditText) ((LinearLayout) containerLayout.getChildAt(0)).getChildAt(1)).getText().toString();
+            String id = ((EditText) ((LinearLayout) containerLayout.getChildAt(1)).getChildAt(1)).getText().toString();
+            String program = ((Spinner) ((LinearLayout) containerLayout.getChildAt(2)).getChildAt(1)).getSelectedItem().toString();
             String[] studentData = {id, name, program};
             //Error Handling
             if(studentData[0].equals("") || studentData[1].equals("")){
@@ -259,10 +259,10 @@ public class AdminCreate extends Fragment {
 
         } else if ("Lecturer".equals(fragmentTitle)) {
 
-            String name = ((EditText) containerLayout.getChildAt(0)).getChildAt(1)).getText().toString();
-            String id = ((EditText) containerLayout.getChildAt(1)).getChildAt(1)).getText().toString();
-            String email = ((EditText) containerLayout.getChildAt(2)).getChildAt(1)).getText().toString();
-            String password = ((EditText) containerLayout.getChildAt(3)).getChildAt(1)).getText().toString();
+            String name = ((EditText) ((LinearLayout) containerLayout.getChildAt(0)).getChildAt(1)).getText().toString();
+            String id = ((EditText) ((LinearLayout) containerLayout.getChildAt(1)).getChildAt(1)).getText().toString();
+            String email =((EditText) ((LinearLayout) containerLayout.getChildAt(2)).getChildAt(1)).getText().toString();
+            String password = ((EditText) ((LinearLayout) containerLayout.getChildAt(3)).getChildAt(1)).getText().toString();
             String[] lecturerData = { id,name, email, password};
             if(lecturerData[0].equals("") || lecturerData[1].equals("")){
                 Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
@@ -276,10 +276,10 @@ public class AdminCreate extends Fragment {
 
         } else if ("Course".equals(fragmentTitle)) {
           
-            String courseName = ((EditText) containerLayout.getChildAt(0)).getChildAt(1)).getText().toString();
-            String courseID= ((EditText) containerLayout.getChildAt(1)).getChildAt(1)).getText().toString();
-            String lecturerID = ((Spinner) containerLayout.getChildAt(2)).getChildAt(1)).getSelectedItem().toString();
-            String program = ((Spinner) containerLayout.getChildAt(3)).getChildAt(1)).getSelectedItem().toString();
+            String courseName = ((EditText) ((LinearLayout) containerLayout.getChildAt(0)).getChildAt(1)).getText().toString();
+            String courseID= ((EditText) ((LinearLayout) containerLayout.getChildAt(1)).getChildAt(1)).getText().toString();
+            String lecturerID = ((Spinner) ((LinearLayout) containerLayout.getChildAt(2)).getChildAt(1)).getSelectedItem().toString();
+            String program = ((Spinner) ((LinearLayout) containerLayout.getChildAt(3)).getChildAt(1)).getSelectedItem().toString();
             String[] courseData = {courseID,lecturerID,courseName,program};
             // Handle adding a course (if needed)
             if(courseData[0].equals("") || courseData[2].equals("")){
