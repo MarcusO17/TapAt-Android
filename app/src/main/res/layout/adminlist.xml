@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/background_picture">
+    android:background="#343541">
 
     <!-- Title -->
     <TextView
@@ -12,12 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:fontFamily="@font/julius_sans_one"
         android:gravity="center"
         android:text="Fragment Title"
         android:textColor="@color/white"
-        android:textStyle="bold"
-        android:textSize="30sp" />
+        android:textSize="20sp" />
 
     <!-- Search Bar -->
     <EditText
@@ -38,7 +36,7 @@
         android:layout_height="0dp"
         android:layout_weight="7"
         android:layout_margin="10dp"
-        android:background="@drawable/scroll_frame"/>
+        android:background="#08ffffff"/>
 
     <!-- Add Button -->
     <Button
@@ -49,10 +47,9 @@
         android:layout_margin="10dp"
         android:text="Add"
         android:textColor="@color/white"
-        android:textSize="20dp"
         android:backgroundTint="#0Dffffff"
         app:cornerRadius="20dp"
-        app:strokeColor="#FFFFFF"
+        app:strokeColor="#1AFFFFFF"
         app:strokeWidth="3dp"/>
 
 </LinearLayout>
