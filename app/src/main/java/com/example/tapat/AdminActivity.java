@@ -1,5 +1,6 @@
 package com.example.tapat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -143,10 +144,9 @@ public class AdminActivity extends AppCompatActivity {
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Handle logout button click
-                // Implement your logout logic here
-                // Close the side menu
-                toggleMenu();
+                Intent loginIntent = new Intent(AdminActivity.this, LoginActivity.class);
+                loginIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(loginIntent);
             }
         });
 

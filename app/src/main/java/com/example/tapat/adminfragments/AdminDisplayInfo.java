@@ -1,6 +1,9 @@
 package com.example.tapat.adminfragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.InputType;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,7 +118,15 @@ public class AdminDisplayInfo extends Fragment {
             String[] studentData = db.getSingularData("Student",buttonName);
             if (studentData != null) {
                 EditText nameEditText = createEditText("Name");
+                nameEditText.setTextColor(Color.parseColor("#ffffff"));
+                nameEditText.setHintTextColor(Color.parseColor("#66ffffff"));
+                nameEditText.setTextSize(18);
+
                 EditText idEditText = createEditText("ID Number");
+                idEditText.setTextColor(Color.parseColor("#ffffff"));
+                idEditText.setHintTextColor(Color.parseColor("#66ffffff"));
+                idEditText.setTextSize(18);
+
                 Spinner programSpinner = createSpinner(programArray, studentData[2]);
 
                 handleSpinnerUI(programSpinner);
@@ -123,27 +134,43 @@ public class AdminDisplayInfo extends Fragment {
                 nameEditText.setText(studentData[1]); //InsertName
                 idEditText.setText(studentData[0]);
 
-                containerLayout.addView(nameEditText);
-                containerLayout.addView(idEditText);
-                containerLayout.addView(programSpinner);
+                containerLayout.addView(editSection("Name",nameEditText));
+                containerLayout.addView(editSection("ID",idEditText));
+                containerLayout.addView(editSection("Program",programSpinner));
             }
         } else if ("Lecturer".equals(fragmentTitle)) {
             String[] lecturerData = db.getSingularData("Lecturer",buttonName);
             if (lecturerData != null) {
                 EditText nameEditText = createEditText("Name");
+                nameEditText.setTextColor(Color.parseColor("#ffffff"));
+                nameEditText.setHintTextColor(Color.parseColor("#66ffffff"));
+                nameEditText.setTextSize(18);
+
                 EditText idEditText = createEditText("ID Number");
+                idEditText.setTextColor(Color.parseColor("#ffffff"));
+                idEditText.setHintTextColor(Color.parseColor("#66ffffff"));
+                idEditText.setTextSize(18);
+
                 EditText emailEditText = createEditText("Email");
+                emailEditText.setTextColor(Color.parseColor("#ffffff"));
+                emailEditText.setHintTextColor(Color.parseColor("#66ffffff"));
+                emailEditText.setTextSize(18);
+
                 EditText passwordEditText = createEditText("Password");
+                passwordEditText.setTextColor(Color.parseColor("#ffffff"));
+                passwordEditText.setHintTextColor(Color.parseColor("#66ffffff"));
+                passwordEditText.setTextSize(18);
+                passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
                 nameEditText.setText(lecturerData[1]);
                 idEditText.setText(lecturerData[0]);
                 emailEditText.setText(lecturerData[2]);
                 passwordEditText.setText(lecturerData[3]);
 
-                containerLayout.addView(nameEditText);
-                containerLayout.addView(idEditText);
-                containerLayout.addView(emailEditText);
-                containerLayout.addView(passwordEditText);
+                containerLayout.addView(editSection("Name",nameEditText));
+                containerLayout.addView(editSection("ID",idEditText));
+                containerLayout.addView(editSection("Email",emailEditText));
+                containerLayout.addView(editSection("Password",passwordEditText));
             }
         } else if ("Course".equals(fragmentTitle)) {
             String[] courseData = db.getSingularData("Course",buttonName);
@@ -151,8 +178,18 @@ public class AdminDisplayInfo extends Fragment {
             String[] lecturerIdArray = db.getID("Lecturer");
             if (courseData != null) {
                 EditText courseNameEditText = createEditText("Course Name");
+                courseNameEditText.setTextColor(Color.parseColor("#ffffff"));
+                courseNameEditText.setHintTextColor(Color.parseColor("#66ffffff"));
+                courseNameEditText.setTextSize(18);
+
                 EditText courseIdEditText = createEditText("Course ID");
+
+                courseIdEditText.setTextColor(Color.parseColor("#ffffff"));
+                courseIdEditText.setHintTextColor(Color.parseColor("#66ffffff"));
+                courseIdEditText.setTextSize(18);
+
                 Spinner lecturerIdSpinner = createSpinner(lecturerIdArray, courseData[1]);
+
                 Spinner programSpinner = createSpinner(programArray, courseData[3]);
 
                 handleSpinnerUI(lecturerIdSpinner);
@@ -161,12 +198,50 @@ public class AdminDisplayInfo extends Fragment {
                 courseNameEditText.setText(courseData[2]);
                 courseIdEditText.setText(courseData[0]);
 
-                containerLayout.addView(courseNameEditText);
-                containerLayout.addView(courseIdEditText);
-                containerLayout.addView(lecturerIdSpinner);
-                containerLayout.addView(programSpinner);
+                containerLayout.addView(editSection("Course Name",courseNameEditText));
+                containerLayout.addView(editSection("Course ID",courseIdEditText));
+                containerLayout.addView(editSection("Lecturer",lecturerIdSpinner));
+                containerLayout.addView(editSection("Program",programSpinner));
             }
         }
+    }
+
+    private LinearLayout editSection(String label, View widget) {
+        // Create a new horizontal LinearLayout
+        LinearLayout linearLayout = new LinearLayout(getContext());
+        linearLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        ));
+        linearLayout.setMinimumHeight(150);
+        linearLayout.setVerticalGravity(Gravity.CENTER);
+        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+
+        // Create a TextView for the label (1:1 ratio)
+        TextView labelTextView = new TextView(getContext());
+        labelTextView.setLayoutParams(new LinearLayout.LayoutParams(
+                0, // Width set to 0 for weight-based distribution
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                2 // Weight 2 for 2:2 ratio
+        ));
+        labelTextView.setText(label);
+        labelTextView.setTextColor(Color.parseColor("#ffffff"));
+        labelTextView.setTextSize(18);
+
+        // Add the label TextView to the LinearLayout
+        linearLayout.addView(labelTextView);
+
+        // Set up the widget (2:1 ratio)
+        widget.setLayoutParams(new LinearLayout.LayoutParams(
+                0, // Width set to 0 for weight-based distribution
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                3 // Weight 3 for 3:2 ratio
+        ));
+
+        // Add the widget to the LinearLayout
+        linearLayout.addView(widget);
+
+        return linearLayout;
     }
 
     private Spinner handleSpinnerUI(Spinner spin){
@@ -180,6 +255,8 @@ public class AdminDisplayInfo extends Fragment {
             // Set popupWindow height to 500px
             popupWindow.setHeight(500);
 
+            spin.setBackgroundColor(Color.parseColor("#66ffffff"));
+
         }
         catch (NoClassDefFoundError | ClassCastException | NoSuchFieldException | IllegalAccessException e) {
             // silently fail...
@@ -191,10 +268,16 @@ public class AdminDisplayInfo extends Fragment {
         // Enable editing of EditText and Spinner fields
         for (int i = 0; i < containerLayout.getChildCount(); i++) {
             View child = containerLayout.getChildAt(i);
-            if (child instanceof EditText) {
-                ((EditText) child).setEnabled(true);
-            } else if (child instanceof Spinner) {
-                ((Spinner) child).setEnabled(true);
+            if (child instanceof LinearLayout) {
+                LinearLayout horizontalLayout = (LinearLayout) child;
+                for (int j = 0; j < horizontalLayout.getChildCount(); j++) {
+                    View innerChild = horizontalLayout.getChildAt(j);
+                    if (innerChild instanceof EditText) {
+                        ((EditText) innerChild).setEnabled(true);
+                    } else if (innerChild instanceof Spinner) {
+                        ((Spinner) innerChild).setEnabled(true);
+                    }
+                }
             }
         }
 
@@ -205,23 +288,11 @@ public class AdminDisplayInfo extends Fragment {
     }
 
     private void handleSaveButtonClick() {
-        // Disable editing of EditText and Spinner fields
-        for (int i = 0; i < containerLayout.getChildCount(); i++) {
-            View child = containerLayout.getChildAt(i);
-            if (child instanceof EditText) {
-                ((EditText) child).setEnabled(false);
-            } else if (child instanceof Spinner) {
-                ((Spinner) child).setEnabled(false);
-            }
-        }
-
-        // Hide Save and Cancel buttons, show Edit button
-        editButton.setVisibility(View.VISIBLE);
-        saveButton.setVisibility(View.GONE);
-        cancelButton.setVisibility(View.GONE);
-
         // Call a method to save the edited data
         saveData();
+
+        // Replace the fragment with AdminList
+        replaceFragment(AdminList.newInstance(fragmentTitle));
     }
 
     private void handleCancelButtonClick() {
@@ -243,18 +314,18 @@ public class AdminDisplayInfo extends Fragment {
         // If you want to discard changes, you can reload the original data
         generateUI();
     }
-
+  
     // Method to save Data(sql query)
     private void saveData() {
         //Get specific User.
         buttonName = getArguments().getString(ARG_BUTTON_NAME);
 
         if ("Student".equals(fragmentTitle)) {
-            String name = ((EditText) containerLayout.getChildAt(0)).getText().toString();
-            String id = ((EditText) containerLayout.getChildAt(1)).getText().toString();
-            String program = ((Spinner) containerLayout.getChildAt(2)).getSelectedItem().toString();
+            String name = ((EditText) ((LinearLayout) containerLayout.getChildAt(0)).getChildAt(1)).getText().toString();
+            String id = ((EditText) ((LinearLayout) containerLayout.getChildAt(1)).getChildAt(1)).getText().toString();
+            String program = ((Spinner) ((LinearLayout) containerLayout.getChildAt(2)).getChildAt(1)).getSelectedItem().toString();
             String[] studentData = {id,name,program};
-            // Change studentData on the student array
+          //Change Student
             if(studentData[0].equals("") || studentData[1].equals("")){
                 Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
             }else if(!db.updateStudentData(studentData,buttonName)) {
@@ -265,10 +336,10 @@ public class AdminDisplayInfo extends Fragment {
             replaceFragment(AdminList.newInstance("Student"));
 
         } else if ("Lecturer".equals(fragmentTitle)) {
-            String name = ((EditText) containerLayout.getChildAt(0)).getText().toString();
-            String id = ((EditText) containerLayout.getChildAt(1)).getText().toString();
-            String email = ((EditText) containerLayout.getChildAt(2)).getText().toString();
-            String password = ((EditText) containerLayout.getChildAt(3)).getText().toString();
+            String name = ((EditText) ((LinearLayout) containerLayout.getChildAt(0)).getChildAt(1)).getText().toString();
+            String id = ((EditText) ((LinearLayout) containerLayout.getChildAt(1)).getChildAt(1)).getText().toString();
+            String email = ((EditText) ((LinearLayout) containerLayout.getChildAt(2)).getChildAt(1)).getText().toString();
+            String password = ((EditText) ((LinearLayout) containerLayout.getChildAt(3)).getChildAt(1)).getText().toString();
             String[] lecturerData = {id,name, email, password};
             // Change lecturerData on the lecturer array
             if(lecturerData[0].equals("") || lecturerData[1].equals("")){
@@ -281,10 +352,10 @@ public class AdminDisplayInfo extends Fragment {
             replaceFragment(AdminList.newInstance("Lecturer"));
 
         } else if ("Course".equals(fragmentTitle)) {
-            String coursename = ((EditText) containerLayout.getChildAt(0)).getText().toString();
-            String courseid = ((EditText) containerLayout.getChildAt(1)).getText().toString();
-            String lecturerid = ((Spinner) containerLayout.getChildAt(2)).getSelectedItem().toString();
-            String program = ((Spinner) containerLayout.getChildAt(3)).getSelectedItem().toString();
+            String coursename = ((EditText) ((LinearLayout) containerLayout.getChildAt(0)).getChildAt(1)).getText().toString();
+            String courseid = ((EditText) ((LinearLayout) containerLayout.getChildAt(1)).getChildAt(1)).getText().toString();
+            String lecturerid = ((Spinner) ((LinearLayout) containerLayout.getChildAt(2)).getChildAt(1)).getSelectedItem().toString();
+            String program = ((Spinner) ((LinearLayout) containerLayout.getChildAt(3)).getChildAt(1)).getSelectedItem().toString();
             String[] courseData = {courseid, lecturerid,coursename, program};
             // Change course data
             if(courseData[0].equals("") || courseData[1].equals("")){
