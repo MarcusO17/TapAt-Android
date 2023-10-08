@@ -18,6 +18,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.example.tapat.R;
+import com.example.tapat.helpers.dbHelper;
 
 import java.lang.reflect.Field;
 
@@ -34,6 +35,7 @@ public class AdminDisplayInfo extends Fragment {
     private Button editButton;
     private Button saveButton;
     private Button cancelButton;
+    private dbHelper db;
 
     public AdminDisplayInfo() {
         // Required empty public constructor
@@ -52,6 +54,9 @@ public class AdminDisplayInfo extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.admindisplayinfo, container, false);
+
+        //Init DB
+        db = new dbHelper(getContext());
 
         // Retrieve the buttonName and fragmentTitle from arguments
         fragmentTitle = getArguments().getString(ARG_FRAGMENT_TITLE);
@@ -108,8 +113,9 @@ public class AdminDisplayInfo extends Fragment {
     private void generateUI() {
         containerLayout.removeAllViews(); // Clear any existing UI elements
 
+        /** FIX DISPLAY ISSUES **/
         if ("Student".equals(fragmentTitle)) {
-            String[] studentData = getStudentData(buttonName);
+            String[] studentData = db.getSingularData("Student",buttonName);
             if (studentData != null) {
                 EditText nameEditText = createEditText("Name");
                 nameEditText.setTextColor(Color.parseColor("#ffffff"));
@@ -125,15 +131,15 @@ public class AdminDisplayInfo extends Fragment {
 
                 handleSpinnerUI(programSpinner);
 
-                nameEditText.setText(studentData[0]);
-                idEditText.setText(studentData[1]);
+                nameEditText.setText(studentData[1]); //InsertName
+                idEditText.setText(studentData[0]);
 
                 containerLayout.addView(editSection("Name",nameEditText));
                 containerLayout.addView(editSection("ID",idEditText));
                 containerLayout.addView(editSection("Program",programSpinner));
             }
         } else if ("Lecturer".equals(fragmentTitle)) {
-            String[] lecturerData = getLecturerData(buttonName);
+            String[] lecturerData = db.getSingularData("Lecturer",buttonName);
             if (lecturerData != null) {
                 EditText nameEditText = createEditText("Name");
                 nameEditText.setTextColor(Color.parseColor("#ffffff"));
@@ -156,8 +162,8 @@ public class AdminDisplayInfo extends Fragment {
                 passwordEditText.setTextSize(18);
                 passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
-                nameEditText.setText(lecturerData[0]);
-                idEditText.setText(lecturerData[1]);
+                nameEditText.setText(lecturerData[1]);
+                idEditText.setText(lecturerData[0]);
                 emailEditText.setText(lecturerData[2]);
                 passwordEditText.setText(lecturerData[3]);
 
@@ -167,9 +173,9 @@ public class AdminDisplayInfo extends Fragment {
                 containerLayout.addView(editSection("Password",passwordEditText));
             }
         } else if ("Course".equals(fragmentTitle)) {
-            String[] courseData = getCourseData(buttonName);
+            String[] courseData = db.getSingularData("Course",buttonName);
             //query
-            String[] lecturerIdArray = {"L1000", "L1001", "L1002", "L1003", "L1004", "L1005", "L1006", "L1007", "L1008", "L1009", "L1010"};
+            String[] lecturerIdArray = db.getID("Lecturer");
             if (courseData != null) {
                 EditText courseNameEditText = createEditText("Course Name");
                 courseNameEditText.setTextColor(Color.parseColor("#ffffff"));
@@ -177,18 +183,20 @@ public class AdminDisplayInfo extends Fragment {
                 courseNameEditText.setTextSize(18);
 
                 EditText courseIdEditText = createEditText("Course ID");
+
                 courseIdEditText.setTextColor(Color.parseColor("#ffffff"));
                 courseIdEditText.setHintTextColor(Color.parseColor("#66ffffff"));
                 courseIdEditText.setTextSize(18);
 
-                Spinner lecturerIdSpinner = createSpinner(lecturerIdArray, courseData[2]);
+                Spinner lecturerIdSpinner = createSpinner(lecturerIdArray, courseData[1]);
+
                 Spinner programSpinner = createSpinner(programArray, courseData[3]);
 
                 handleSpinnerUI(lecturerIdSpinner);
                 handleSpinnerUI(programSpinner);
 
-                courseNameEditText.setText(courseData[0]);
-                courseIdEditText.setText(courseData[1]);
+                courseNameEditText.setText(courseData[2]);
+                courseIdEditText.setText(courseData[0]);
 
                 containerLayout.addView(editSection("Course Name",courseNameEditText));
                 containerLayout.addView(editSection("Course ID",courseIdEditText));
@@ -306,65 +314,7 @@ public class AdminDisplayInfo extends Fragment {
         // If you want to discard changes, you can reload the original data
         generateUI();
     }
-
-    //getting data
-    private String[] getStudentData(String buttonName) {
-        //query single row
-        String[][] studentData = {
-                {"Ali","P21013251","BCSCUN"},
-                {"Abu","P21013252","MCS03"},
-                {"Chisa","P21013253","BCSCUN"},
-                {"Murta","P21013254","DCS"},
-                {"Marci","P21013255","BCTCUN"},
-                {"John","P21013256","DCS"},
-                {"Baboon","P21013257","BCSCUN"},
-                {"Dill","P21013258","BCSCUN"},
-                {"Chloe","P21013259","MCS03"},
-                {"Furn","P21013260","MCS03"}
-        };
-
-        for (String[] student : studentData) {
-            if (student[0].equals(buttonName)) {
-                return student;
-            }
-        }
-
-        return null; // Return null if data not found
-    }
-
-    private String[] getLecturerData(String buttonName) {
-        //query single row
-        String[][] lecturerData = {
-                {"Muka","L1000","Muka@lecturer.college.edu.my","abc"},
-                {"Ghili","L1001","Ghilli@lecturer.college.edu.my","135"}
-        };
-
-        for (String[] lecturer : lecturerData) {
-            if (lecturer[0].equals(buttonName)) {
-                return lecturer;
-            }
-        }
-
-        return null; // Return null if data not found
-    }
-
-    private String[] getCourseData(String buttonName) {
-        //query single row
-        String[][] courseData = {
-                {"Android Development","AG1001","L1000","BCSCUN"},
-                {"Software Engineering","AG1003","L1001","DCS"}
-        };
-
-        for (String[] course : courseData) {
-            if (course[0].equals(buttonName.split(": ")[1])) {
-                return course;
-            }
-        }
-
-        return null; // Return null if data not found
-    }
-
-
+  
     // Method to save Data(sql query)
     private void saveData() {
         //Get specific User.
@@ -375,6 +325,13 @@ public class AdminDisplayInfo extends Fragment {
             String id = ((EditText) ((LinearLayout) containerLayout.getChildAt(1)).getChildAt(1)).getText().toString();
             String program = ((Spinner) ((LinearLayout) containerLayout.getChildAt(2)).getChildAt(1)).getSelectedItem().toString();
             String[] studentData = {id,name,program};
+          //Change Student
+            if(studentData[0].equals("") || studentData[1].equals("")){
+                Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
+            }else if(!db.updateStudentData(studentData,buttonName)) {
+                // Add studentData to the student array
+                Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
+            }
 
             replaceFragment(AdminList.newInstance("Student"));
 
@@ -384,6 +341,13 @@ public class AdminDisplayInfo extends Fragment {
             String email = ((EditText) ((LinearLayout) containerLayout.getChildAt(2)).getChildAt(1)).getText().toString();
             String password = ((EditText) ((LinearLayout) containerLayout.getChildAt(3)).getChildAt(1)).getText().toString();
             String[] lecturerData = {id,name, email, password};
+            // Change lecturerData on the lecturer array
+            if(lecturerData[0].equals("") || lecturerData[1].equals("")){
+                Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
+            }else if(!db.updateLecturerData(lecturerData,buttonName)) {
+                // Add studentData to the student array
+                Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
+            }
 
             replaceFragment(AdminList.newInstance("Lecturer"));
 
@@ -393,6 +357,13 @@ public class AdminDisplayInfo extends Fragment {
             String lecturerid = ((Spinner) ((LinearLayout) containerLayout.getChildAt(2)).getChildAt(1)).getSelectedItem().toString();
             String program = ((Spinner) ((LinearLayout) containerLayout.getChildAt(3)).getChildAt(1)).getSelectedItem().toString();
             String[] courseData = {courseid, lecturerid,coursename, program};
+            // Change course data
+            if(courseData[0].equals("") || courseData[1].equals("")){
+                Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
+            }else if(!db.updateCourseData(courseData,buttonName)) {
+                // Add studentData to the student array
+                Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
+            }
 
             replaceFragment(AdminList.newInstance("Course"));
         }
