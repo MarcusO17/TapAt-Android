@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".AttendanceListFragment"
     android:orientation="vertical"
+    android:background="@drawable/background_picture"
     >
 
     <Button
@@ -13,6 +14,9 @@
         android:id="@+id/attendance_taking_button"
         android:text="@string/starttakingattendance"
         android:layout_alignParentEnd="true"
+        android:backgroundTint="#0Dffffff"
+        android:textColor="@color/white"
+        android:textSize="15sp"
         />
     <Button
         android:layout_width="wrap_content"
@@ -20,25 +24,36 @@
         android:id="@+id/submit_attendance_button"
         android:text="@string/submit"
         android:layout_toLeftOf="@+id/attendance_taking_button"
+        android:backgroundTint="#0Dffffff"
+        android:textColor="@color/white"
+        android:textSize="15sp"
         />
 
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
         android:id="@+id/attendancelistsearchbar"
-        android:padding="10dp"
-        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/attendance_taking_button"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/transparent"
         android:hint="Search"
-        android:layout_below="@id/attendance_taking_button"/>
+        android:inputType="text"
+        android:padding="10dp"
+        android:textColor="@color/white"
+        android:textColorHint="#66ffffff" />
 
     <!-- TODO: Update blank fragment layout -->
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:id="@+id/attendancelistrecyclerview"
-        android:background="@color/white"
+        android:layout_width="350dp"
+        android:layout_height="650dp"
         android:layout_below="@id/attendancelistsearchbar"
-        />
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/scroll_frame" />
 
 
 </RelativeLayout>

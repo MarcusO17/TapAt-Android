@@ -23,6 +23,7 @@
         android:fontFamily="@font/julius_sans_one"
         android:text="Lecturer"
         android:textColor="#FFFFFF"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:textStyle="bold"/>
 
 </LinearLayout>

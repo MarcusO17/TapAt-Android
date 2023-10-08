@@ -3,13 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="@drawable/background_picture">
 
     <TextView
         android:id="@+id/textViewUserProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="User Profile"
+        android:textColor="@color/white"
         android:textSize="18sp" />
 
     <!-- Add user profile information and UI components here -->
