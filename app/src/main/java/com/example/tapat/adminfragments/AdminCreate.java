@@ -231,27 +231,27 @@ public class AdminCreate extends Fragment {
     private void handleAddButtonClick() {
         // Handle the logic for adding data to the respective arrays
         if ("Student".equals(fragmentTitle)) {
-            String name = ((EditText) containerLayout.getChildAt(0)).getText().toString();
-            String id = ((EditText) containerLayout.getChildAt(1)).getText().toString();
-            String program = ((Spinner) containerLayout.getChildAt(2)).getSelectedItem().toString();
-            String[] studentData = {name, id, program};
+            String name = ((EditText) ((LinearLayout) containerLayout.getChildAt(0)).getChildAt(1)).getText().toString();
+            String id = ((EditText) ((LinearLayout) containerLayout.getChildAt(1)).getChildAt(1)).getText().toString();
+            String program = ((Spinner) ((LinearLayout) containerLayout.getChildAt(2)).getChildAt(1)).getSelectedItem().toString();
+            String[] studentData = {id, name, program};
             // Add studentData to the student array
 
             replaceFragment(AdminList.newInstance("Student"));
         } else if ("Lecturer".equals(fragmentTitle)) {
-            String name = ((EditText) containerLayout.getChildAt(0)).getText().toString();
-            String id = ((EditText) containerLayout.getChildAt(1)).getText().toString();
-            String email = ((EditText) containerLayout.getChildAt(2)).getText().toString();
-            String password = ((EditText) containerLayout.getChildAt(3)).getText().toString();
+            String name = ((EditText) ((LinearLayout) containerLayout.getChildAt(0)).getChildAt(1)).getText().toString();
+            String id = ((EditText) ((LinearLayout) containerLayout.getChildAt(1)).getChildAt(1)).getText().toString();
+            String email = ((EditText) ((LinearLayout) containerLayout.getChildAt(2)).getChildAt(1)).getText().toString();
+            String password = ((EditText) ((LinearLayout) containerLayout.getChildAt(3)).getChildAt(1)).getText().toString();
             String[] lecturerData = {name, id, email, password};
             // Add lecturerData to the lecturer array
 
             replaceFragment(AdminList.newInstance("Lecturer"));
         } else if ("Course".equals(fragmentTitle)) {
-            String coursename = ((EditText) containerLayout.getChildAt(0)).getText().toString();
-            String courseid = ((EditText) containerLayout.getChildAt(1)).getText().toString();
-            String lecturerid = ((Spinner) containerLayout.getChildAt(2)).getSelectedItem().toString();
-            String program = ((Spinner) containerLayout.getChildAt(3)).getSelectedItem().toString();
+            String coursename = ((EditText) ((LinearLayout) containerLayout.getChildAt(0)).getChildAt(1)).getText().toString();
+            String courseid = ((EditText) ((LinearLayout) containerLayout.getChildAt(1)).getChildAt(1)).getText().toString();
+            String lecturerid = ((Spinner) ((LinearLayout) containerLayout.getChildAt(2)).getChildAt(1)).getSelectedItem().toString();
+            String program = ((Spinner) ((LinearLayout) containerLayout.getChildAt(3)).getChildAt(1)).getSelectedItem().toString();
             String[] courseData = {coursename, courseid, lecturerid, program};
             // Handle adding a course (if needed)
 
