@@ -20,10 +20,11 @@
     <!-- Add your buttons for Student, Lecturer, Course here -->
     <Button
         android:id="@+id/studentButton"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="300dp"
+        android:layout_height="110dp"
+        android:layout_gravity="center"
         android:layout_margin="10dp"
-        android:layout_weight="1"
+        android:backgroundTint="#0Dffffff"
         android:text="Student"
         android:textSize="20sp"
         android:textColor="@color/white"
