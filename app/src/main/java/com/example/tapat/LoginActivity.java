@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                     if(sessionID.startsWith("L")){
-                        Intent intent = new Intent(getApplicationContext(), LecturerActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), FragmentHolderActivity.class);
                         intent.putExtra("sessionID",sessionID);
                         startActivity(intent);
                     }
@@ -63,6 +63,7 @@ public class LoginActivity extends AppCompatActivity {
                     loginToastError.show();
 
                 }
+            }
         });
     }
 }
