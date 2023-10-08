@@ -114,8 +114,8 @@ public class AdminDisplayInfo extends Fragment {
         containerLayout.removeAllViews(); // Clear any existing UI elements
 
         /** FIX DISPLAY ISSUES **/
-        if ("Student".equals(fragmentTitle)) {
-            String[] studentData = db.getSingularData("Student",buttonName);
+        if ("StudentItem".equals(fragmentTitle)) {
+            String[] studentData = db.getSingularData("StudentItem",buttonName);
             if (studentData != null) {
                 EditText nameEditText = createEditText("Name");
                 nameEditText.setTextColor(Color.parseColor("#ffffff"));
@@ -320,12 +320,12 @@ public class AdminDisplayInfo extends Fragment {
         //Get specific User.
         buttonName = getArguments().getString(ARG_BUTTON_NAME);
 
-        if ("Student".equals(fragmentTitle)) {
+        if ("StudentItem".equals(fragmentTitle)) {
             String name = ((EditText) ((LinearLayout) containerLayout.getChildAt(0)).getChildAt(1)).getText().toString();
             String id = ((EditText) ((LinearLayout) containerLayout.getChildAt(1)).getChildAt(1)).getText().toString();
             String program = ((Spinner) ((LinearLayout) containerLayout.getChildAt(2)).getChildAt(1)).getSelectedItem().toString();
             String[] studentData = {id,name,program};
-          //Change Student
+          //Change StudentItem
             if(studentData[0].equals("") || studentData[1].equals("")){
                 Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
             }else if(!db.updateStudentData(studentData,buttonName)) {
@@ -333,7 +333,7 @@ public class AdminDisplayInfo extends Fragment {
                 Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
             }
 
-            replaceFragment(AdminList.newInstance("Student"));
+            replaceFragment(AdminList.newInstance("StudentItem"));
 
         } else if ("Lecturer".equals(fragmentTitle)) {
             String name = ((EditText) ((LinearLayout) containerLayout.getChildAt(0)).getChildAt(1)).getText().toString();

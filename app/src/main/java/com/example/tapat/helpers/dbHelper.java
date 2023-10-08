@@ -7,6 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.tapat.model.AttendanceListRowData;
+import com.example.tapat.model.CourseItem;
+import com.example.tapat.model.StudentItem;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +21,7 @@ public class dbHelper extends SQLiteOpenHelper {
      ***********************************************************************************************
      */
     private static final String DATABASE_NAME = "TapAt.db";
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 9;
 
     static class Admin{
         private static final String TABLE_NAME = "admins";
@@ -59,7 +63,7 @@ public class dbHelper extends SQLiteOpenHelper {
     static class AttendanceStudents{
         private static final String TABLE_NAME = "attendance_students";
         private static final String COL_1 = "attendance_ID";
-        private static final String COL_2= "course_ID";
+        private static final String COL_2= "student_ID";
         private static final String COL_3 = "attendance_status";
         private static final String COL_4 = "reason";
     }
@@ -103,7 +107,7 @@ public class dbHelper extends SQLiteOpenHelper {
                 + Lecturer.COL_4 + " TEXT  NOT NULL"
                 + " )");
 
-        //Creating Student Table
+        //Creating StudentItem Table
         db.execSQL("CREATE TABLE " + Student.TABLE_NAME+ " ( "
                 + Student.COL_1 + " TEXT PRIMARY KEY, "
                 + Student.COL_2 + " TEXT NOT NULL,"
@@ -134,7 +138,7 @@ public class dbHelper extends SQLiteOpenHelper {
                 + AttendanceStudents.COL_3 + " TEXT NOT NULL,"
                 + AttendanceStudents.COL_4 + " TEXT NOT NULL,"
                 + " FOREIGN KEY (attendance_ID) REFERENCES attendance(attendance_ID),"
-                + " FOREIGN KEY (course_ID) REFERENCES courses(course_ID)"
+                + " FOREIGN KEY (student_ID) REFERENCES students(student_ID)"
                 + " )");
 
         //Creating CourseStudents Table
@@ -155,8 +159,8 @@ public class dbHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Course.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + Attendance.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + AttendanceStudents.TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS " + CourseStudents.TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS users");
+        db.execSQL("DROP VIEW IF EXISTS " + CourseStudents.TABLE_NAME);
+        //db.execSQL("DROP TABLE IF EXISTS users");
         onCreate(db);
         insertAdmin(db);
     }
@@ -229,7 +233,7 @@ public class dbHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Get Student Names
+     * Get StudentItem Names
      * @return List of Students (Array)
      */
     public String[] getNames(String className){
@@ -276,7 +280,7 @@ public class dbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
         switch(className){
-            case "Student":{
+            case "StudentItem":{
                 cursor = db.rawQuery("SELECT student_ID FROM students", null);
                 if(cursor!=null){
                     while(cursor.moveToNext()){
@@ -312,9 +316,9 @@ public class dbHelper extends SQLiteOpenHelper {
     public boolean insertStudentData(String[] student){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(Student.COL_1,student[0]); //Insert Student ID
-        cv.put(Student.COL_2,student[1]); //Insert Student Name
-        cv.put(Student.COL_3,student[2]); //Insert Student Programme
+        cv.put(Student.COL_1,student[0]); //Insert StudentItem ID
+        cv.put(Student.COL_2,student[1]); //Insert StudentItem Name
+        cv.put(Student.COL_3,student[2]); //Insert StudentItem Programme
         try{
             long result = db.insert(Student.TABLE_NAME,null,cv);
             return result != -1;
@@ -358,7 +362,7 @@ public class dbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
         switch(className){
-            case "Student":{
+            case "StudentItem":{
                 cursor = db.rawQuery("SELECT * FROM students where student_name = ? ", new String[] {buttonName});
                 if(cursor!=null && cursor.moveToFirst())
                     for(int i= 0; i < cursor.getColumnCount(); i++)
@@ -392,9 +396,9 @@ public class dbHelper extends SQLiteOpenHelper {
     public boolean updateStudentData(String[] student,String target){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv= new ContentValues();
-        cv.put(Student.COL_1,student[0]); //Insert Student ID
-        cv.put(Student.COL_2,student[1]); //Insert Student Name
-        cv.put(Student.COL_3,student[2]); //Insert Student Programme
+        cv.put(Student.COL_1,student[0]); //Insert StudentItem ID
+        cv.put(Student.COL_2,student[1]); //Insert StudentItem Name
+        cv.put(Student.COL_3,student[2]); //Insert StudentItem Programme
         try {
             long result = db.update(Student.TABLE_NAME,cv,"student_name=?", new String[]{target});
             return result != -1;
@@ -452,7 +456,45 @@ public class dbHelper extends SQLiteOpenHelper {
     }
     */
 
+    public List<StudentItem> getStudents() {
+        List<StudentItem> studentData = new ArrayList<>();
 
+        String studentID = "";
+        String studentName = "";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+
+
+        cursor = db.rawQuery("SELECT * FROM students", null);
+        if(cursor!=null){
+            while(cursor.moveToNext()){
+                studentID = cursor.getString(cursor.getColumnIndex("student_ID"));
+                studentName = cursor.getString(cursor.getColumnIndex("student_name"));
+                studentData.add(new StudentItem(studentName,studentID));
+            }
+        }
+
+        return studentData;
+    }
+
+    public List<CourseItem> getCourses() {
+        List<CourseItem> courseData = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+
+        cursor = db.rawQuery("SELECT * FROM courses", null);
+        if(cursor!=null){
+            while(cursor.moveToNext()){
+                String courseID = cursor.getString(cursor.getColumnIndex("course_ID"));
+                String courseName = cursor.getString(cursor.getColumnIndex("course_name"));
+                courseData.add(new CourseItem(courseName,courseID));
+            }
+        }
+
+        return courseData;
+    }
 }
 
 

@@ -2,6 +2,7 @@ package com.example.tapat.model;
 
 public class AttendanceListRowData{
 
+    String attendanceID;
     String studentName;
     boolean attendance;
     String reason;

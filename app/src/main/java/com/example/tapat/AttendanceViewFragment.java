@@ -16,8 +16,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.tapat.adapter.AttendanceViewAdapter;
+import com.example.tapat.helpers.dbHelper;
 import com.example.tapat.model.AttendanceListRowData;
-import com.example.tapat.model.Student;
+import com.example.tapat.model.StudentItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class AttendanceViewFragment extends Fragment {
     String className;
     String classID;
     AttendanceViewAdapter attendanceListAdapter;
+    dbHelper db;
     EditText searchbar;
 
     public AttendanceViewFragment() {
@@ -43,6 +45,10 @@ public class AttendanceViewFragment extends Fragment {
         RecyclerView attendanceListRecyclerView = view.findViewById(R.id.attendanceviewrecyclerview);
         LinearLayoutManager attendanceListLayout = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         attendanceListRecyclerView.setLayoutManager(attendanceListLayout);
+
+        //init DB
+
+        db = new dbHelper(getContext());
 
         Bundle args = getArguments();
 
@@ -73,15 +79,15 @@ public class AttendanceViewFragment extends Fragment {
             Log.d("ClassListFragment", "class id: " + classID);
         }
         //query the shit here
-        Student student1 = new Student("Ali", "P21011234");
-        Student student2 = new Student("Abu", "P21010001");
-        Student student3 = new Student("John","P21011002");
-        Student student4 = new Student("Felix","P21011003");
+        StudentItem studentItem1 = new StudentItem("Ali", "P21011234");
+        StudentItem studentItem2 = new StudentItem("Abu", "P21010001");
+        StudentItem studentItem3 = new StudentItem("John","P21011002");
+        StudentItem studentItem4 = new StudentItem("Felix","P21011003");
 
-        AttendanceListRowData row1 = new AttendanceListRowData(student1.getStudentName(),false,"");
-        AttendanceListRowData row2 = new AttendanceListRowData(student2.getStudentName(),false,"");
-        AttendanceListRowData row3 = new AttendanceListRowData(student3.getStudentName(),false,"");
-        AttendanceListRowData row4 = new AttendanceListRowData(student4.getStudentName(),false,"");
+        AttendanceListRowData row1 = new AttendanceListRowData(studentItem1.getStudentName(),false,"");
+        AttendanceListRowData row2 = new AttendanceListRowData(studentItem2.getStudentName(),false,"");
+        AttendanceListRowData row3 = new AttendanceListRowData(studentItem3.getStudentName(),false,"");
+        AttendanceListRowData row4 = new AttendanceListRowData(studentItem4.getStudentName(),false,"");
 
         attendanceList.add(row1);
         attendanceList.add(row2);

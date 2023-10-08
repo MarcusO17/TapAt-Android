@@ -81,8 +81,8 @@ public class AdminCreate extends Fragment {
     private void generateUI() {
         containerLayout.removeAllViews(); // Clear any existing UI elements
 
-        if ("Student".equals(fragmentTitle)) {
-            // Create UI for Student
+        if ("StudentItem".equals(fragmentTitle)) {
+            // Create UI for StudentItem
             EditText nameEditText = new EditText(requireContext());
             nameEditText.setHint("Name");
             nameEditText.setTextColor(Color.parseColor("#ffffff"));
@@ -241,7 +241,7 @@ public class AdminCreate extends Fragment {
 
     private void handleAddButtonClick() {
         // Handle the logic for adding data to the respective arrays
-        if ("Student".equals(fragmentTitle)) {
+        if ("StudentItem".equals(fragmentTitle)) {
           
             String name = ((EditText) ((LinearLayout) containerLayout.getChildAt(0)).getChildAt(1)).getText().toString();
             String id = ((EditText) ((LinearLayout) containerLayout.getChildAt(1)).getChildAt(1)).getText().toString();
@@ -255,7 +255,7 @@ public class AdminCreate extends Fragment {
                 Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
             }
 
-            replaceFragment(AdminList.newInstance("Student"));
+            replaceFragment(AdminList.newInstance("StudentItem"));
 
         } else if ("Lecturer".equals(fragmentTitle)) {
 
