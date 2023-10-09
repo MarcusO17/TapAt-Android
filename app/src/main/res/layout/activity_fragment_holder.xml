@@ -52,7 +52,7 @@
             android:paddingBottom="97dp"
             android:orientation="vertical"
             android:gravity="center_vertical"
-            android:background="@drawable/scroll_frame"/>
+            android:background="@android:color/transparent"/>
 
     </LinearLayout>
 
