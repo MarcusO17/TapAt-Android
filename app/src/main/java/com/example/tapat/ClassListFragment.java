@@ -1,7 +1,9 @@
 package com.example.tapat;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -73,29 +75,46 @@ public class ClassListFragment extends Fragment implements CourseItemViewAdapter
         addClassButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Integer size = classList.size()+1;
-                String className = "Class " + size;
-                String classID = "c" + size;
-                ClassListItem tempclass = new ClassListItem(className, classID);
-                classList.add(tempclass);
-                adapter.notifyDataSetChanged();
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setCancelable(true);
+                builder.setMessage("Create New Class?");
+                builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        Integer size = classList.size()+1;
+                        String className = "Class " + size;
+                        String classID = "c" + size;
+                        ClassListItem tempclass = new ClassListItem(className, classID);
+                        classList.add(tempclass);
+                        adapter.notifyDataSetChanged();
 
-                TextView title = getActivity().findViewById(R.id.fragmentholdertitle);
-                title.setText(classID + " - " + className);
+                        TextView title = getActivity().findViewById(R.id.fragmentholdertitle);
+                        title.setText(classID + " - " + className);
 
-                Bundle args = new Bundle();
-                args.putString("class_id",classID);
-                args.putString("class_name",className);
+                        Bundle args = new Bundle();
+                        args.putString("class_id",classID);
+                        args.putString("class_name",className);
 
-                AttendanceListFragment attendanceListFragment = new AttendanceListFragment();
+                        AttendanceListFragment attendanceListFragment = new AttendanceListFragment();
 
-                attendanceListFragment.setArguments(args);
+                        attendanceListFragment.setArguments(args);
 
-                FragmentManager fragmentManager = getParentFragmentManager();
-                FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.classlistframelayout, attendanceListFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                        FragmentManager fragmentManager = getParentFragmentManager();
+                        FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.classlistframelayout, attendanceListFragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+                    }
+                });
+                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
 
             }
         });

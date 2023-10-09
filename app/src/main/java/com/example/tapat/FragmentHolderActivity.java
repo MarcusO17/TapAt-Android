@@ -6,7 +6,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -63,7 +65,7 @@ public class FragmentHolderActivity extends AppCompatActivity {
 
 
         // side navigation bar
-        sideNavigationButton = (ImageButton) findViewById(R.id.sidebar_button);
+        sideNavigationButton = (ImageButton) findViewById(R.id.sidebar_button); // in actionbar
         sideNavigationLayout = (DrawerLayout) findViewById(R.id.side_navigation_layout);
         sideNavigationView = (NavigationView) findViewById(R.id.side_navigation_view);
 
@@ -78,12 +80,16 @@ public class FragmentHolderActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(MenuItem item) {
                 // Handle navigation item clicks here
                 if (item.getItemId() == R.id.side_navigation_home_button) {
-                    //switch to homepage activity/fragment
-                    ;
+                    int size = fragmentManager.getBackStackEntryCount();
+                    for (int i = 0; i<(size-1);i++) {
+                        onBackPressed();
+                    }
+
                 }
                 else if (item.getItemId() == R.id.logout_button) {
-                    //switch to logout activity
-                    ;
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
                 }
                 sideNavigationLayout.closeDrawer(GravityCompat.START);
                 return true;
