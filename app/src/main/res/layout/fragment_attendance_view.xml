@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AttendanceViewFragment"
-    android:background="@drawable/background_picture">
+    tools:context=".AttendanceViewFragment">
 
     <EditText
         android:layout_width="match_parent"
@@ -12,24 +11,14 @@
         android:id="@+id/attendanceviewsearchbar"
         android:padding="10dp"
         android:hint="Search"
-        android:layout_margin="10dp"
-        android:textColor="@color/white"
-        android:textColorHint="#66ffffff"
-        android:inputType="text"
-        android:background="@android:color/transparent"
-        />
+        android:background="@color/white"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/attendanceviewrecyclerview"
-        android:background="@drawable/scroll_frame"
+        android:background="@color/white"
         android:layout_below="@+id/attendanceviewsearchbar"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
         />
 
 </RelativeLayout>
