@@ -113,7 +113,6 @@ public class AdminDisplayInfo extends Fragment {
     private void generateUI() {
         containerLayout.removeAllViews(); // Clear any existing UI elements
 
-        /** FIX DISPLAY ISSUES **/
         if ("Student".equals(fragmentTitle)) {
             String[] studentData = db.getSingularData("Student",buttonName);
             if (studentData != null) {

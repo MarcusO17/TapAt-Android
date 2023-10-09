@@ -1,17 +1,106 @@
-<!-- fragment_admin_nfc_reader.xml -->
+<!-- adminnrcreader.xml -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center">
+    android:background="#343541">
+
+    <!-- Display Fragment Title -->
 
     <TextView
-        android:id="@+id/textViewNFCReader"
-        android:layout_width="wrap_content"
+        android:id="@+id/displayFragmentTitleTextView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="AdminNFCReader"
-        android:textSize="18sp" />
+        android:gravity="center"
+        android:text="NFC Reader"
+        android:textSize="20sp"
+        android:textColor="@color/white" />
 
-    <!-- Add NFC Reader related UI components here -->
+    <!-- Add your UI elements for displaying admin information here -->
+    <LinearLayout
+        android:id="@+id/containerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+        <!-- Dynamically generated UI elements will be added here -->
+        <LinearLayout
+            android:id="@+id/nameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="50dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Name"
+                android:textSize="20sp"
+                android:textColor="#ffffff" />
+
+            <TextView
+                android:id="@+id/nameText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:text="Name"
+                android:textSize="20sp"
+                android:textColor="#ffffff" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/IdLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="50dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="ID"
+                android:textSize="20sp"
+                android:textColor="#ffffff" />
+
+            <TextView
+                android:id="@+id/idText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:text="ID Number"
+                android:textSize="20sp"
+                android:textColor="#ffffff" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ProgramLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="50dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Program"
+                android:textSize="20sp"
+                android:textColor="#ffffff" />
+
+            <TextView
+                android:id="@+id/programText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:text="Program"
+                android:textSize="20sp"
+                android:textColor="#ffffff" />
+
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

@@ -389,6 +389,18 @@ public class dbHelper extends SQLiteOpenHelper {
         return rowInfo.toArray(new String[]{});
     }
 
+    public String[] getStudentData(String studentid){
+        List<String> rowInfo = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        cursor = db.rawQuery("SELECT * FROM students where student_ID = ? ", new String[] {studentid});
+        if(cursor!=null && cursor.moveToFirst())
+            for(int i= 0; i < cursor.getColumnCount(); i++)
+                rowInfo.add(cursor.getString(i));
+
+        return rowInfo.toArray(new String[]{});
+    }
+
     public boolean updateStudentData(String[] student,String target){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv= new ContentValues();
