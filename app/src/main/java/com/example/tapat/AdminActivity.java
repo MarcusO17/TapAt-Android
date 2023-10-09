@@ -155,6 +155,18 @@ public class AdminActivity extends AppCompatActivity {
         replaceFragment(new AdminDashboard());
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        // Pass the NFC intent to the active fragment
+        Fragment activeFragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+        if (activeFragment instanceof AdminNFCwriter) {
+            String buttonName = "YourButtonName"; // Replace with your actual buttonName or fetch it from your data source
+            ((AdminNFCwriter) activeFragment).handleNfcIntent(intent, buttonName);
+        }
+    }
+
     // Function to toggle the menu (expand/contract)
     private void toggleMenu() {
         if (isMenuExpanded) {

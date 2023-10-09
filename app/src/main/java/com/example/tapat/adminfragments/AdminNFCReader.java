@@ -30,16 +30,16 @@ public class AdminNFCReader extends Fragment {
         }
 
         // Initialize and handle NFC Reader related UI components and functionality here
-        String[] studentData = db.getStudentData(nfc_data);
+        //String[] studentData = db.getStudentData(nfc_data);
 
-        TextView nameView = view.findViewById(R.id.nameText);
-        nameView.setText(studentData[1]);
+        //TextView nameView = view.findViewById(R.id.nameText);
+        //nameView.setText(studentData[1]);
 
-        TextView idView = view.findViewById(R.id.idText);
-        idView.setText(studentData[0]);
+        //TextView idView = view.findViewById(R.id.idText);
+        //idView.setText(studentData[0]);
 
-        TextView programView = view.findViewById(R.id.programText);
-        programView.setText(studentData[2]);
+        //TextView programView = view.findViewById(R.id.programText);
+        //programView.setText(studentData[2]);
 
         return view;
     }
