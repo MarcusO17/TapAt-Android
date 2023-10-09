@@ -7,7 +7,7 @@ public class ClassListItem implements Serializable {
     String classID;
 
     public ClassListItem(String className, String classID) {
-        this.className = className;
+        this.className = "Class " + className;
         this.classID = classID;
     }
 

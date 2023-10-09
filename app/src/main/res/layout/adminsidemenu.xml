@@ -55,7 +55,7 @@
             app:strokeWidth="1dp"
             android:text="Dashboard" />
 
-        <!-- Student -->
+        <!-- StudentItem -->
         <Button
             android:id="@+id/studentButton"
             android:layout_width="match_parent"

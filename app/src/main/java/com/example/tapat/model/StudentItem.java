@@ -2,11 +2,11 @@ package com.example.tapat.model;
 
 import java.io.Serializable;
 
-public class Student implements Serializable {
+public class StudentItem implements Serializable {
     private String studentName;
     private String studentID;
 
-    public Student(String studentName, String studentID) {
+    public StudentItem(String studentName, String studentID) {
         this.studentName = studentName;
         this.studentID = studentID;
     }

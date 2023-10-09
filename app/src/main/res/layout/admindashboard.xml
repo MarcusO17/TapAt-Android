@@ -17,7 +17,7 @@
         android:layout_margin="10dp"
         android:autoSizeTextType="uniform" />
 
-    <!-- Add your buttons for Student, Lecturer, Course here -->
+    <!-- Add your buttons for StudentItem, Lecturer, Course here -->
     <Button
         android:id="@+id/studentButton"
         android:layout_width="match_parent"
