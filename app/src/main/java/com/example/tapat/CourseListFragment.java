@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.tapat.adapter.CourseItemViewAdapter;
+import com.example.tapat.helpers.dbHelper;
 import com.example.tapat.model.CourseItem;
 
 import java.util.ArrayList;
@@ -21,6 +22,8 @@ import java.util.List;
 
 public class CourseListFragment extends Fragment implements CourseItemViewAdapter.OnClickListener{
     View view;
+    dbHelper db;
+    String sessionInfo = "";
     List<CourseItem> courseList = new ArrayList<>();
     public CourseListFragment() {
         // Required empty public constructor
@@ -31,11 +34,18 @@ public class CourseListFragment extends Fragment implements CourseItemViewAdapte
         // Inflate the layout for this fragment
         view =  inflater.inflate(R.layout.fragment_course_list, container, false);
 
+        //init DB
+        db = new dbHelper(getContext());
+
         RecyclerView courseListRecyclerView = view.findViewById(R.id.courselistrecyclerview);
         LinearLayoutManager courseListLayout = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         courseListRecyclerView.setLayoutManager(courseListLayout);
+        Bundle args = getArguments();
+
+        sessionInfo = args.getString("sessionID");
 
         //query the shit here
+        /*
         CourseItem course1 = new CourseItem("Android Development Skill", "A202SGI");
         CourseItem course2 = new CourseItem("Data Science", "INT5005CEM");
         CourseItem course3 = new CourseItem("Software Engineering","INT5001CEM");
@@ -49,12 +59,11 @@ public class CourseListFragment extends Fragment implements CourseItemViewAdapte
         courseList.add(course4);
         courseList.add(course5);
         courseList.add(course6);
-
-
-        CourseItemViewAdapter courseItemAdapter = new CourseItemViewAdapter(courseList, this::onClickListener);
+        */
+        courseList = db.getCourses(sessionInfo);
+        CourseItemViewAdapter courseItemAdapter = new CourseItemViewAdapter(courseList, this);
 
         courseListRecyclerView.setAdapter(courseItemAdapter);
-        Bundle args = getArguments();
 
         return view;
     }

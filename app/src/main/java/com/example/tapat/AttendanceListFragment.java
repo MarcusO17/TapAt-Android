@@ -17,8 +17,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.tapat.adapter.AttendanceListViewAdapter;
+import com.example.tapat.helpers.dbHelper;
 import com.example.tapat.model.AttendanceListRowData;
-import com.example.tapat.model.Student;
+import com.example.tapat.model.StudentItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +28,11 @@ public class AttendanceListFragment extends Fragment{
 
     View view;
     List<AttendanceListRowData> attendanceList = new ArrayList<>();
+    List<StudentItem> studentsInClass = new ArrayList<>();
     String className;
+    String courseID;
     String classID;
+    dbHelper db;
     Button attendanceTakingButton;
     Button submitButton;
     EditText searchBar;
@@ -42,6 +46,10 @@ public class AttendanceListFragment extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_attendance_list, container, false);
+
+        //Init DB
+        db = new dbHelper(getContext());
+        db.populateCourseStudents();
 
         attendanceTakingButton = view.findViewById(R.id.attendance_taking_button);
         submitButton = view.findViewById(R.id.submit_attendance_button);
@@ -91,25 +99,33 @@ public class AttendanceListFragment extends Fragment{
         if (args != null) {
             className = args.getString("class_id");
             classID = args.getString("class_name");
+            courseID = args.getString("course_ID");
             Log.d("ClassListFragment", "class name: " + className);
             Log.d("ClassListFragment", "class id: " + classID);
         }
         //query the shit here
-        Student student1 = new Student("Ali", "P21011234");
-        Student student2 = new Student("Abu", "P21010001");
-        Student student3 = new Student("John","P21011002");
-        Student student4 = new Student("Felix","P21011003");
+        /* TESTING PRE-DB
+        StudentItem studentItem1 = new StudentItem("Ali", "P21011234");
+        StudentItem studentItem2 = new StudentItem("Abu", "P21010001");
+        StudentItem studentItem3 = new StudentItem("John","P21011002");
+        StudentItem studentItem4 = new StudentItem("Felix","P21011003");
 
-        AttendanceListRowData row1 = new AttendanceListRowData(student1.getStudentName(),false,"");
-        AttendanceListRowData row2 = new AttendanceListRowData(student2.getStudentName(),false,"");
-        AttendanceListRowData row3 = new AttendanceListRowData(student3.getStudentName(),false,"");
-        AttendanceListRowData row4 = new AttendanceListRowData(student4.getStudentName(),false,"");
+        AttendanceListRowData row1 = new AttendanceListRowData(studentItem1.getStudentName(),false,"");
+        AttendanceListRowData row2 = new AttendanceListRowData(studentItem2.getStudentName(),false,"");
+        AttendanceListRowData row3 = new AttendanceListRowData(studentItem3.getStudentName(),false,"");
+        AttendanceListRowData row4 = new AttendanceListRowData(studentItem4.getStudentName(),false,"");
 
         attendanceList.add(row1);
         attendanceList.add(row2);
         attendanceList.add(row3);
         attendanceList.add(row4);
+        */
 
+        studentsInClass = db.getCourseStudents(courseID);
+
+        for(StudentItem student: studentsInClass){
+            attendanceList.add(new AttendanceListRowData(classID,student.getStudentID(),student.getStudentName(),false,""));
+        }
 
         attendanceListAdapter = new AttendanceListViewAdapter(attendanceList);
 
