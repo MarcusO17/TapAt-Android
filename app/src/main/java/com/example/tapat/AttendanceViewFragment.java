@@ -79,6 +79,7 @@ public class AttendanceViewFragment extends Fragment {
             Log.d("ClassListFragment", "class id: " + classID);
         }
         //query the shit here
+        /*
         StudentItem studentItem1 = new StudentItem("Ali", "P21011234");
         StudentItem studentItem2 = new StudentItem("Abu", "P21010001");
         StudentItem studentItem3 = new StudentItem("John","P21011002");
@@ -93,7 +94,7 @@ public class AttendanceViewFragment extends Fragment {
         attendanceList.add(row2);
         attendanceList.add(row3);
         attendanceList.add(row4);
-
+        */
 
         attendanceListAdapter = new AttendanceViewAdapter(attendanceList);
 

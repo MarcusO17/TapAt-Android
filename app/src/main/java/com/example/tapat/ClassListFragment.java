@@ -94,6 +94,7 @@ public class ClassListFragment extends Fragment implements CourseItemViewAdapter
                 Bundle args = new Bundle();
                 args.putString("class_id",classID);
                 args.putString("class_name",className);
+                args.putString("course_ID",courseCode);
 
                 AttendanceListFragment attendanceListFragment = new AttendanceListFragment();
 

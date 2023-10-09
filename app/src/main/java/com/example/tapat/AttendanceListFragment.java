@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.tapat.adapter.AttendanceListViewAdapter;
+import com.example.tapat.helpers.dbHelper;
 import com.example.tapat.model.AttendanceListRowData;
 import com.example.tapat.model.StudentItem;
 
@@ -27,8 +28,11 @@ public class AttendanceListFragment extends Fragment{
 
     View view;
     List<AttendanceListRowData> attendanceList = new ArrayList<>();
+    List<StudentItem> studentsInClass = new ArrayList<>();
     String className;
+    String courseID;
     String classID;
+    dbHelper db;
     Button attendanceTakingButton;
     Button submitButton;
     EditText searchBar;
@@ -42,6 +46,10 @@ public class AttendanceListFragment extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_attendance_list, container, false);
+
+        //Init DB
+        db = new dbHelper(getContext());
+        db.populateCourseStudents();
 
         attendanceTakingButton = view.findViewById(R.id.attendance_taking_button);
         submitButton = view.findViewById(R.id.submit_attendance_button);
@@ -91,10 +99,12 @@ public class AttendanceListFragment extends Fragment{
         if (args != null) {
             className = args.getString("class_id");
             classID = args.getString("class_name");
+            courseID = args.getString("course_ID");
             Log.d("ClassListFragment", "class name: " + className);
             Log.d("ClassListFragment", "class id: " + classID);
         }
         //query the shit here
+        /* TESTING PRE-DB
         StudentItem studentItem1 = new StudentItem("Ali", "P21011234");
         StudentItem studentItem2 = new StudentItem("Abu", "P21010001");
         StudentItem studentItem3 = new StudentItem("John","P21011002");
@@ -109,7 +119,13 @@ public class AttendanceListFragment extends Fragment{
         attendanceList.add(row2);
         attendanceList.add(row3);
         attendanceList.add(row4);
+        */
 
+        studentsInClass = db.getCourseStudents(courseID);
+
+        for(StudentItem student: studentsInClass){
+            attendanceList.add(new AttendanceListRowData(classID,student.getStudentID(),student.getStudentName(),false,""));
+        }
 
         attendanceListAdapter = new AttendanceListViewAdapter(attendanceList);
 
