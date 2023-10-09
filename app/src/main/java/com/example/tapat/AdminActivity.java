@@ -90,7 +90,7 @@ public class AdminActivity extends AppCompatActivity {
              @Override
              public void onClick(View view) {
                  // Replace the fragment with AdminDashboard
-                 replaceFragment(AdminList.newInstance("StudentItem"));
+                 replaceFragment(AdminList.newInstance("Student"));
                  // Close the side menu
                  toggleMenu();
              }

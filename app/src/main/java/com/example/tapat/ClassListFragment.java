@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.example.tapat.adapter.ClassListViewAdapter;
 import com.example.tapat.adapter.CourseItemViewAdapter;
+import com.example.tapat.helpers.dbHelper;
 import com.example.tapat.model.ClassListItem;
 import com.example.tapat.model.CourseItem;
 
@@ -29,6 +30,7 @@ public class ClassListFragment extends Fragment implements CourseItemViewAdapter
     String courseName;
     String courseCode;
     Button addClassButton;
+    dbHelper db;
     List<ClassListItem> classList = new ArrayList<>();
     public ClassListFragment() {
         // Required empty public constructor
@@ -39,6 +41,8 @@ public class ClassListFragment extends Fragment implements CourseItemViewAdapter
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_class_list, container, false);
 
+        //init DB
+        db = new dbHelper(getContext());
         addClassButton = view.findViewById(R.id.button_add_class);
 
         RecyclerView classListRecyclerView = view.findViewById(R.id.classlistrecyclerview);
@@ -48,6 +52,7 @@ public class ClassListFragment extends Fragment implements CourseItemViewAdapter
 
         Bundle args = getArguments();
 
+        //getCourseID and CourseName
 
         if (args != null) {
             courseName = args.getString("course_name");
@@ -57,6 +62,7 @@ public class ClassListFragment extends Fragment implements CourseItemViewAdapter
         }
 
         // use the coursename and coursecode to query the items here
+        /*
         ClassListItem class1 = new ClassListItem("Class 1", "c1");
         ClassListItem class2 = new ClassListItem("Class 2", "c2");
         ClassListItem class3 = new ClassListItem("Class 3", "c3");
@@ -64,10 +70,12 @@ public class ClassListFragment extends Fragment implements CourseItemViewAdapter
         classList.add(class1);
         classList.add(class2);
         classList.add(class3);
+        */
+
 
         Log.d("ClassListFragment","classList size: " + classList.size());
 
-        ClassListViewAdapter adapter = new ClassListViewAdapter(getContext(),classList, this::onClickListener);
+        ClassListViewAdapter adapter = new ClassListViewAdapter(getContext(),db.getClasses(courseCode), this::onClickListener);
         classListRecyclerView.setAdapter(adapter);
 
         addClassButton.setOnClickListener(new View.OnClickListener() {

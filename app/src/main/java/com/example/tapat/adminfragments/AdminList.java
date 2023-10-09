@@ -119,7 +119,7 @@ public class AdminList extends Fragment {
         // Implement logic to get the appropriate data array based on the fragment title
         // For example, if fragmentTitle is "Students," return the students array
         // Similarly for "Lecturer" and "Courses"
-        if ("StudentItem".equals(fragmentTitle)) {
+        if ("Student".equals(fragmentTitle)) {
             //find name of students
             return db.getNames("Students");
         } else if ("Lecturer".equals(fragmentTitle)) {

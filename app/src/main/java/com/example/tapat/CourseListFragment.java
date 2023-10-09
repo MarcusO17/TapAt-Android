@@ -56,8 +56,8 @@ public class CourseListFragment extends Fragment implements CourseItemViewAdapte
         courseList.add(course5);
         courseList.add(course6);
         */
-
-        CourseItemViewAdapter courseItemAdapter = new CourseItemViewAdapter(db.getCourses(), this::onClickListener);
+        courseList = db.getCourses();
+        CourseItemViewAdapter courseItemAdapter = new CourseItemViewAdapter(courseList, this);
 
         courseListRecyclerView.setAdapter(courseItemAdapter);
         Bundle args = getArguments();

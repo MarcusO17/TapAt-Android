@@ -6,8 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.tapat.model.AttendanceListRowData;
+import com.example.tapat.model.ClassListItem;
 import com.example.tapat.model.CourseItem;
 import com.example.tapat.model.StudentItem;
 
@@ -159,7 +161,7 @@ public class dbHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Course.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + Attendance.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + AttendanceStudents.TABLE_NAME);
-        db.execSQL("DROP VIEW IF EXISTS " + CourseStudents.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + CourseStudents.TABLE_NAME);
         //db.execSQL("DROP TABLE IF EXISTS users");
         onCreate(db);
         insertAdmin(db);
@@ -494,6 +496,29 @@ public class dbHelper extends SQLiteOpenHelper {
         }
 
         return courseData;
+    }
+
+    public List<ClassListItem> getClasses(String courseID){
+        List<ClassListItem> classData = new ArrayList<>();
+        int classCount = 0;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery("SELECT attendance_ID FROM attendance where course_ID = ? ORDER BY datetime", new String[]{courseID});
+        }catch(SQLiteException e){
+            Log.e("Query Failed : ", e.toString());
+            return classData;
+        }
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
+                    String attendanceID = cursor.getString(cursor.getColumnIndex("attendance_ID"));
+                    classCount += 1;
+                    classData.add(new ClassListItem(Integer.toString(classCount), attendanceID));
+                }
+            }
+
+
+        return classData;
     }
 }
 

@@ -32,9 +32,9 @@ public class AdminDashboard extends Fragment {
         studentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Handle StudentItem button click
+                // Handle Student button click
                 // Replace the fragment with AdminListFragment and pass data
-                replaceFragment(AdminList.newInstance("StudentItem"));
+                replaceFragment(AdminList.newInstance("Student"));
             }
         });
 
