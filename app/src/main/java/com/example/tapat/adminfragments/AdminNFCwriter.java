@@ -1,5 +1,7 @@
 package com.example.tapat.adminfragments;
 
+import android.app.Dialog;
+import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -27,6 +29,7 @@ public class AdminNFCwriter extends Fragment {
 
     private ButtonListAdapter buttonListAdapter;
     private dbHelper db;
+    private Dialog nfcDialog;
 
     public AdminNFCwriter() {
         // Required empty public constructor
@@ -93,22 +96,54 @@ public class AdminNFCwriter extends Fragment {
     }
 
     private void writeNfc(String buttonName) {
-        // Create and display the Toast message with the buttonName
-        Context context = requireContext(); // Get the context
-        Toast toast = Toast.makeText(context, buttonName, Toast.LENGTH_SHORT);
+        // Step 1: Check NFC availability and state
+        NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(requireContext());
+        if (nfcAdapter == null) {
+            // Device has no NFC support
+            showToast("This device has no NFC");
+            return;
+        }
+
+        if (!nfcAdapter.isEnabled()) {
+            // NFC is disabled, prompt the user to enable it
+            showToast("Please Enable your NFC");
+            return;
+        }
+
+        // Step 2: show a dialog"Detecting Card" that doesn't close until a NFC card or tag is detected .the dialog file will be nfc_dialog.xml
+        showNfcDialog("Detecting Card");
+        
+        // Step 3: NFC card detected,change the dialog message to "NFC Detected" and Overwrites everything inside the card with buttonName
+
+        // Step 4: change the dialog message to "Complete writing"+buttonName,click anywhere on the screen to close the dialog
+
+        //Note:the overall process happens in this fragment without switching fragment or activity.
+
+    }
+
+    private void showNfcDialog(String initialMessage) {
+        nfcDialog = new Dialog(requireContext());
+        nfcDialog.setContentView(R.layout.nfc_dialog);
+
+        TextView nfcStatusTextView = nfcDialog.findViewById(R.id.nfcStatusTextView);
+        nfcStatusTextView.setText(initialMessage);
+
+        nfcDialog.setCanceledOnTouchOutside(false);
+        nfcDialog.show();
+    }
+
+    private void showToast(String message) {
+        Context context = requireContext();
+        Toast toast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
 
-        // Set a delay of 3 seconds to hide the Toast
         Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                toast.cancel(); // Hide the Toast after 3 seconds
+                toast.cancel();
             }
-        }, 3000); // 3000 milliseconds = 3 seconds
-
-        // Your NFC writing logic can go here
-        // ...
+        }, 3000);
     }
 }

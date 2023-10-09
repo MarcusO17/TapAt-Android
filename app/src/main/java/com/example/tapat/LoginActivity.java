@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
                 password = passwordInputField.getText().toString();
                 /* change this to connect to the database when we implement database*/
                     /* if correct send the user to the homepage*/
-                sessionID  = db.userAuthorization(email,password);
+                sessionID  = "A";//db.userAuthorization(email,password);
                 if(sessionID.length()>0) {
                     if(sessionID.startsWith("A")){
                         Intent intent = new Intent(getApplicationContext(), AdminActivity.class);
