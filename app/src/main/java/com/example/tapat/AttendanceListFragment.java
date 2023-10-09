@@ -1,8 +1,12 @@
 package com.example.tapat;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +23,7 @@ import android.widget.TextView;
 import com.example.tapat.adapter.AttendanceListViewAdapter;
 import com.example.tapat.helpers.dbHelper;
 import com.example.tapat.model.AttendanceListRowData;
+import com.example.tapat.model.ClassListItem;
 import com.example.tapat.model.StudentItem;
 
 import java.util.ArrayList;
@@ -55,6 +60,18 @@ public class AttendanceListFragment extends Fragment{
         submitButton = view.findViewById(R.id.submit_attendance_button);
         searchBar = view.findViewById(R.id.attendancelistsearchbar);
 
+        attendanceTakingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AttendanceScanningFragment attendanceScanningFragment = new AttendanceScanningFragment();
+                FragmentManager fragmentManager = getParentFragmentManager();
+                FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.classlistframelayout, attendanceScanningFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
+
         searchBar.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -72,20 +89,31 @@ public class AttendanceListFragment extends Fragment{
             }
         });
 
-        attendanceTakingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //go to NFC READING
-            }
-        });
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //send to database
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setCancelable(true);
+                builder.setMessage("Submit Attendance List?");
+                builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        //send to information to database
 
-                //go exit this page when submitting
-                getActivity().onBackPressed();
+                        // back to last page
+                        getActivity().onBackPressed();
+                    }
+                });
+                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
 
@@ -139,6 +167,10 @@ public class AttendanceListFragment extends Fragment{
         TextView title = getActivity().findViewById(R.id.fragmentholdertitle);
         title.setText("Attendance List");
     }
+    public void onPause() {
+        super.onPause();
+        attendanceList.clear();
+    }
 
     private void filter(String text){
         ArrayList<AttendanceListRowData> filteredList= new ArrayList<>();
@@ -148,7 +180,27 @@ public class AttendanceListFragment extends Fragment{
             }
         }
         attendanceListAdapter.filteredList(filteredList);
-
     }
 
+    public void showExitConfirmationDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setCancelable(true);
+        builder.setMessage("Are you sure you want to Exit?");
+        builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                // back to last page
+                getParentFragmentManager().popBackStack();
+            }
+        });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 }
