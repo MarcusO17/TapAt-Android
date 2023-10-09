@@ -150,6 +150,7 @@ public class dbHelper extends SQLiteOpenHelper {
                 + " FOREIGN KEY (course_ID) REFERENCES courses(course_ID),"
                 + " FOREIGN KEY (student_ID) REFERENCES students(student_ID)"
                 + " )");
+        insertAdmin(db);
 
     }
 
@@ -164,7 +165,6 @@ public class dbHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + CourseStudents.TABLE_NAME);
         //db.execSQL("DROP TABLE IF EXISTS users");
         onCreate(db);
-        insertAdmin(db);
     }
 
 
@@ -480,7 +480,6 @@ public class dbHelper extends SQLiteOpenHelper {
         return studentData;
     }
 
-    public List<StudentItem> getCourseStudents(String courseID) {
     public List<StudentItem> getCourseStudents(String courseID) {
         List<String> studentIDData = new ArrayList<>();
         List<StudentItem> studentData = new ArrayList<>();
