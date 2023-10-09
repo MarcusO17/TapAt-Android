@@ -3,6 +3,7 @@ package com.example.tapat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -30,9 +31,20 @@ public class FragmentHolderActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment currentFragment = fragmentManager.findFragmentById(R.id.classlistframelayout);
+        Log.d("Fragment Type", currentFragment.getClass().getName());
         if (fragmentManager.getBackStackEntryCount() >1) {
-            // Pop the top fragment from the back stack to go back to the previous fragment
-            fragmentManager.popBackStack();
+            if (currentFragment instanceof AttendanceListFragment){
+                Log.d("inside on backpress", "it should trigger exit confirmation dialog");
+                ((AttendanceListFragment) currentFragment).showExitConfirmationDialog();
+            } else if (currentFragment instanceof AttendanceScanningFragment) {
+                Log.d("inside on backpress", "it should trigger exit confirmation dialog");
+                ((AttendanceScanningFragment) currentFragment).showExitConfirmationDialog();
+            }
+            else {
+                // Pop the top fragment from the back stack to go back to the previous fragment
+                fragmentManager.popBackStack();
+            }
         }
     }
 
