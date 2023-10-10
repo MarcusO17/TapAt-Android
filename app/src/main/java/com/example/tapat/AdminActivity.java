@@ -167,6 +167,18 @@ public class AdminActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // Perform any cleanup or resource release here
+        // For example, if you want to dismiss the NFC dialog in the AdminNFCwriter fragment, you can call its method here.
+        AdminNFCwriter adminNFCwriterFragment = (AdminNFCwriter) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+        if (adminNFCwriterFragment != null) {
+            adminNFCwriterFragment.dismissNfcDialog(); // You should create this method in AdminNFCwriter to dismiss the dialog.
+        }
+    }
+
     // Function to toggle the menu (expand/contract)
     private void toggleMenu() {
         if (isMenuExpanded) {

@@ -17,6 +17,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +44,7 @@ public class AdminNFCwriter extends Fragment {
     private PendingIntent pendingIntent;
     private IntentFilter[] intentFiltersArray;
     private String[][] techListsArray;
+    private NfcAdapter nfcAdapter;
     private boolean isNfcWriteComplete = false;
 
     public AdminNFCwriter() {
@@ -53,7 +55,7 @@ public class AdminNFCwriter extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.adminnfcwriter, container, false);
-        //Init DB
+        // Init DB
         db = new dbHelper(getContext());
 
         // Set the title in the TextView
@@ -62,7 +64,7 @@ public class AdminNFCwriter extends Fragment {
             textView.setText("AdminNFCWriter");
         }
 
-        String [] student = db.getNames("Students");
+        String[] student = db.getNames("Students");
 
         // Initialize RecyclerView
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
@@ -80,7 +82,11 @@ public class AdminNFCwriter extends Fragment {
         buttonListAdapter.setOnItemClickListener(new ButtonListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(String buttonText) {
-                writeNfc(buttonText);
+                buttonListAdapter.setSelectedButtonName(buttonText);
+                // Show the "Detecting NFC Card" dialog when the button is clicked
+                showNfcDialog("Detecting NFC Card");
+                // Start NFC reader mode
+                startNfcReader(buttonText);
             }
         });
 
@@ -107,43 +113,122 @@ public class AdminNFCwriter extends Fragment {
         });
 
         // Initialize NFC-related variables
+        nfcAdapter = NfcAdapter.getDefaultAdapter(requireContext());
+
         pendingIntent = PendingIntent.getActivity(requireContext(), 0, new Intent(requireContext(), getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), PendingIntent.FLAG_IMMUTABLE);
-        IntentFilter ndef = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
-        try {
-            ndef.addDataType("*/*"); // Handles all MIME based dispatches. You should customize this based on your needs.
-        } catch (IntentFilter.MalformedMimeTypeException e) {
-            throw new RuntimeException("Failed to initialize NFC", e);
-        }
-        intentFiltersArray = new IntentFilter[]{ndef};
+        intentFiltersArray = new IntentFilter[]{new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED)};
         techListsArray = new String[][]{new String[]{NfcF.class.getName()}};
 
         return view;
     }
 
-    private void writeNfc(String buttonName) {
-        // Step 1: Check NFC availability and state
-        NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(requireContext());
-        if (nfcAdapter == null) {
-            // Device has no NFC support
-            showToast("This device has no NFC");
-            return;
+    public void handleNfcIntent(Intent intent, String buttonName) {
+        // Handle the NFC intent and write data to the NFC tag here
+        // You can access the NFC data from the intent and use buttonName to write to the tag
+        // Follow the NFC writing logic from the previous response in this method
+
+        // Check if the NFC tag contains NDEF data
+        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) {
+            // NFC tag detected with NDEF data
+            Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+            if (tag != null) {
+                // Write the buttonName to the NFC tag
+                writeDataToNfcTag(tag, buttonName);
+
+                // Mark NFC write as complete
+                isNfcWriteComplete = true;
+
+                // Update the dialog message
+                updateNfcDialogStatus("Complete writing " + buttonName);
+            }
         }
+    }
 
-        if (!nfcAdapter.isEnabled()) {
-            // NFC is disabled, prompt the user to enable it
-            showToast("Please Enable your NFC");
-            return;
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Enable NFC reader mode when the fragment is in the foreground
+        if (nfcAdapter != null) {
+            Bundle options = new Bundle();
+            options.putInt(NfcAdapter.EXTRA_READER_PRESENCE_CHECK_DELAY, 5000); // Adjust the delay as needed
+            nfcAdapter.enableReaderMode(requireActivity(), new NfcAdapter.ReaderCallback() {
+                @Override
+                public void onTagDiscovered(Tag tag) {
+                    // Handle the NFC tag discovery here
+                    String buttonText = buttonListAdapter.getSelectedButtonName();
+                    if (buttonText != null) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                // NFC card detected, change the dialog message to "NFC Detected"
+                                updateNfcDialogStatus("NFC Detected");
+                                // Write the buttonName to the NFC tag
+                                boolean writeSuccess = writeDataToNfcTag(tag, buttonText);
+                                // Mark NFC write as complete
+                                if (writeSuccess) {
+                                    updateNfcDialogStatus("Write Complete");
+                                } else {
+                                    updateNfcDialogStatus("Failed to Write");
+                                }
+                            }
+                        });
+                    }
+                }
+            }, NfcAdapter.FLAG_READER_NFC_A | NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK, options);
         }
+    }
 
-        // Step 2: Show a dialog "Detecting Card" that doesn't close until an NFC card or tag is detected. The dialog file will be nfc_dialog.xml
-        showNfcDialog("Detecting Card");
+    @Override
+    public void onPause() {
+        super.onPause();
+        // Disable NFC reader mode when the fragment is not in the foreground
+        if (nfcAdapter != null) {
+            nfcAdapter.disableReaderMode(requireActivity());
+        }
+    }
 
-        // Step 3: NFC card detected, change the dialog message to "NFC Detected" and overwrite everything inside the card with buttonName
-        // You can use NfcAdapter's enableForegroundDispatch to handle NFC card detection
-        nfcAdapter.enableForegroundDispatch(requireActivity(), pendingIntent, intentFiltersArray, techListsArray);
+    private boolean writeDataToNfcTag(Tag tag, String data) {
+        Ndef ndef = Ndef.get(tag);
+        if (ndef != null) {
+            try {
+                ndef.connect();
+                NdefMessage message = new NdefMessage(NdefRecord.createMime("text/plain", data.getBytes()));
+                ndef.writeNdefMessage(message);
+                ndef.close();
+                return true; // Write successful
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.e("NFCWriter", "IOException writing to NFC tag: " + e.getMessage());
+            } catch (FormatException e) {
+                e.printStackTrace();
+                Log.e("NFCWriter", "FormatException writing to NFC tag: " + e.getMessage());
+            }
+        } else {
+            Log.e("NFCWriter", "NDEF format not supported by this NFC tag.");
+        }
+        return false; // Write failed
+    }
 
-        // Step 4: Change the dialog message to "Complete writing" + buttonName, click anywhere on the screen to close the dialog
-        // You can update the dialog text when the NFC write is complete
+
+
+    private void updateNfcDialogStatus(String message) {
+        if (nfcDialog != null && nfcDialog.isShowing()) {
+            TextView nfcStatusTextView = nfcDialog.findViewById(R.id.nfcStatusTextView);
+            if (nfcStatusTextView != null) {
+                nfcStatusTextView.setText(message);
+                nfcStatusTextView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Dismiss the dialog when the user taps anywhere on the screen
+                        nfcDialog.dismiss();
+                    }
+                });
+                // If the message is "Write Complete" or "Failed to Write," allow the user to close the dialog by tapping anywhere
+                if ("Write Complete".equals(message) || "Failed to Write".equals(message)) {
+                    nfcDialog.setCanceledOnTouchOutside(true);
+                }
+            }
+        }
     }
 
     private void showNfcDialog(String initialMessage) {
@@ -172,59 +257,40 @@ public class AdminNFCwriter extends Fragment {
         }, 3000);
     }
 
-    private void writeDataToNfcTag(Tag tag, String data) {
-        Ndef ndef = Ndef.get(tag);
-        if (ndef != null) {
-            try {
-                ndef.connect();
-                NdefMessage message = new NdefMessage(NdefRecord.createMime("text/plain", data.getBytes()));
-                ndef.writeNdefMessage(message);
-                ndef.close();
-            } catch (IOException | FormatException e) {
-                e.printStackTrace();
-            }
-        } else {
-            showToast("NFC tag is not NDEF compatible");
-        }
-    }
+    private void startNfcReader(String buttonText) {
+        // Start NFC reader mode
+        if (nfcAdapter != null) {
+            Bundle options = new Bundle();
+            options.putInt(NfcAdapter.EXTRA_READER_PRESENCE_CHECK_DELAY, 5000); // Adjust the delay as needed
+            nfcAdapter.enableReaderMode(requireActivity(), new NfcAdapter.ReaderCallback() {
+                @Override
+                public void onTagDiscovered(Tag tag) {
+                    // Handle the NFC tag discovery here
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            // NFC card detected, change the dialog message to "NFC Detected"
+                            updateNfcDialogStatus("NFC Detected");
 
-    public void handleNfcIntent(Intent intent, String buttonName) {
-        // Handle the NFC intent and write data to the NFC tag here
-        // You can access the NFC data from the intent and use buttonName to write to the tag
-        // Follow the NFC writing logic from the previous response in this method
+                            // Write the buttonName to the NFC tag
+                            boolean writeSuccess = writeDataToNfcTag(tag, buttonText);
 
-        // Check if the NFC tag contains NDEF data
-        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) {
-            // NFC tag detected with NDEF data
-            Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-            if (tag != null) {
-                // Write the buttonName to the NFC tag
-                writeDataToNfcTag(tag, buttonName);
-
-                // Mark NFC write as complete
-                isNfcWriteComplete = true;
-
-                // Update the dialog message
-                updateNfcDialogStatus("Complete writing " + buttonName);
-            }
-        }
-    }
-
-    private void updateNfcDialogStatus(String message) {
-        if (nfcDialog != null) {
-            TextView nfcStatusTextView = nfcDialog.findViewById(R.id.nfcStatusTextView);
-            if (nfcStatusTextView != null) {
-                nfcStatusTextView.setText(message);
-                nfcStatusTextView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // Dismiss the dialog when the user taps anywhere on the screen
-                        if (isNfcWriteComplete) {
-                            nfcDialog.dismiss();
+                            // Mark NFC write as complete
+                            if (writeSuccess) {
+                                updateNfcDialogStatus("Write Complete");
+                            } else {
+                                updateNfcDialogStatus("Failed to Write");
+                            }
                         }
-                    }
-                });
-            }
+                    });
+                }
+            }, NfcAdapter.FLAG_READER_NFC_A | NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK, options);
+        }
+    }
+
+    public void dismissNfcDialog() {
+        if (nfcDialog != null && nfcDialog.isShowing()) {
+            nfcDialog.dismiss();
         }
     }
 }

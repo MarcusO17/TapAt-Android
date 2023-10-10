@@ -20,6 +20,7 @@ public class ButtonListAdapter extends RecyclerView.Adapter<ButtonListAdapter.Vi
     private final List<String> filteredButtonData;
     private final Context context;
     private OnItemClickListener onItemClickListener;
+    private String selectedButtonName;
 
     public ButtonListAdapter(Context context) {
         this.context = context;
@@ -106,5 +107,16 @@ public class ButtonListAdapter extends RecyclerView.Adapter<ButtonListAdapter.Vi
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.onItemClickListener = listener;
     }
+
+    // Add a method to set the selected button name
+    public void setSelectedButtonName(String buttonName) {
+        selectedButtonName = buttonName;
+    }
+
+    // Add a method to get the selected button name
+    public String getSelectedButtonName() {
+        return selectedButtonName;
+    }
+
 }
 
