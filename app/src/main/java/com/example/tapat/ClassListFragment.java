@@ -102,6 +102,7 @@ public class ClassListFragment extends Fragment implements CourseItemViewAdapter
                         Bundle args = new Bundle();
                         args.putString("class_id",classID);
                         args.putString("class_name",className);
+                        args.putString("course_ID",courseCode);
 
                         AttendanceListFragment attendanceListFragment = new AttendanceListFragment();
 
@@ -149,6 +150,7 @@ public class ClassListFragment extends Fragment implements CourseItemViewAdapter
         Bundle args = new Bundle();
         args.putString("class_id",classList.get(position).getClassID());
         args.putString("class_name",classList.get(position).getClassName());
+        args.putString("course_name", courseName);
 
         AttendanceViewFragment attendanceviewFragment = new AttendanceViewFragment();
 

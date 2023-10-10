@@ -42,8 +42,6 @@ public class AttendanceListFragment extends Fragment{
     Button submitButton;
     EditText searchBar;
     AttendanceListViewAdapter attendanceListAdapter;
-    Button exportToPDFButton;
-
     public AttendanceListFragment() {
         // Required empty public constructor
     }
@@ -101,9 +99,10 @@ public class AttendanceListFragment extends Fragment{
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         //send to information to database
-
+                        Log.d("AttendanceListFragment", attendanceList.get(0).getStudentName());
                         // back to last page
-                        getActivity().onBackPressed();
+                        FragmentManager fragmentManager = getParentFragmentManager();
+                        fragmentManager.popBackStack();
                     }
                 });
                 builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -115,12 +114,6 @@ public class AttendanceListFragment extends Fragment{
 
                 AlertDialog dialog = builder.create();
                 dialog.show();
-            }
-        });
-        exportToPDFButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
             }
         });
 
@@ -137,6 +130,7 @@ public class AttendanceListFragment extends Fragment{
             courseID = args.getString("course_ID");
             Log.d("ClassListFragment", "class name: " + className);
             Log.d("ClassListFragment", "class id: " + classID);
+            Log.d("ClassListFragment", "course_ID: " + courseID);
         }
         //query the shit here
         /* TESTING PRE-DB

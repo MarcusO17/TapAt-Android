@@ -46,7 +46,6 @@ public class FragmentHolderActivity extends AppCompatActivity {
                 ((AttendanceScanningFragment) currentFragment).showExitConfirmationDialog();
             }
             else {
-                // Pop the top fragment from the back stack to go back to the previous fragment
                 fragmentManager.popBackStack();
             }
         }
