@@ -11,6 +11,7 @@ import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.Ndef;
+import android.nfc.tech.NdefFormatable;
 import android.nfc.tech.NfcF;
 import android.os.Bundle;
 import android.os.Handler;
@@ -188,28 +189,59 @@ public class AdminNFCwriter extends Fragment {
     }
 
     private boolean writeDataToNfcTag(Tag tag, String data) {
-        Ndef ndef = Ndef.get(tag);
-        if (ndef != null) {
-            try {
-                ndef.connect();
-                NdefMessage message = new NdefMessage(NdefRecord.createMime("text/plain", data.getBytes()));
-                ndef.writeNdefMessage(message);
-                ndef.close();
-                return true; // Write successful
-            } catch (IOException e) {
-                e.printStackTrace();
-                Log.e("NFCWriter", "IOException writing to NFC tag: " + e.getMessage());
-            } catch (FormatException e) {
-                e.printStackTrace();
-                Log.e("NFCWriter", "FormatException writing to NFC tag: " + e.getMessage());
+        try {
+            if (tag == null) {
+                Toast.makeText(requireContext(), "Tag cannot be null!", Toast.LENGTH_SHORT).show();
+                return false;
             }
-        } else {
-            Log.e("NFCWriter", "NDEF format not supported by this NFC tag.");
+
+            Ndef ndef = Ndef.get(tag);
+            if (ndef == null) {
+                // Formats Tag with NDEF Format and Writes Message
+                formatTag(tag, data);
+            } else {
+                ndef.connect();
+                if (!ndef.isWritable()) {
+                    Toast.makeText(requireContext(), "Tag is not writable!", Toast.LENGTH_SHORT).show();
+                    ndef.close();
+                    return false;
+                }
+                if (data == null || data.length() == 0) {
+                    Toast.makeText(requireContext(), "Tag Resetting!", Toast.LENGTH_SHORT).show();
+                    ndef.writeNdefMessage(new NdefMessage(new NdefRecord(NdefRecord.TNF_WELL_KNOWN, null, null, null)));
+                } else {
+                    NdefMessage message = new NdefMessage(NdefRecord.createMime("text/plain", data.getBytes()));
+                    ndef.writeNdefMessage(message);
+                    Toast.makeText(requireContext(), "Tag Written!", Toast.LENGTH_SHORT).show();
+                }
+                ndef.close();
+            }
+            return true;
+        } catch (Exception e) {
+            Log.e("writeDataToNfcTag", e.getMessage());
+            return false;
         }
-        return false; // Write failed
     }
 
+    private void formatTag(Tag tag, String data) {
+        try{
 
+            NdefFormatable ndefFormatable = NdefFormatable.get(tag);
+
+            if(ndefFormatable == null){
+                showToast("Tag is not NDEF Formatable :(");
+            }
+
+            ndefFormatable.connect();
+            NdefMessage ndefMessage = new NdefMessage(NdefRecord.createMime("text/plain", data.getBytes()));
+
+            ndefFormatable.format(ndefMessage);
+            ndefFormatable.close();
+
+        }catch(Exception e){
+            Log.e("formatTagA", e.getMessage());
+        }
+    }
 
     private void updateNfcDialogStatus(String message) {
         if (nfcDialog != null && nfcDialog.isShowing()) {
