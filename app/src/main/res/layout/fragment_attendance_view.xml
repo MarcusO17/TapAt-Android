@@ -7,17 +7,17 @@
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:id="@+id/attendanceviewsearchbar"
         android:padding="10dp"
         android:hint="Search"
-        android:background="@color/white"/>
+        android:background="@drawable/scroll_frame"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/attendanceviewrecyclerview"
-        android:background="@color/white"
+        android:background="@drawable/scroll_frame"
         android:layout_below="@+id/attendanceviewsearchbar"
         />
 
