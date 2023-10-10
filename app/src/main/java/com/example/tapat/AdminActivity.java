@@ -87,13 +87,13 @@ public class AdminActivity extends AppCompatActivity {
 
         // Set click listener for studentButton
         studentButton.setOnClickListener(new View.OnClickListener(){
-             @Override
-             public void onClick(View view) {
-                 // Replace the fragment with AdminDashboard
-                 replaceFragment(AdminList.newInstance("Student"));
-                 // Close the side menu
-                 toggleMenu();
-             }
+            @Override
+            public void onClick(View view) {
+                // Replace the fragment with AdminDashboard
+                replaceFragment(AdminList.newInstance("Student"));
+                // Close the side menu
+                toggleMenu();
+            }
         });
 
         // Set click listener for lecturerButton
@@ -153,30 +153,6 @@ public class AdminActivity extends AppCompatActivity {
 
         // Initially, show AdminDashboard
         replaceFragment(new AdminDashboard());
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-
-        // Pass the NFC intent to the active fragment
-        Fragment activeFragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-        if (activeFragment instanceof AdminNFCwriter) {
-            String buttonName = "YourButtonName"; // Replace with your actual buttonName or fetch it from your data source
-            ((AdminNFCwriter) activeFragment).handleNfcIntent(intent, buttonName);
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        // Perform any cleanup or resource release here
-        // For example, if you want to dismiss the NFC dialog in the AdminNFCwriter fragment, you can call its method here.
-        AdminNFCwriter adminNFCwriterFragment = (AdminNFCwriter) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-        if (adminNFCwriterFragment != null) {
-            adminNFCwriterFragment.dismissNfcDialog(); // You should create this method in AdminNFCwriter to dismiss the dialog.
-        }
     }
 
     // Function to toggle the menu (expand/contract)
