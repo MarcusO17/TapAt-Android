@@ -17,4 +17,7 @@
     <string name="takingAttendance">Taking Attendance</string>
     <string name="stopScanningButton">Stop Scanning</string>
     <string name="pleasetapyourcard">Please Tap Your Card</string>
+    <string name="exportaspdf">Export as PDF</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

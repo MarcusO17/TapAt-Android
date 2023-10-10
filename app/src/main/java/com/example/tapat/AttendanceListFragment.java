@@ -42,6 +42,7 @@ public class AttendanceListFragment extends Fragment{
     Button submitButton;
     EditText searchBar;
     AttendanceListViewAdapter attendanceListAdapter;
+    Button exportToPDFButton;
 
     public AttendanceListFragment() {
         // Required empty public constructor
@@ -114,6 +115,12 @@ public class AttendanceListFragment extends Fragment{
 
                 AlertDialog dialog = builder.create();
                 dialog.show();
+            }
+        });
+        exportToPDFButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
 

@@ -1,26 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AttendanceListFragment"
     android:orientation="vertical"
+    android:weightSum="100"
     >
 
-    <Button
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/attendance_taking_button"
-        android:text="@string/starttakingattendance"
-        android:layout_alignParentEnd="true"
-        />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/submit_attendance_button"
-        android:text="@string/submit"
-        android:layout_toLeftOf="@+id/attendance_taking_button"
-        />
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/attendance_taking_button"
+            android:text="@string/starttakingattendance"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="20dp" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/exportaspdfButton"
+            android:text="@string/exportaspdf"/>
+
+    </LinearLayout>
 
     <EditText
         android:layout_width="match_parent"
@@ -29,16 +35,24 @@
         android:padding="10dp"
         android:background="@color/white"
         android:hint="Search"
-        android:layout_below="@id/attendance_taking_button"/>
+        android:layout_below="@id/attendance_taking_button" />
 
-    <!-- TODO: Update blank fragment layout -->
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/attendancelistrecyclerview"
         android:background="@color/white"
         android:layout_below="@id/attendancelistsearchbar"
+        android:layout_weight="100"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/submit_attendance_button"
+        android:text="@string/submit"
+        android:layout_below="@+id/attendancelistrecyclerview"
+        android:layout_marginRight="20dp"
+        android:layout_gravity="end"
         />
 
-
-</RelativeLayout>
+</LinearLayout>
