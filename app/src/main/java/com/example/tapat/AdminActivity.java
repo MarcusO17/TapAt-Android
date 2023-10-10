@@ -123,7 +123,8 @@ public class AdminActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Replace the fragment with AdminDashboard
-                replaceFragment(new AdminNFCReader());
+                Intent intent = new Intent(AdminActivity.this, ReadModeActivity.class);
+                startActivity(intent);
                 // Close the side menu
                 toggleMenu();
             }
