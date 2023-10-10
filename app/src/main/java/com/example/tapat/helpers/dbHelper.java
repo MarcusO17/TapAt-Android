@@ -237,9 +237,9 @@ public class dbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
         if(className == "Students") {
-            cursor = db.rawQuery("SELECT student_name FROM students", null);
+            cursor = db.rawQuery("SELECT student_ID,student_name FROM students", null);
         } else if (className == "Lecturers") {
-            cursor = db.rawQuery("SELECT lecturer_name FROM lecturers", null);
+            cursor = db.rawQuery("SELECT lecturer_ID,lecturer_name FROM lecturers", null);
         } else if (className == "Courses") {
             cursor = db.rawQuery("SELECT course_ID,course_name FROM courses", null);
         }else{
@@ -249,12 +249,16 @@ public class dbHelper extends SQLiteOpenHelper {
                 switch (className) {
                     case "Students":
                         while (cursor.moveToNext()) {
-                            namesList.add(cursor.getString(cursor.getColumnIndex("student_name")));
+                            String studentID = cursor.getString(cursor.getColumnIndex("student_ID"));
+                            String studentName = cursor.getString(cursor.getColumnIndex("student_name"));
+                            namesList.add(studentID + " : " + studentName);
                         }
                         break;
                     case "Lecturers":
                         while (cursor.moveToNext()) {
-                            namesList.add(cursor.getString(cursor.getColumnIndex("lecturer_name")));
+                            String lecturerID = cursor.getString(cursor.getColumnIndex("lecturer_ID"));
+                            String lecturerName = cursor.getString(cursor.getColumnIndex("lecturer_name"));
+                            namesList.add(lecturerID + " : " + lecturerName);
                         }
                         break;
                     case "Courses":
@@ -359,7 +363,8 @@ public class dbHelper extends SQLiteOpenHelper {
         Cursor cursor = null;
         switch(className){
             case "Student":{
-                cursor = db.rawQuery("SELECT * FROM students where student_name = ? ", new String[] {buttonName});
+                buttonName = buttonName.split(":")[0].trim();
+                cursor = db.rawQuery("SELECT * FROM students where student_ID = ? ", new String[] {buttonName});
                 if(cursor!=null && cursor.moveToFirst())
                     for(int i= 0; i < cursor.getColumnCount(); i++)
                         rowInfo.add(cursor.getString(i));
@@ -367,7 +372,8 @@ public class dbHelper extends SQLiteOpenHelper {
                 break;
             }
             case "Lecturer":{
-                cursor = db.rawQuery("SELECT * FROM lecturers where lecturer_name = ? ", new String[] {buttonName});
+                buttonName = buttonName.split(":")[0].trim();
+                cursor = db.rawQuery("SELECT * FROM lecturers where lecturer_ID = ? ", new String[] {buttonName});
                 if(cursor!=null && cursor.moveToFirst()){
                     for(int i= 0; i < cursor.getColumnCount(); i++)
                         rowInfo.add(cursor.getString(i));
@@ -386,18 +392,6 @@ public class dbHelper extends SQLiteOpenHelper {
                 return new String[]{};
             }
         }
-        return rowInfo.toArray(new String[]{});
-    }
-
-    public String[] getStudentData(String studentid){
-        List<String> rowInfo = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = null;
-        cursor = db.rawQuery("SELECT * FROM students where student_ID = ? ", new String[] {studentid});
-        if(cursor!=null && cursor.moveToFirst())
-            for(int i= 0; i < cursor.getColumnCount(); i++)
-                rowInfo.add(cursor.getString(i));
-
         return rowInfo.toArray(new String[]{});
     }
 

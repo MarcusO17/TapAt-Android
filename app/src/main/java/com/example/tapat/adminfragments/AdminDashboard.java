@@ -1,5 +1,6 @@
 package com.example.tapat.adminfragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,9 @@ import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.tapat.AdminActivity;
+import com.example.tapat.AdminNFCReader;
+import com.example.tapat.AdminNFCwriter;
 import com.example.tapat.R;
 
 public class AdminDashboard extends Fragment {
@@ -59,18 +63,16 @@ public class AdminDashboard extends Fragment {
         nfcReaderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Handle NFC Reader button click
-                // Replace the fragment with AdminNFCReaderFragment
-                replaceFragment(new AdminNFCReader());
+                Intent readnfcIntent = new Intent(requireContext(), AdminNFCReader.class);
+                startActivity(readnfcIntent);
             }
         });
 
         nfcWriterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Handle NFC Writer button click
-                // Replace the fragment with AdminNFCWriterFragment
-                replaceFragment(new AdminNFCwriter());
+                Intent writenfcIntent = new Intent(requireContext(), AdminNFCwriter.class);
+                startActivity(writenfcIntent);
             }
         });
 
