@@ -91,7 +91,7 @@ public class ClassListFragment extends Fragment implements CourseItemViewAdapter
                     public void onClick(DialogInterface dialog, int id) {
                         Integer size = classList.size()+1;
                         String className = "Class " + size;
-                        String classID = "c" + size;
+                        String classID = "AT" + courseCode + size;
                         ClassListItem tempclass = new ClassListItem(className, classID);
                         classList.add(tempclass);
                         adapter.notifyDataSetChanged();
@@ -133,7 +133,6 @@ public class ClassListFragment extends Fragment implements CourseItemViewAdapter
     @Override
     public void onPause() {
         super.onPause();
-        classList.clear();
     }
     @Override
     public void onResume() {

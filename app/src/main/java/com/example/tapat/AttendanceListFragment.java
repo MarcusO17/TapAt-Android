@@ -121,6 +121,7 @@ public class AttendanceListFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         //send to information to database
+                        
 
                         for(AttendanceListRowData row: attendanceList){
                             Log.d("attendance list data", row.getStudentID()+ " " +row.getStudentName() + " " +row.isAttendance() + " " + row.getReason());
