@@ -38,12 +38,9 @@ public class FragmentHolderActivity extends AppCompatActivity {
         Fragment currentFragment = fragmentManager.findFragmentById(R.id.classlistframelayout);
         Log.d("Fragment Type", currentFragment.getClass().getName());
         if (fragmentManager.getBackStackEntryCount() >1) {
-            if (currentFragment instanceof AttendanceListFragment){
+            if (currentFragment instanceof AttendanceListFragment) {
                 Log.d("inside on backpress", "it should trigger exit confirmation dialog");
                 ((AttendanceListFragment) currentFragment).showExitConfirmationDialog();
-            } else if (currentFragment instanceof AttendanceScanningFragment) {
-                Log.d("inside on backpress", "it should trigger exit confirmation dialog");
-                ((AttendanceScanningFragment) currentFragment).showExitConfirmationDialog();
             }
             else {
                 fragmentManager.popBackStack();

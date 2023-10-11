@@ -1,7 +1,10 @@
 package com.example.tapat;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -30,7 +33,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class AttendanceListFragment extends Fragment implements NFCReaderActivity.OnDataReceivedListener {
+public class AttendanceListFragment extends Fragment {
 
     View view;
     List<AttendanceListRowData> attendanceList = new ArrayList<>();
@@ -43,9 +46,25 @@ public class AttendanceListFragment extends Fragment implements NFCReaderActivit
     Button submitButton;
     EditText searchBar;
     AttendanceListViewAdapter attendanceListAdapter;
+    BroadcastReceiver receiver;
     List<String> attendedStudentIDList = new ArrayList<>();
     public AttendanceListFragment() {
         // Required empty public constructor
+    }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if ("com.example.tapat.ACTION_NFC_DATA".equals(intent.getAction())) {
+                    attendedStudentIDList = intent.getStringArrayListExtra("attendedList");
+                }
+            }
+        };
+        IntentFilter intentFilter = new IntentFilter("com.example.tapat.ACTION_NFC_DATA");
+        requireActivity().registerReceiver(receiver, intentFilter);
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -130,6 +149,7 @@ public class AttendanceListFragment extends Fragment implements NFCReaderActivit
             Log.d("ClassListFragment", "class id: " + classID);
             Log.d("ClassListFragment", "course_ID: " + courseID);
         }
+
         //query the shit here
         /* TESTING PRE-DB
         StudentItem studentItem1 = new StudentItem("Ali", "P21011234");
@@ -152,6 +172,7 @@ public class AttendanceListFragment extends Fragment implements NFCReaderActivit
 
         for(StudentItem student: studentsInClass){
             attendanceList.add(new AttendanceListRowData(classID,student.getStudentID(),student.getStudentName(),false,""));
+            Log.d("GETTING ATTENDANCE LIST", student.getStudentID() + " " + student.getStudentName());
         }
 
         attendanceListAdapter = new AttendanceListViewAdapter(attendanceList);
@@ -165,10 +186,23 @@ public class AttendanceListFragment extends Fragment implements NFCReaderActivit
         super.onResume();
         TextView title = getActivity().findViewById(R.id.fragmentholdertitle);
         title.setText("Attendance List");
+
+        Log.d("ROW ITEM", "IN ON RESUME");
+        for (AttendanceListRowData data: attendanceList) {
+            Log.d("ROW ITEM", data.getStudentID() + " " + data.getStudentName() + " " + data.isAttendance());
+            for (String item : attendedStudentIDList) {
+                Log.d("id", item);
+                Log.d("another id", data.getStudentID());
+                if (data.getStudentID().equals(item)) {
+                    data.setAttendance(true);
+                    attendanceListAdapter.notifyDataSetChanged();
+                    Log.d("ROW ITEM", data.getStudentID() + " " + data.getStudentName() + " " + data.isAttendance());
+                }
+            }
+        }
     }
     public void onPause() {
         super.onPause();
-        attendanceList.clear();
     }
 
     private void filter(String text){
@@ -200,17 +234,5 @@ public class AttendanceListFragment extends Fragment implements NFCReaderActivit
 
         AlertDialog dialog = builder.create();
         dialog.show();
-    }
-
-    @Override
-    public void onDataReceived(List<String> data) {
-        attendedStudentIDList = data;
-        for(AttendanceListRowData item: attendanceList) {
-            for(String id: attendedStudentIDList){
-                if (item.getStudentID() == id) {
-                    item.setAttendance(true);
-                }
-            }
-        }
     }
 }

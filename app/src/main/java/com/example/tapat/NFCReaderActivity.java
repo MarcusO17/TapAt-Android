@@ -31,12 +31,11 @@ import java.util.List;
  */
 public class NFCReaderActivity extends AppCompatActivity {
 
-    Tag detectedTag;
     NfcAdapter nfcAdapter;
     String contentMessage;
-    TextView tagContentText;
     Button stopScanningButton;
-    List<String> studentAttendedList = new ArrayList<>();
+    ArrayList<String> studentAttendedList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +43,7 @@ public class NFCReaderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_nfcreader);
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
-        stopScanningButton =(Button) findViewById(R.id.stopscanningbutton);
+        stopScanningButton = (Button) findViewById(R.id.stopscanningbutton);
 
         stopScanningButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,12 +55,11 @@ public class NFCReaderActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         //send to information to database
-                        AttendanceListFragment fragment = (AttendanceListFragment) getSupportFragmentManager().findFragmentById(R.id.classlistframelayout);
-                        if (fragment != null) {
-                            fragment.onDataReceived(studentAttendedList);
-                        }
+                        Intent intent = new Intent("com.example.tapat.ACTION_NFC_DATA");
+                        intent.putStringArrayListExtra("attendedList", studentAttendedList);
+                        sendBroadcast(intent);
 
-                        onPause();
+                        finish();
                     }
                 });
                 builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -84,8 +82,11 @@ public class NFCReaderActivity extends AppCompatActivity {
         if (parcelables != null && parcelables.length > 0) {
             contentMessage = readTextFromTag((NdefMessage) parcelables[0]);
             Log.d("SCANNED INFO", contentMessage);
-            studentAttendedList.add(contentMessage);
+            String[] studentInfo = contentMessage.split(":");
+            String studentID = studentInfo[1].replaceAll("\\s", "");
+            studentAttendedList.add(studentID);
             contentDialog(contentMessage);
+            Log.d("SCANNER INFO", studentID);
         } else {
             Toast.makeText(this, "No NDEF Messages Found!", Toast.LENGTH_SHORT).show();
         }
@@ -94,7 +95,7 @@ public class NFCReaderActivity extends AppCompatActivity {
 
 
     //Document : https://developer.android.com/develop/ui/views/components/dialogs
-    private void contentDialog(String message){
+    private void contentDialog(String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(message);
         builder.setTitle("Scan Successful!");
@@ -104,11 +105,9 @@ public class NFCReaderActivity extends AppCompatActivity {
         dialog.show();
         //auto closing
         final Handler handler = new Handler();
-        handler.postDelayed(new Runnable()
-        {
+        handler.postDelayed(new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
                 dialog.cancel();
             }
         }, 1000);
@@ -120,7 +119,7 @@ public class NFCReaderActivity extends AppCompatActivity {
         //Intent ensures NFCWriterLogic is running , and prevents multiple calls to run NFCWriterLogic
         Intent intent = new Intent(this, NFCReaderActivity.class).addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_MUTABLE);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_MUTABLE);
         //Conditions for NFC Tag(Now Empty)
         IntentFilter[] intentFilters = new IntentFilter[]{};
 
@@ -133,37 +132,34 @@ public class NFCReaderActivity extends AppCompatActivity {
         nfcAdapter.disableForegroundDispatch(this);
     }
 
-    private String readTextFromTag(NdefMessage ndefMessage){
+    private String readTextFromTag(NdefMessage ndefMessage) {
         NdefRecord[] ndefRecords = ndefMessage.getRecords();
 
-        if(ndefRecords != null && ndefRecords.length > 0){
+        if (ndefRecords != null && ndefRecords.length > 0) {
             NdefRecord ndefRecord = ndefRecords[0];
 
             String tagContent = getTextfromNdefRecord(ndefRecord);
             return tagContent;
-        }else{
+        } else {
             Toast.makeText(this, "No NDEF Records Found!", Toast.LENGTH_SHORT).show();
         }
         return null;
     }
 
-    public String getTextfromNdefRecord(NdefRecord ndefRecord){
+    public String getTextfromNdefRecord(NdefRecord ndefRecord) {
 
-        String tagContent =null;
+        String tagContent = null;
         try {
             byte[] payload = ndefRecord.getPayload();
             String textEncoding = ((payload[0] & 128) == 0) ? "UTF-8" : "UTF-16";
             int languageSize = payload[0] & 0063;
             tagContent = new String(payload, languageSize + 1, payload.length - languageSize - 1, textEncoding);
-        }catch(IndexOutOfBoundsException e) {
-            Log.e("getTextNdefRecord", e.getMessage(),e);
+        } catch (IndexOutOfBoundsException e) {
+            Log.e("getTextNdefRecord", e.getMessage(), e);
             tagContent = "Empty!";
-        }catch(UnsupportedEncodingException e){
+        } catch (UnsupportedEncodingException e) {
             Log.e("getTextNdefRecord", e.getMessage(), e);
         }
         return tagContent;
-    }
-    public interface OnDataReceivedListener {
-        void onDataReceived(List<String> data);
     }
 }
