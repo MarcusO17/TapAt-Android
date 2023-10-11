@@ -195,11 +195,11 @@ public class AttendanceListFragment extends Fragment {
                 Log.d("another id", data.getStudentID());
                 if (data.getStudentID().equals(item)) {
                     data.setAttendance(true);
-                    attendanceListAdapter.notifyDataSetChanged();
                     Log.d("ROW ITEM", data.getStudentID() + " " + data.getStudentName() + " " + data.isAttendance());
                 }
             }
         }
+        attendanceListAdapter.notifyDataSetChanged();
     }
     public void onPause() {
         super.onPause();

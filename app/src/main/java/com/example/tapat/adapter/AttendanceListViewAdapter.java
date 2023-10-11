@@ -38,6 +38,11 @@ public class AttendanceListViewAdapter extends RecyclerView.Adapter<AttendanceLi
     public void onBindViewHolder(@NonNull AttendanceListViewAdapter.ViewHolder holder, int position) {
 
         holder.title.setText(attendanceList.get(position).getStudentName());
+        if(attendanceList.get(position).isAttendance()) {
+            holder.attendanceCheckBox.setChecked(true);
+        }else{
+            holder.attendanceCheckBox.setChecked(false);
+        }
 
         List<String> dropDownMenuItems = Arrays.asList("No Reason","Late", "MC");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
