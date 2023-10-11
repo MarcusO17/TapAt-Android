@@ -21,6 +21,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tapat.model.StudentItem;
+
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,12 +37,20 @@ public class NFCReaderActivity extends AppCompatActivity {
     String contentMessage;
     Button stopScanningButton;
     ArrayList<String> studentAttendedList = new ArrayList<>();
+    List<StudentItem> studentList;
+    List<String> studentIDList = new ArrayList<>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfcreader);
+
+        studentList = getIntent().getParcelableArrayListExtra("student_list");
+
+        for (StudentItem student: studentList) {
+            studentIDList.add(student.getStudentID());
+        }
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         stopScanningButton = (Button) findViewById(R.id.stopscanningbutton);
@@ -84,8 +94,17 @@ public class NFCReaderActivity extends AppCompatActivity {
             Log.d("SCANNED INFO", contentMessage);
             String[] studentInfo = contentMessage.split(":");
             String studentID = studentInfo[1].replaceAll("\\s", "");
-            studentAttendedList.add(studentID);
-            contentDialog(contentMessage);
+            Log.d("Student ID List Info", studentIDList.size()+"");
+            for (String i : studentIDList) {
+                Log.d("inside array", i);
+            }
+            if (studentIDList.contains(studentID)) {
+                contentDialog(contentMessage);
+                studentAttendedList.add(studentID);
+            }else {
+                contentWrongDialog(contentMessage);
+            }
+
             Log.d("SCANNER INFO", studentID);
         } else {
             Toast.makeText(this, "No NDEF Messages Found!", Toast.LENGTH_SHORT).show();
@@ -99,6 +118,24 @@ public class NFCReaderActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(message);
         builder.setTitle("Scan Successful!");
+
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        //auto closing
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dialog.cancel();
+            }
+        }, 1000);
+    }
+    private void contentWrongDialog(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message);
+        builder.setTitle("Scan Failed!");
+        builder.setMessage("Student Do Not Belong In The Class");
 
 
         AlertDialog dialog = builder.create();
@@ -130,6 +167,7 @@ public class NFCReaderActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         nfcAdapter.disableForegroundDispatch(this);
+
     }
 
     private String readTextFromTag(NdefMessage ndefMessage) {

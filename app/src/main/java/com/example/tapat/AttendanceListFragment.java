@@ -29,6 +29,8 @@ import com.example.tapat.model.AttendanceListRowData;
 import com.example.tapat.model.ClassListItem;
 import com.example.tapat.model.StudentItem;
 
+import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -83,7 +85,10 @@ public class AttendanceListFragment extends Fragment {
         attendanceTakingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intent = new Intent(getContext(), NFCReaderActivity.class);
+                ArrayList<StudentItem> studentList = new ArrayList<>(studentsInClass);
+                intent.putExtra("student_list", studentList);
                 startActivity(intent);
             }
         });
@@ -188,12 +193,19 @@ public class AttendanceListFragment extends Fragment {
         title.setText("Attendance List");
 
         Log.d("ROW ITEM", "IN ON RESUME");
+        for (AttendanceListRowData student: attendanceList) {
+            Log.d("inside attendance List", student.getStudentID());
+        }
+        for (String student: attendedStudentIDList) {
+            Log.d("inside attendanded student List", student);
+        }
         for (AttendanceListRowData data: attendanceList) {
             Log.d("ROW ITEM", data.getStudentID() + " " + data.getStudentName() + " " + data.isAttendance());
             for (String item : attendedStudentIDList) {
                 Log.d("id", item);
                 Log.d("another id", data.getStudentID());
                 if (data.getStudentID().equals(item)) {
+                    Log.d("Trigger checkbox check", item);
                     data.setAttendance(true);
                     Log.d("ROW ITEM", data.getStudentID() + " " + data.getStudentName() + " " + data.isAttendance());
                 }
