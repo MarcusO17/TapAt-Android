@@ -4,28 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AttendanceViewFragment">
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/exportascsvbutton"
-        android:text="@string/exportaspdf"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="20dp"/>
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:id="@+id/attendanceviewsearchbar"
         android:padding="10dp"
         android:hint="Search"
-        android:background="@color/white"
-        android:layout_below="@id/exportascsvbutton"/>
+        android:background="@drawable/scroll_frame"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/attendanceviewrecyclerview"
-        android:background="@color/white"
+        android:background="@drawable/scroll_frame"
         android:layout_below="@+id/attendanceviewsearchbar"
         />
 

@@ -3,17 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#343541">
+    android:background="@drawable/background_picture">
 
     <TextView
         android:id="@+id/textViewNFCWriter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="AdminNFCWriter"
+        android:fontFamily="@font/julius_sans_one"
         android:gravity="center"
+        android:text="Admin NFC Writer"
         android:textColor="@color/white"
-        android:textSize="20sp" />
+        android:textStyle="bold"
+        android:textSize="28sp" />
 
     <!-- Search Bar -->
     <EditText
@@ -34,6 +36,6 @@
         android:layout_height="0dp"
         android:layout_weight="8"
         android:layout_margin="10dp"
-        android:background="#08ffffff"/>
+        android:background="@drawable/scroll_frame"/>
 
 </LinearLayout>
