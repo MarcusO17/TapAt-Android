@@ -177,7 +177,7 @@ public class AttendanceListFragment extends Fragment {
         studentsInClass = db.getCourseStudents(courseID);
 
         for(StudentItem student: studentsInClass){
-            attendanceList.add(new AttendanceListRowData(classID,student.getStudentID(),student.getStudentName(),false,""));
+            attendanceList.add(new AttendanceListRowData(className,student.getStudentID(),student.getStudentName(),false,""));
             Log.d("GETTING ATTENDANCE LIST", student.getStudentID() + " " + student.getStudentName());
         }
 
