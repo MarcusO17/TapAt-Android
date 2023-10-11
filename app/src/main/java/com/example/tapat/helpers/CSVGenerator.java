@@ -40,7 +40,7 @@ public class CSVGenerator {
             for (AttendanceListRowData row: attendanceList) {
                 String name = row.getStudentName();
                 String attendance = "Attend";
-                if (row.isAttendance()){
+                if (row.getAttendance()){
                     attendance = "Attend";
                 }else {
                     attendance = "No Attend";

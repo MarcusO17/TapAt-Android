@@ -602,6 +602,23 @@ public class dbHelper extends SQLiteOpenHelper {
                 "    SELECT DISTINCT programme_code FROM courses " + ");");
     }
 
+    public void insertAttendanceData(ArrayList<AttendanceListRowData> attendanceList){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
+        for(AttendanceListRowData attendanceStudent : attendanceList){
+            ContentValues cv = new ContentValues();
+            cv.put(AttendanceStudents.COL_1, attendanceStudent.getAttendanceID());
+            cv.put(AttendanceStudents.COL_2, attendanceStudent.getStudentID());
+            cv.put(AttendanceStudents.COL_3, attendanceStudent.getAttendance());
+            cv.put(AttendanceStudents.COL_4, attendanceStudent.getReason());
+
+            db.insert(AttendanceStudents.TABLE_NAME, null, cv);
+        }
+
+        db.setTransactionSuccessful();
+        db.endTransaction();
+    }
+
 
 }
 
