@@ -602,7 +602,7 @@ public class dbHelper extends SQLiteOpenHelper {
                 "    SELECT DISTINCT programme_code FROM courses " + ");");
     }
 
-    public void insertAttendanceData(ArrayList<AttendanceListRowData> attendanceList){
+    public void insertAttendanceStudentsData(ArrayList<AttendanceListRowData> attendanceList){
         SQLiteDatabase db = this.getWritableDatabase();
         db.beginTransaction();
         for(AttendanceListRowData attendanceStudent : attendanceList){
@@ -619,6 +619,19 @@ public class dbHelper extends SQLiteOpenHelper {
         db.endTransaction();
     }
 
+    public boolean insertAttendanceData(String[] attendanceRow){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(Attendance.COL_1,attendanceRow[0]); //Insert
+        cv.put(Attendance.COL_2,attendanceRow[1]); //Insert
+        cv.put(Attendance.COL_3,attendanceRow[2]); //Insert
+        try {
+            long result = db.insert(Attendance.TABLE_NAME,null, cv);
+            return result != -1;
+        }catch(SQLiteException e){
+            return false;
+        }
+    }
 
 }
 

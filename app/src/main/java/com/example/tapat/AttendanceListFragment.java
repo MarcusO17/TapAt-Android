@@ -31,8 +31,12 @@ import com.example.tapat.model.StudentItem;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class AttendanceListFragment extends Fragment {
@@ -122,7 +126,15 @@ public class AttendanceListFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int id) {
                         //send to information to database
                         ArrayList<AttendanceListRowData> attendanceArrayList = new ArrayList<AttendanceListRowData>(attendanceList);
-                        db.insertAttendanceData(attendanceArrayList);
+
+                        //Initialising classData info for indexing
+                        //Getting data
+                        DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD HH:mm:ss");
+                        String date = dateFormat.format(Calendar.getInstance().getTime());
+
+                        String[] classData = new String[]{className,courseID,date};
+                        db.insertAttendanceData(classData);
+                        db.insertAttendanceStudentsData(attendanceArrayList);
                         // back to last page
                         FragmentManager fragmentManager = getParentFragmentManager();
                         fragmentManager.popBackStack();

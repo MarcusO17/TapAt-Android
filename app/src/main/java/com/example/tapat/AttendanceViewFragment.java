@@ -133,7 +133,6 @@ public class AttendanceViewFragment extends Fragment {
         attendanceList.add(row3);
         attendanceList.add(row4);
         */
-
         attendanceListAdapter = new AttendanceViewAdapter(attendanceList);
 
         attendanceListRecyclerView.setAdapter(attendanceListAdapter);
