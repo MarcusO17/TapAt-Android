@@ -1,5 +1,6 @@
 package com.example.tapat.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.tapat.AttendanceListFragment;
 import com.example.tapat.R;
 import com.example.tapat.model.AttendanceListRowData;
+import com.example.tapat.model.ClassListItem;
+import com.example.tapat.model.Student;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,7 +57,6 @@ public class AttendanceListViewAdapter extends RecyclerView.Adapter<AttendanceLi
     public int getItemCount() {
         return attendanceList.size();
     }
-
     public void filteredList(List<AttendanceListRowData> list) {
         attendanceList = list;
         notifyDataSetChanged();

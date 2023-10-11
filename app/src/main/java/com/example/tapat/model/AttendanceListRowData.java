@@ -2,15 +2,11 @@ package com.example.tapat.model;
 
 public class AttendanceListRowData{
 
-    String attendanceID;
-    String studentID;
     String studentName;
     boolean attendance;
     String reason;
 
-    public AttendanceListRowData(String attendanceID,String studentID,String studentName, boolean attendance, String reason) {
-        this.attendanceID = attendanceID;
-        this.studentID =studentID;
+    public AttendanceListRowData(String studentName, boolean attendance, String reason) {
         this.studentName = studentName;
         this.attendance = attendance;
         this.reason = reason;

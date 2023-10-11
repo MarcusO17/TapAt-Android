@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/background_picture">
+    android:background="#343541">
 
     <!-- Display Fragment Title -->
 
@@ -12,10 +12,8 @@
         android:id="@+id/displayFragmentTitleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/julius_sans_one"
         android:gravity="center"
         android:text="Fragment Title"
-        android:textStyle="bold"
         android:textSize="20sp"
         android:textColor="@color/white" />
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ClassListFragment"
-    android:background="@drawable/scroll_frame">
+    android:background="@android:color/transparent">
 
     <Button
         android:layout_width="wrap_content"
@@ -13,7 +13,6 @@
         android:id="@+id/button_add_class"
         android:text="@string/addclassbutton"
         android:layout_alignParentEnd="true"
-        android:backgroundTint="#4B494B"
         />
 
     <!-- Recycler View here -->
@@ -22,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/classlistrecyclerview"
-        android:background="@drawable/scroll_frame"
+        android:background="@color/white"
         />
 
 
