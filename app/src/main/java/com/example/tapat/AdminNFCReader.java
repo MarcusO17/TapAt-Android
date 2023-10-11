@@ -221,18 +221,14 @@ public class AdminNFCReader extends AppCompatActivity {
         // Initialize and handle NFC Reader related UI components and functionality here
         String[] studentData = db.getSingularData("Student",message);
 
-        if(studentData!=null){
-            TextView nameView = findViewById(R.id.nameText);
-            nameView.setText(studentData[1]);
+        TextView nameView = findViewById(R.id.nameText);
+        nameView.setText(studentData[1]);
 
-            TextView idView = findViewById(R.id.idText);
-            idView.setText(studentData[0]);
+        TextView idView = findViewById(R.id.idText);
+        idView.setText(studentData[0]);
 
-            TextView programView = findViewById(R.id.programText);
-            programView.setText(studentData[2]);
-        }else{
-            Toast.makeText(AdminNFCReader.this,"Error!",Toast.LENGTH_SHORT).show();
-        }
+        TextView programView = findViewById(R.id.programText);
+        programView.setText(studentData[2]);
 
     }
 
