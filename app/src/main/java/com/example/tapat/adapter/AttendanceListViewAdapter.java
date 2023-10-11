@@ -76,8 +76,10 @@ public class AttendanceListViewAdapter extends RecyclerView.Adapter<AttendanceLi
             attendanceCheckBox = itemView.findViewById(R.id.attendancecheckbox);
 
             attendanceCheckBox.setOnCheckedChangeListener((checkbox, isChecked) ->{
-                if(position != RecyclerView.NO_POSITION){
-                    attendanceList.get(position).setAttendance(isChecked);
+                int adapterPosition = getAdapterPosition();
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    AttendanceListRowData rowData = attendanceList.get(adapterPosition);
+                    rowData.setAttendance(isChecked);
                 }
             });
 

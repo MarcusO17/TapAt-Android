@@ -121,7 +121,12 @@ public class AttendanceListFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         //send to information to database
-                        Log.d("AttendanceListFragment", attendanceList.get(0).getStudentName());
+
+                        for(AttendanceListRowData row: attendanceList){
+                            Log.d("attendance list data", row.getStudentID()+ " " +row.getStudentName() + " " +row.isAttendance() + " " + row.getReason());
+                        }
+
+
                         // back to last page
                         FragmentManager fragmentManager = getParentFragmentManager();
                         fragmentManager.popBackStack();
