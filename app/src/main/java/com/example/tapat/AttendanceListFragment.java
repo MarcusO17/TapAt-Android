@@ -1,12 +1,15 @@
 package com.example.tapat;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,10 +29,13 @@ import com.example.tapat.model.AttendanceListRowData;
 import com.example.tapat.model.ClassListItem;
 import com.example.tapat.model.StudentItem;
 
+import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class AttendanceListFragment extends Fragment{
+public class AttendanceListFragment extends Fragment {
 
     View view;
     List<AttendanceListRowData> attendanceList = new ArrayList<>();
@@ -42,9 +48,25 @@ public class AttendanceListFragment extends Fragment{
     Button submitButton;
     EditText searchBar;
     AttendanceListViewAdapter attendanceListAdapter;
-
+    BroadcastReceiver receiver;
+    List<String> attendedStudentIDList = new ArrayList<>();
     public AttendanceListFragment() {
         // Required empty public constructor
+    }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if ("com.example.tapat.ACTION_NFC_DATA".equals(intent.getAction())) {
+                    attendedStudentIDList = intent.getStringArrayListExtra("attendedList");
+                }
+            }
+        };
+        IntentFilter intentFilter = new IntentFilter("com.example.tapat.ACTION_NFC_DATA");
+        requireActivity().registerReceiver(receiver, intentFilter);
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,12 +85,11 @@ public class AttendanceListFragment extends Fragment{
         attendanceTakingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AttendanceScanningFragment attendanceScanningFragment = new AttendanceScanningFragment();
-                FragmentManager fragmentManager = getParentFragmentManager();
-                FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.classlistframelayout, attendanceScanningFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+
+                Intent intent = new Intent(getContext(), NFCReaderActivity.class);
+                ArrayList<StudentItem> studentList = new ArrayList<>(studentsInClass);
+                intent.putExtra("student_list", studentList);
+                startActivity(intent);
             }
         });
 
@@ -100,9 +121,16 @@ public class AttendanceListFragment extends Fragment{
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         //send to information to database
+                        
+
+                        for(AttendanceListRowData row: attendanceList){
+                            Log.d("attendance list data", row.getStudentID()+ " " +row.getStudentName() + " " +row.isAttendance() + " " + row.getReason());
+                        }
+
 
                         // back to last page
-                        getActivity().onBackPressed();
+                        FragmentManager fragmentManager = getParentFragmentManager();
+                        fragmentManager.popBackStack();
                     }
                 });
                 builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -130,7 +158,9 @@ public class AttendanceListFragment extends Fragment{
             courseID = args.getString("course_ID");
             Log.d("ClassListFragment", "class name: " + className);
             Log.d("ClassListFragment", "class id: " + classID);
+            Log.d("ClassListFragment", "course_ID: " + courseID);
         }
+
         //query the shit here
         /* TESTING PRE-DB
         StudentItem studentItem1 = new StudentItem("Ali", "P21011234");
@@ -153,6 +183,7 @@ public class AttendanceListFragment extends Fragment{
 
         for(StudentItem student: studentsInClass){
             attendanceList.add(new AttendanceListRowData(classID,student.getStudentID(),student.getStudentName(),false,""));
+            Log.d("GETTING ATTENDANCE LIST", student.getStudentID() + " " + student.getStudentName());
         }
 
         attendanceListAdapter = new AttendanceListViewAdapter(attendanceList);
@@ -166,10 +197,30 @@ public class AttendanceListFragment extends Fragment{
         super.onResume();
         TextView title = getActivity().findViewById(R.id.fragmentholdertitle);
         title.setText("Attendance List");
+
+        Log.d("ROW ITEM", "IN ON RESUME");
+        for (AttendanceListRowData student: attendanceList) {
+            Log.d("inside attendance List", student.getStudentID());
+        }
+        for (String student: attendedStudentIDList) {
+            Log.d("inside attendanded student List", student);
+        }
+        for (AttendanceListRowData data: attendanceList) {
+            Log.d("ROW ITEM", data.getStudentID() + " " + data.getStudentName() + " " + data.isAttendance());
+            for (String item : attendedStudentIDList) {
+                Log.d("id", item);
+                Log.d("another id", data.getStudentID());
+                if (data.getStudentID().equals(item)) {
+                    Log.d("Trigger checkbox check", item);
+                    data.setAttendance(true);
+                    Log.d("ROW ITEM", data.getStudentID() + " " + data.getStudentName() + " " + data.isAttendance());
+                }
+            }
+        }
+        attendanceListAdapter.notifyDataSetChanged();
     }
     public void onPause() {
         super.onPause();
-        attendanceList.clear();
     }
 
     private void filter(String text){
@@ -181,7 +232,6 @@ public class AttendanceListFragment extends Fragment{
         }
         attendanceListAdapter.filteredList(filteredList);
     }
-
     public void showExitConfirmationDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setCancelable(true);

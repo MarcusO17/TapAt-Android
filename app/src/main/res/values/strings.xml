@@ -17,4 +17,5 @@
     <string name="takingAttendance">Taking Attendance</string>
     <string name="stopScanningButton">Stop Scanning</string>
     <string name="pleasetapyourcard">Please Tap Your Card</string>
+    <string name="exportaspdf">Export as CSV</string>
 </resources>

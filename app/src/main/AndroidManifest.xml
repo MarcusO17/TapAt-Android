@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.NFC" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <uses-feature
         android:name="android.hardware.nfc"
@@ -14,10 +16,14 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TapAt"
         tools:targetApi="31">
+        <activity
+            android:name=".NFCReaderActivity"
+            android:exported="false" />
         <activity
             android:name=".AttendanceViewFragment"
             android:exported="false" />
@@ -25,20 +31,11 @@
             android:name=".FragmentHolderActivity"
             android:exported="false" />
         <activity
-            android:name=".ClassListDetails"
-            android:exported="false" />
-        <activity
-            android:name=".LecturerHomepageActivity"
-            android:exported="false" />
-       <activity
-            android:name=".StudentListAdapter"
-            android:exported="false" />
-        <activity
             android:name=".AdminActivity"
             android:exported="false" />
         <activity
-            android:name=".LecturerActivity"
-            android:exported="false"></activity>
+            android:name=".NFCReaderLogic"
+            android:exported="false" />
         <activity
             android:name=".LoginActivity"
             android:exported="true">
