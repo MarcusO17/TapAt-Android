@@ -1,12 +1,12 @@
 package com.example.tapat;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,9 +27,10 @@ import com.example.tapat.model.ClassListItem;
 import com.example.tapat.model.StudentItem;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class AttendanceListFragment extends Fragment{
+public class AttendanceListFragment extends Fragment implements NFCReaderLogic.OnDataReceivedListener {
 
     View view;
     List<AttendanceListRowData> attendanceList = new ArrayList<>();
@@ -42,6 +43,7 @@ public class AttendanceListFragment extends Fragment{
     Button submitButton;
     EditText searchBar;
     AttendanceListViewAdapter attendanceListAdapter;
+    List<String> attendedStudentIDList = new ArrayList<>();
     public AttendanceListFragment() {
         // Required empty public constructor
     }
@@ -62,12 +64,8 @@ public class AttendanceListFragment extends Fragment{
         attendanceTakingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AttendanceScanningFragment attendanceScanningFragment = new AttendanceScanningFragment();
-                FragmentManager fragmentManager = getParentFragmentManager();
-                FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.classlistframelayout, attendanceScanningFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                Intent intent = new Intent(getContext(), NFCReaderLogic.class);
+                startActivity(intent);
             }
         });
 
@@ -182,7 +180,6 @@ public class AttendanceListFragment extends Fragment{
         }
         attendanceListAdapter.filteredList(filteredList);
     }
-
     public void showExitConfirmationDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setCancelable(true);
@@ -203,5 +200,17 @@ public class AttendanceListFragment extends Fragment{
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    @Override
+    public void onDataReceived(List<String> data) {
+        attendedStudentIDList = data;
+        for(AttendanceListRowData item: attendanceList) {
+            for(String id: attendedStudentIDList){
+                if (item.getStudentID() == id) {
+                    item.setAttendance(true);
+                }
+            }
+        }
     }
 }
