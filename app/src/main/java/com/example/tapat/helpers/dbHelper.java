@@ -633,7 +633,39 @@ public class dbHelper extends SQLiteOpenHelper {
         }
     }
 
+    public ArrayList<AttendanceListRowData> getPastAttendanceData (String classID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ArrayList<AttendanceListRowData> attendanceList = new ArrayList<AttendanceListRowData>();
+        Cursor cursor = null;
+        Cursor cursorExtra =null;
+
+        String sqlQuery = "SELECT a.attendance_ID, a.student_ID, a.attendance_status, a.reason, s.student_name " +
+                "FROM attendance_students a " +
+                "INNER JOIN students s ON a.student_ID = s.student_ID " +
+                "WHERE a.attendance_ID = ?";
+
+        cursor = db.rawQuery(sqlQuery, new String[] { classID });
+
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                String attendanceID = cursor.getString(cursor.getColumnIndex("attendance_ID"));
+                String studentID = cursor.getString(cursor.getColumnIndex("student_ID"));
+                String studentName = cursor.getString(cursor.getColumnIndex("student_name"));
+                boolean attendanceStatus = cursor.getInt(cursor.getColumnIndex("attendance_status")) > 0;
+                String reason = cursor.getString(cursor.getColumnIndex("reason"));
+
+                attendanceList.add(new AttendanceListRowData(attendanceID, studentID, studentName, attendanceStatus, reason));
+            }
+            cursor.close();
+        }
+        return attendanceList;
+
+    }
+
+
 }
+
+
 
 
 

@@ -73,11 +73,11 @@ public class ClassListFragment extends Fragment implements CourseItemViewAdapter
         classList.add(class2);
         classList.add(class3);
         */
-
+        classList = db.getClasses(courseCode);
 
         Log.d("ClassListFragment","classList size: " + classList.size());
 
-        ClassListViewAdapter adapter = new ClassListViewAdapter(getContext(),db.getClasses(courseCode), this::onClickListener);
+        ClassListViewAdapter adapter = new ClassListViewAdapter(getContext(),classList, this::onClickListener);
         classListRecyclerView.setAdapter(adapter);
 
         addClassButton.setOnClickListener(new View.OnClickListener() {
