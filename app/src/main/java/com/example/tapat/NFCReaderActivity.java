@@ -118,7 +118,7 @@ public class NFCReaderActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         //Intent ensures NFCWriterLogic is running , and prevents multiple calls to run NFCWriterLogic
-        Intent intent = new Intent(this, NFCReaderLogic.class).addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING);
+        Intent intent = new Intent(this, NFCReaderActivity.class).addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_MUTABLE);
         //Conditions for NFC Tag(Now Empty)

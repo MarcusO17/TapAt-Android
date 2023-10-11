@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class AttendanceListFragment extends Fragment implements NFCReaderLogic.OnDataReceivedListener {
+public class AttendanceListFragment extends Fragment implements NFCReaderActivity.OnDataReceivedListener {
 
     View view;
     List<AttendanceListRowData> attendanceList = new ArrayList<>();
@@ -64,7 +64,7 @@ public class AttendanceListFragment extends Fragment implements NFCReaderLogic.O
         attendanceTakingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), NFCReaderLogic.class);
+                Intent intent = new Intent(getContext(), NFCReaderActivity.class);
                 startActivity(intent);
             }
         });
