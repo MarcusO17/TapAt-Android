@@ -49,7 +49,7 @@ public class NFCReaderActivity extends AppCompatActivity {
         stopScanningButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getApplicationContext());
+                AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
                 builder.setCancelable(true);
                 builder.setMessage("Stop Scanning?");
                 builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
@@ -61,7 +61,7 @@ public class NFCReaderActivity extends AppCompatActivity {
                             fragment.onDataReceived(studentAttendedList);
                         }
 
-                        finish();
+                        onPause();
                     }
                 });
                 builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -71,7 +71,7 @@ public class NFCReaderActivity extends AppCompatActivity {
                     }
                 });
 
-                androidx.appcompat.app.AlertDialog dialog = builder.create();
+                AlertDialog dialog = builder.create();
                 dialog.show();
             }
         });
