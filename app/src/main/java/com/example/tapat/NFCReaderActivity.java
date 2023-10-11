@@ -49,7 +49,7 @@ public class NFCReaderActivity extends AppCompatActivity {
         stopScanningButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+                AlertDialog.Builder builder = new AlertDialog.Builder(NFCReaderActivity.this);
                 builder.setCancelable(true);
                 builder.setMessage("Stop Scanning?");
                 builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
