@@ -22,7 +22,8 @@
             app:icon="@drawable/baseline_menu_24"
             app:iconSize="50dp"
             app:strokeColor="#FFFFFF"
-            app:strokeWidth="1dp" />
+            app:strokeWidth="1dp"
+            app:iconColor="#ffffff"/>
 
         <Button
             android:id="@+id/profileButton"

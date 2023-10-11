@@ -401,6 +401,7 @@ public class dbHelper extends SQLiteOpenHelper {
         cv.put(Student.COL_1,student[0]); //Insert Student ID
         cv.put(Student.COL_2,student[1]); //Insert Student Name
         cv.put(Student.COL_3,student[2]); //Insert Student Programme
+        target = target.split(":")[1].trim();
         try {
             long result = db.update(Student.TABLE_NAME,cv,"student_name=?", new String[]{target});
             return result != -1;
@@ -415,6 +416,7 @@ public class dbHelper extends SQLiteOpenHelper {
         cv.put(Lecturer.COL_2,lecturer[1]); //Insert Lecturer Name
         cv.put(Lecturer.COL_3,lecturer[2]); //Insert Lecturer Email
         cv.put(Lecturer.COL_4,lecturer[3]);//Insert Lecturer Password
+        target = target.split(":")[1].trim();
         try {
             long result = db.update(Lecturer.TABLE_NAME,cv,"lecturer_name=?", new String[]{target});
             return result != -1;
