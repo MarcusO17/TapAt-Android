@@ -6,6 +6,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import com.example.tapat.model.AttendanceListRowData;
+import com.example.tapat.model.ClassListItem;
+import com.example.tapat.model.CourseItem;
+import com.example.tapat.model.StudentItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +23,7 @@ public class dbHelper extends SQLiteOpenHelper {
      ***********************************************************************************************
      */
     private static final String DATABASE_NAME = "TapAt.db";
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 9;
 
     static class Admin{
         private static final String TABLE_NAME = "admins";
@@ -59,7 +65,7 @@ public class dbHelper extends SQLiteOpenHelper {
     static class AttendanceStudents{
         private static final String TABLE_NAME = "attendance_students";
         private static final String COL_1 = "attendance_ID";
-        private static final String COL_2= "course_ID";
+        private static final String COL_2= "student_ID";
         private static final String COL_3 = "attendance_status";
         private static final String COL_4 = "reason";
     }
@@ -134,7 +140,7 @@ public class dbHelper extends SQLiteOpenHelper {
                 + AttendanceStudents.COL_3 + " TEXT NOT NULL,"
                 + AttendanceStudents.COL_4 + " TEXT NOT NULL,"
                 + " FOREIGN KEY (attendance_ID) REFERENCES attendance(attendance_ID),"
-                + " FOREIGN KEY (course_ID) REFERENCES courses(course_ID)"
+                + " FOREIGN KEY (student_ID) REFERENCES students(student_ID)"
                 + " )");
 
         //Creating CourseStudents Table
@@ -144,6 +150,7 @@ public class dbHelper extends SQLiteOpenHelper {
                 + " FOREIGN KEY (course_ID) REFERENCES courses(course_ID),"
                 + " FOREIGN KEY (student_ID) REFERENCES students(student_ID)"
                 + " )");
+        insertAdmin(db);
 
     }
 
@@ -156,9 +163,8 @@ public class dbHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Attendance.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + AttendanceStudents.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + CourseStudents.TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS users");
+        //db.execSQL("DROP TABLE IF EXISTS users");
         onCreate(db);
-        insertAdmin(db);
     }
 
 
@@ -459,6 +465,150 @@ public class dbHelper extends SQLiteOpenHelper {
         return  rowInfo.toArray(new String[]{});
     }
     */
+
+    public List<StudentItem> getStudents() {
+        List<StudentItem> studentData = new ArrayList<>();
+
+        String studentID = "";
+        String studentName = "";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+
+
+        cursor = db.rawQuery("SELECT * FROM students", null);
+        if(cursor!=null){
+            while(cursor.moveToNext()){
+                studentID = cursor.getString(cursor.getColumnIndex("student_ID"));
+                studentName = cursor.getString(cursor.getColumnIndex("student_name"));
+                studentData.add(new StudentItem(studentName,studentID));
+            }
+        }
+
+        return studentData;
+    }
+
+    public List<StudentItem> getCourseStudents(String courseID) {
+        List<String> studentIDData = new ArrayList<>();
+        List<StudentItem> studentData = new ArrayList<>();
+
+        String studentCourseID = "";
+        String studentName = "";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+
+
+        cursor = db.rawQuery("SELECT student_ID FROM course_students where course_ID = ?", new String[]{courseID});
+        if(cursor!=null){
+            while(cursor.moveToNext()){
+                studentCourseID = cursor.getString(cursor.getColumnIndex("student_ID"));
+                studentIDData.add(studentCourseID);
+            }
+        }
+        for(String studentID: studentIDData ){
+            studentData.add(new StudentItem(getNamefromID("Student",studentID),studentID));
+        }
+        return studentData;
+    }
+
+    public List<CourseItem> getCourses(String lecturerID){
+        List<CourseItem> courseData = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+
+        cursor = db.rawQuery("SELECT * FROM courses where lecturer_ID = ? ", new String[]{lecturerID});
+        if(cursor!=null){
+            while(cursor.moveToNext()){
+                String courseID = cursor.getString(cursor.getColumnIndex("course_ID"));
+                String courseName = cursor.getString(cursor.getColumnIndex("course_name"));
+                courseData.add(new CourseItem(courseName,courseID));
+            }
+        }
+
+        return courseData;
+    }
+
+    public List<ClassListItem> getClasses(String courseID){
+        List<ClassListItem> classData = new ArrayList<>();
+        int classCount = 0;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery("SELECT attendance_ID FROM attendance where course_ID = ? ORDER BY datetime", new String[]{courseID});
+        }catch(SQLiteException e){
+            Log.e("Query Failed : ", e.toString());
+            return classData;
+        }
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
+                    String attendanceID = cursor.getString(cursor.getColumnIndex("attendance_ID"));
+                    classCount += 1;
+                    classData.add(new ClassListItem(Integer.toString(classCount), attendanceID));
+                }
+            }
+
+
+        return classData;
+    }
+
+    public String getNamefromID(String className,String ID) {
+       String name = "";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        switch (className) {
+            case "Student": {
+                cursor = db.rawQuery("SELECT * FROM students where student_ID = ? ", new String[]{ID});
+                if (cursor != null && cursor.moveToFirst())
+                    name = cursor.getString(cursor.getColumnIndex("student_name"));
+
+                break;
+            }
+            case "Lecturer": {
+                cursor = db.rawQuery("SELECT * FROM lecturers where lecturer_ID = ? ", new String[]{ID});
+                if (cursor != null && cursor.moveToFirst()) {
+                    name = cursor.getString(cursor.getColumnIndex("lecturer_name"));
+                }
+                break;
+            }
+            /*
+            case "Course": {
+                 ID = split(":")[0].trim();
+                cursor = db.rawQuery("SELECT * FROM courses where course_ID = ? ", new String[]{ID});
+                if (cursor != null && cursor.moveToFirst())
+                   name = cursor.getString(cursor.getColumnIndex("course_name"));
+            }
+            break;
+            */
+
+            default: {
+                return name;
+            }
+        }
+        return name;
+    }
+
+    public void populateCourseStudents() {
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = null;
+        cursor = db.rawQuery("SELECT COUNT(*) FROM course_students",null);
+        if(cursor.moveToFirst()){
+            if(cursor.getInt(0) > 0)
+                db.execSQL("DELETE FROM course_students");
+        }
+
+        //If student_ID (PC (programme_code)) is = to course_ID (PC). then inner join respectively
+        db.execSQL("INSERT INTO course_students (student_ID, course_ID) " +
+                "SELECT s.student_ID, c.course_ID " +
+                "FROM students s " +
+                "JOIN courses c ON s.programme_code = c.programme_code " +
+                "WHERE s.programme_code IN ( " +
+                "    SELECT DISTINCT programme_code FROM students " +
+                ") " +
+                "AND c.programme_code IN ( " +
+                "    SELECT DISTINCT programme_code FROM courses " + ");");
+    }
 
 
 }

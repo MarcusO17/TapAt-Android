@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:ignore="ExtraText">
+    android:orientation="vertical"
+    android:background="@drawable/background_picture">
 
     <!-- Header -->
     <RelativeLayout
@@ -43,6 +45,17 @@
 
     <!-- Fragment Container -->
     <FrameLayout
+        android:layout_weight="1"
+        android:fontFamily="@font/julius_sans_one"
+        android:gravity="center"
+        android:text="Admin NFC Writer"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="28sp" />
+
+    <!-- Search Bar -->
+    <EditText
+        android:id="@+id/searchEditText"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/header">
@@ -95,12 +108,9 @@
         android:visibility="gone"
         tools:visibility="visible"
         android:background="#80ffffff">
-
         <!-- Include adminsidemenu.xml -->
         <include layout="@layout/adminsidemenu" />
-
     </LinearLayout>
 
-</RelativeLayout>
-<!-- fragment_admin_nfc_writer.xml -->
+
 

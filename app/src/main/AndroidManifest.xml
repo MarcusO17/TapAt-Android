@@ -55,8 +55,10 @@
         <activity
             android:name=".AdminNFCwriter"
             android:exported="true">
-        </activity>
-
+      </activity>
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
