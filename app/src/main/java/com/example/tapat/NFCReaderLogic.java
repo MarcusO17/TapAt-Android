@@ -83,6 +83,7 @@ public class NFCReaderLogic extends AppCompatActivity {
         Parcelable[] parcelables = intent.getParcelableArrayExtra(nfcAdapter.EXTRA_NDEF_MESSAGES);
         if (parcelables != null && parcelables.length > 0) {
             contentMessage = readTextFromTag((NdefMessage) parcelables[0]);
+            Log.d("SCANNED INFO", contentMessage);
             studentAttendedList.add(contentMessage);
             contentDialog(contentMessage);
         } else {

@@ -31,6 +31,9 @@
             android:name=".AdminActivity"
             android:exported="false" />
         <activity
+            android:name=".NFCReaderLogic"
+            android:exported="false" />
+        <activity
             android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
