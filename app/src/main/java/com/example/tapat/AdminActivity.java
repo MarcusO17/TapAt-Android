@@ -13,8 +13,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.tapat.adminfragments.AdminDashboard;
 import com.example.tapat.adminfragments.AdminList;
-import com.example.tapat.adminfragments.AdminNFCReader;
-import com.example.tapat.adminfragments.AdminNFCwriter;
 
 public class AdminActivity extends AppCompatActivity {
 
@@ -32,6 +30,9 @@ public class AdminActivity extends AppCompatActivity {
         navigationSection = findViewById(R.id.navigationSection);
         overlayView = findViewById(R.id.navigationSection);
         buttonA = findViewById(R.id.buttonA);
+
+        // Retrieve the fragmentToLoad data from the intent
+        String fragmentToLoad = getIntent().getStringExtra("fragmentToLoad");
 
         // Set click listener for buttonA to expand/contract the menu
         buttonA.setOnClickListener(new View.OnClickListener() {
@@ -87,13 +88,13 @@ public class AdminActivity extends AppCompatActivity {
 
         // Set click listener for studentButton
         studentButton.setOnClickListener(new View.OnClickListener(){
-             @Override
-             public void onClick(View view) {
-                 // Replace the fragment with AdminDashboard
-                 replaceFragment(AdminList.newInstance("Student"));
-                 // Close the side menu
-                 toggleMenu();
-             }
+            @Override
+            public void onClick(View view) {
+                // Replace the fragment with AdminDashboard
+                replaceFragment(AdminList.newInstance("Student"));
+                // Close the side menu
+                toggleMenu();
+            }
         });
 
         // Set click listener for lecturerButton
@@ -122,10 +123,9 @@ public class AdminActivity extends AppCompatActivity {
         nfcReaderButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                // Replace the fragment with AdminDashboard
-                replaceFragment(new AdminNFCReader());
-                // Close the side menu
-                toggleMenu();
+                Intent readnfcIntent = new Intent(AdminActivity.this, AdminNFCReader.class);
+                startActivity(readnfcIntent);
+                finish();
             }
         });
 
@@ -133,10 +133,9 @@ public class AdminActivity extends AppCompatActivity {
         nfcWriterButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                // Replace the fragment with AdminDashboard
-                replaceFragment(new AdminNFCwriter());
-                // Close the side menu
-                toggleMenu();
+                Intent writenfcIntent = new Intent(AdminActivity.this, AdminNFCwriter.class);
+                startActivity(writenfcIntent);
+                finish();
             }
         });
 
@@ -150,9 +149,18 @@ public class AdminActivity extends AppCompatActivity {
             }
         });
 
-
-        // Initially, show AdminDashboard
-        replaceFragment(new AdminDashboard());
+        if ("Profile".equals(fragmentToLoad)) {
+            replaceFragment(new UserProfile());
+        } else if ("Student".equals(fragmentToLoad)) {
+            replaceFragment(AdminList.newInstance("Student"));
+        } else if ("Lecturer".equals(fragmentToLoad)) {
+            replaceFragment(AdminList.newInstance("Lecturer"));
+        } else if ("Course".equals(fragmentToLoad)) {
+            replaceFragment(AdminList.newInstance("Course"));
+        } else {
+            //default
+            replaceFragment(new AdminDashboard());
+        }
     }
 
     // Function to toggle the menu (expand/contract)

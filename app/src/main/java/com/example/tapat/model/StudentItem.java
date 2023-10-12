@@ -46,7 +46,7 @@ public class StudentItem implements Serializable, Parcelable {
         parcel.writeString(studentName);
         parcel.writeString(studentID);
     }
-    public static final Parcelable.Creator<StudentItem> CREATOR = new Parcelable.Creator<StudentItem>() {
+    public static final Creator<StudentItem> CREATOR = new Creator<StudentItem>() {
         @Override
         public StudentItem createFromParcel(Parcel in) {
             return new StudentItem(in);

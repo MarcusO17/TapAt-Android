@@ -93,7 +93,7 @@ public class NFCReaderActivity extends AppCompatActivity {
             contentMessage = readTextFromTag((NdefMessage) parcelables[0]);
             Log.d("SCANNED INFO", contentMessage);
             String[] studentInfo = contentMessage.split(":");
-            String studentID = studentInfo[1].replaceAll("\\s", "");
+            String studentID = studentInfo[0].trim();
             Log.d("Student ID List Info", studentIDList.size()+"");
             for (String i : studentIDList) {
                 Log.d("inside array", i);
