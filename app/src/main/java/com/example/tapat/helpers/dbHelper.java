@@ -17,7 +17,7 @@ public class dbHelper extends SQLiteOpenHelper {
      ***********************************************************************************************
      */
     private static final String DATABASE_NAME = "TapAt.db";
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 9;
 
     static class Admin{
         private static final String TABLE_NAME = "admins";
