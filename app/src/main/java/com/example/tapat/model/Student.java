@@ -1,23 +1,14 @@
 package com.example.tapat.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import androidx.annotation.NonNull;
-
 import java.io.Serializable;
 
-public class StudentItem implements Serializable, Parcelable {
+public class Student implements Serializable {
     private String studentName;
     private String studentID;
 
-    public StudentItem(String studentName, String studentID) {
+    public Student(String studentName, String studentID) {
         this.studentName = studentName;
         this.studentID = studentID;
-    }
-    protected StudentItem(Parcel in) {
-        studentName = in.readString();
-        studentID = in.readString();
     }
 
     public String getStudentName() {
@@ -35,26 +26,4 @@ public class StudentItem implements Serializable, Parcelable {
     public void setStudentID(String studentID) {
         this.studentID = studentID;
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(@NonNull Parcel parcel, int i) {
-        parcel.writeString(studentName);
-        parcel.writeString(studentID);
-    }
-    public static final Parcelable.Creator<StudentItem> CREATOR = new Parcelable.Creator<StudentItem>() {
-        @Override
-        public StudentItem createFromParcel(Parcel in) {
-            return new StudentItem(in);
-        }
-
-        @Override
-        public StudentItem[] newArray(int size) {
-            return new StudentItem[size];
-        }
-    };
 }

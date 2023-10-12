@@ -35,9 +35,5 @@ public class AttendanceListRowData{
     public void setReason(String reason) {
         this.reason = reason;
     }
-    public String getStudentID() {
-        return studentID;
-    }
-
 
 }

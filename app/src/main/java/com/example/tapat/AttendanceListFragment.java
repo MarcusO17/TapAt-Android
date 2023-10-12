@@ -1,15 +1,8 @@
 package com.example.tapat;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,49 +17,25 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.tapat.adapter.AttendanceListViewAdapter;
-import com.example.tapat.helpers.dbHelper;
 import com.example.tapat.model.AttendanceListRowData;
-import com.example.tapat.model.ClassListItem;
-import com.example.tapat.model.StudentItem;
+import com.example.tapat.model.Student;
 
-import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class AttendanceListFragment extends Fragment {
+public class AttendanceListFragment extends Fragment{
 
     View view;
     List<AttendanceListRowData> attendanceList = new ArrayList<>();
-    List<StudentItem> studentsInClass = new ArrayList<>();
     String className;
-    String courseID;
     String classID;
-    dbHelper db;
     Button attendanceTakingButton;
     Button submitButton;
     EditText searchBar;
     AttendanceListViewAdapter attendanceListAdapter;
-    BroadcastReceiver receiver;
-    List<String> attendedStudentIDList = new ArrayList<>();
+
     public AttendanceListFragment() {
         // Required empty public constructor
-    }
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        receiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                if ("com.example.tapat.ACTION_NFC_DATA".equals(intent.getAction())) {
-                    attendedStudentIDList = intent.getStringArrayListExtra("attendedList");
-                }
-            }
-        };
-        IntentFilter intentFilter = new IntentFilter("com.example.tapat.ACTION_NFC_DATA");
-        requireActivity().registerReceiver(receiver, intentFilter);
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,24 +43,9 @@ public class AttendanceListFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_attendance_list, container, false);
 
-        //Init DB
-        db = new dbHelper(getContext());
-        db.populateCourseStudents();
-
         attendanceTakingButton = view.findViewById(R.id.attendance_taking_button);
         submitButton = view.findViewById(R.id.submit_attendance_button);
         searchBar = view.findViewById(R.id.attendancelistsearchbar);
-
-        attendanceTakingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(getContext(), NFCReaderActivity.class);
-                ArrayList<StudentItem> studentList = new ArrayList<>(studentsInClass);
-                intent.putExtra("student_list", studentList);
-                startActivity(intent);
-            }
-        });
 
         searchBar.addTextChangedListener(new TextWatcher() {
             @Override
@@ -110,38 +64,20 @@ public class AttendanceListFragment extends Fragment {
             }
         });
 
+        attendanceTakingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //go to NFC READING
+            }
+        });
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setCancelable(true);
-                builder.setMessage("Submit Attendance List?");
-                builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        //send to information to database
-                        
+                //send to database
 
-                        for(AttendanceListRowData row: attendanceList){
-                            Log.d("attendance list data", row.getStudentID()+ " " +row.getStudentName() + " " +row.isAttendance() + " " + row.getReason());
-                        }
-
-
-                        // back to last page
-                        FragmentManager fragmentManager = getParentFragmentManager();
-                        fragmentManager.popBackStack();
-                    }
-                });
-                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                });
-
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                //go exit this page when submitting
+                getActivity().onBackPressed();
             }
         });
 
@@ -155,36 +91,25 @@ public class AttendanceListFragment extends Fragment {
         if (args != null) {
             className = args.getString("class_id");
             classID = args.getString("class_name");
-            courseID = args.getString("course_ID");
             Log.d("ClassListFragment", "class name: " + className);
             Log.d("ClassListFragment", "class id: " + classID);
-            Log.d("ClassListFragment", "course_ID: " + courseID);
         }
-
         //query the shit here
-        /* TESTING PRE-DB
-        StudentItem studentItem1 = new StudentItem("Ali", "P21011234");
-        StudentItem studentItem2 = new StudentItem("Abu", "P21010001");
-        StudentItem studentItem3 = new StudentItem("John","P21011002");
-        StudentItem studentItem4 = new StudentItem("Felix","P21011003");
+        Student student1 = new Student("Ali", "P21011234");
+        Student student2 = new Student("Abu", "P21010001");
+        Student student3 = new Student("John","P21011002");
+        Student student4 = new Student("Felix","P21011003");
 
-        AttendanceListRowData row1 = new AttendanceListRowData(studentItem1.getStudentName(),false,"");
-        AttendanceListRowData row2 = new AttendanceListRowData(studentItem2.getStudentName(),false,"");
-        AttendanceListRowData row3 = new AttendanceListRowData(studentItem3.getStudentName(),false,"");
-        AttendanceListRowData row4 = new AttendanceListRowData(studentItem4.getStudentName(),false,"");
+        AttendanceListRowData row1 = new AttendanceListRowData(student1.getStudentName(),false,"");
+        AttendanceListRowData row2 = new AttendanceListRowData(student2.getStudentName(),false,"");
+        AttendanceListRowData row3 = new AttendanceListRowData(student3.getStudentName(),false,"");
+        AttendanceListRowData row4 = new AttendanceListRowData(student4.getStudentName(),false,"");
 
         attendanceList.add(row1);
         attendanceList.add(row2);
         attendanceList.add(row3);
         attendanceList.add(row4);
-        */
 
-        studentsInClass = db.getCourseStudents(courseID);
-
-        for(StudentItem student: studentsInClass){
-            attendanceList.add(new AttendanceListRowData(classID,student.getStudentID(),student.getStudentName(),false,""));
-            Log.d("GETTING ATTENDANCE LIST", student.getStudentID() + " " + student.getStudentName());
-        }
 
         attendanceListAdapter = new AttendanceListViewAdapter(attendanceList);
 
@@ -197,30 +122,6 @@ public class AttendanceListFragment extends Fragment {
         super.onResume();
         TextView title = getActivity().findViewById(R.id.fragmentholdertitle);
         title.setText("Attendance List");
-
-        Log.d("ROW ITEM", "IN ON RESUME");
-        for (AttendanceListRowData student: attendanceList) {
-            Log.d("inside attendance List", student.getStudentID());
-        }
-        for (String student: attendedStudentIDList) {
-            Log.d("inside attendanded student List", student);
-        }
-        for (AttendanceListRowData data: attendanceList) {
-            Log.d("ROW ITEM", data.getStudentID() + " " + data.getStudentName() + " " + data.isAttendance());
-            for (String item : attendedStudentIDList) {
-                Log.d("id", item);
-                Log.d("another id", data.getStudentID());
-                if (data.getStudentID().equals(item)) {
-                    Log.d("Trigger checkbox check", item);
-                    data.setAttendance(true);
-                    Log.d("ROW ITEM", data.getStudentID() + " " + data.getStudentName() + " " + data.isAttendance());
-                }
-            }
-        }
-        attendanceListAdapter.notifyDataSetChanged();
-    }
-    public void onPause() {
-        super.onPause();
     }
 
     private void filter(String text){
@@ -231,26 +132,7 @@ public class AttendanceListFragment extends Fragment {
             }
         }
         attendanceListAdapter.filteredList(filteredList);
-    }
-    public void showExitConfirmationDialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setCancelable(true);
-        builder.setMessage("Are you sure you want to Exit?");
-        builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                // back to last page
-                getParentFragmentManager().popBackStack();
-            }
-        });
-        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
-            }
-        });
 
-        AlertDialog dialog = builder.create();
-        dialog.show();
     }
+
 }
