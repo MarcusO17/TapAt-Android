@@ -25,18 +25,6 @@
             android:name=".FragmentHolderActivity"
             android:exported="false" />
         <activity
-            android:name=".ClassListDetails"
-            android:exported="false" />
-        <activity
-            android:name=".LecturerHomepageActivity"
-            android:exported="false" />
-       <activity
-            android:name=".StudentListAdapter"
-            android:exported="false" />
-        <activity
-            android:name=".LecturerActivity"
-            android:exported="false"></activity>
-        <activity
             android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
@@ -54,8 +42,11 @@
             android:exported="false" />
         <activity
             android:name=".AdminNFCwriter"
-            android:exported="true">
-        </activity>
+            android:exported="true"/>
+        <activity
+            android:name=".NFCReaderActivity"
+            android:exported="true"/>
+
 
     </application>
 
