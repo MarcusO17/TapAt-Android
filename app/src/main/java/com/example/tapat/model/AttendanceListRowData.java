@@ -11,6 +11,8 @@ public class AttendanceListRowData{
         this.attendance = attendance;
         this.reason = reason;
     }
+    public String getAttendanceID(){return attendanceID;}
+    public void setAttendanceID(String attendanceID) {this.attendanceID = attendanceID;}
 
     public String getStudentName() {
         return studentName;
@@ -20,7 +22,7 @@ public class AttendanceListRowData{
         this.studentName = studentName;
     }
 
-    public boolean isAttendance() {
+    public boolean getAttendance() {
         return attendance;
     }
 

@@ -1,6 +1,5 @@
 package com.example.tapat.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.tapat.AttendanceListFragment;
 import com.example.tapat.R;
 import com.example.tapat.model.AttendanceListRowData;
-import com.example.tapat.model.ClassListItem;
-import com.example.tapat.model.Student;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,6 +38,11 @@ public class AttendanceListViewAdapter extends RecyclerView.Adapter<AttendanceLi
     public void onBindViewHolder(@NonNull AttendanceListViewAdapter.ViewHolder holder, int position) {
 
         holder.title.setText(attendanceList.get(position).getStudentName());
+        if(attendanceList.get(position).getAttendance()) {
+            holder.attendanceCheckBox.setChecked(true);
+        }else{
+            holder.attendanceCheckBox.setChecked(false);
+        }
 
         List<String> dropDownMenuItems = Arrays.asList("No Reason","Late", "MC");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
@@ -57,6 +58,7 @@ public class AttendanceListViewAdapter extends RecyclerView.Adapter<AttendanceLi
     public int getItemCount() {
         return attendanceList.size();
     }
+
     public void filteredList(List<AttendanceListRowData> list) {
         attendanceList = list;
         notifyDataSetChanged();
@@ -74,8 +76,10 @@ public class AttendanceListViewAdapter extends RecyclerView.Adapter<AttendanceLi
             attendanceCheckBox = itemView.findViewById(R.id.attendancecheckbox);
 
             attendanceCheckBox.setOnCheckedChangeListener((checkbox, isChecked) ->{
-                if(position != RecyclerView.NO_POSITION){
-                    attendanceList.get(position).setAttendance(isChecked);
+                int adapterPosition = getAdapterPosition();
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    AttendanceListRowData rowData = attendanceList.get(adapterPosition);
+                    rowData.setAttendance(isChecked);
                 }
             });
 
