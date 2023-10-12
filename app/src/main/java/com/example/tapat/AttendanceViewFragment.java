@@ -79,7 +79,7 @@ public class AttendanceViewFragment extends Fragment {
                 filter(editable.toString());
             }
         });
-
+        /*
         exportasCSVButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,7 +106,7 @@ public class AttendanceViewFragment extends Fragment {
                 dialog.show();
             }
         });
-
+    */
 
         if (args != null) {
             className = args.getString("class_id");
@@ -133,7 +133,7 @@ public class AttendanceViewFragment extends Fragment {
         attendanceList.add(row3);
         attendanceList.add(row4);
         */
-
+        attendanceList = db.getPastAttendanceData(className);
         attendanceListAdapter = new AttendanceViewAdapter(attendanceList);
 
         attendanceListRecyclerView.setAdapter(attendanceListAdapter);

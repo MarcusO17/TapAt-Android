@@ -31,8 +31,12 @@ import com.example.tapat.model.StudentItem;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class AttendanceListFragment extends Fragment {
@@ -121,13 +125,16 @@ public class AttendanceListFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         //send to information to database
-                        
+                        ArrayList<AttendanceListRowData> attendanceArrayList = new ArrayList<AttendanceListRowData>(attendanceList);
 
-                        for(AttendanceListRowData row: attendanceList){
-                            Log.d("attendance list data", row.getStudentID()+ " " +row.getStudentName() + " " +row.isAttendance() + " " + row.getReason());
-                        }
+                        //Initialising classData info for indexing
+                        //Getting data
+                        DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD HH:mm:ss");
+                        String date = dateFormat.format(Calendar.getInstance().getTime());
 
-
+                        String[] classData = new String[]{className,courseID,date};
+                        db.insertAttendanceData(classData);
+                        db.insertAttendanceStudentsData(attendanceArrayList);
                         // back to last page
                         FragmentManager fragmentManager = getParentFragmentManager();
                         fragmentManager.popBackStack();
@@ -182,7 +189,7 @@ public class AttendanceListFragment extends Fragment {
         studentsInClass = db.getCourseStudents(courseID);
 
         for(StudentItem student: studentsInClass){
-            attendanceList.add(new AttendanceListRowData(classID,student.getStudentID(),student.getStudentName(),false,""));
+            attendanceList.add(new AttendanceListRowData(className,student.getStudentID(),student.getStudentName(),false,""));
             Log.d("GETTING ATTENDANCE LIST", student.getStudentID() + " " + student.getStudentName());
         }
 
@@ -206,14 +213,14 @@ public class AttendanceListFragment extends Fragment {
             Log.d("inside attendanded student List", student);
         }
         for (AttendanceListRowData data: attendanceList) {
-            Log.d("ROW ITEM", data.getStudentID() + " " + data.getStudentName() + " " + data.isAttendance());
+            Log.d("ROW ITEM", data.getStudentID() + " " + data.getStudentName() + " " + data.getAttendance());
             for (String item : attendedStudentIDList) {
                 Log.d("id", item);
                 Log.d("another id", data.getStudentID());
                 if (data.getStudentID().equals(item)) {
                     Log.d("Trigger checkbox check", item);
                     data.setAttendance(true);
-                    Log.d("ROW ITEM", data.getStudentID() + " " + data.getStudentName() + " " + data.isAttendance());
+                    Log.d("ROW ITEM", data.getStudentID() + " " + data.getStudentName() + " " + data.getAttendance());
                 }
             }
         }

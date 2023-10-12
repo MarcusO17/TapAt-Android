@@ -602,8 +602,70 @@ public class dbHelper extends SQLiteOpenHelper {
                 "    SELECT DISTINCT programme_code FROM courses " + ");");
     }
 
+    public void insertAttendanceStudentsData(ArrayList<AttendanceListRowData> attendanceList){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
+        for(AttendanceListRowData attendanceStudent : attendanceList){
+            ContentValues cv = new ContentValues();
+            cv.put(AttendanceStudents.COL_1, attendanceStudent.getAttendanceID());
+            cv.put(AttendanceStudents.COL_2, attendanceStudent.getStudentID());
+            cv.put(AttendanceStudents.COL_3, attendanceStudent.getAttendance());
+            cv.put(AttendanceStudents.COL_4, attendanceStudent.getReason());
+
+            db.insert(AttendanceStudents.TABLE_NAME, null, cv);
+        }
+
+        db.setTransactionSuccessful();
+        db.endTransaction();
+    }
+
+    public boolean insertAttendanceData(String[] attendanceRow){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(Attendance.COL_1,attendanceRow[0]); //Insert
+        cv.put(Attendance.COL_2,attendanceRow[1]); //Insert
+        cv.put(Attendance.COL_3,attendanceRow[2]); //Insert
+        try {
+            long result = db.insert(Attendance.TABLE_NAME,null, cv);
+            return result != -1;
+        }catch(SQLiteException e){
+            return false;
+        }
+    }
+
+    public ArrayList<AttendanceListRowData> getPastAttendanceData (String classID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ArrayList<AttendanceListRowData> attendanceList = new ArrayList<AttendanceListRowData>();
+        Cursor cursor = null;
+        Cursor cursorExtra =null;
+
+        String sqlQuery = "SELECT a.attendance_ID, a.student_ID, a.attendance_status, a.reason, s.student_name " +
+                "FROM attendance_students a " +
+                "INNER JOIN students s ON a.student_ID = s.student_ID " +
+                "WHERE a.attendance_ID = ?";
+
+        cursor = db.rawQuery(sqlQuery, new String[] { classID });
+
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                String attendanceID = cursor.getString(cursor.getColumnIndex("attendance_ID"));
+                String studentID = cursor.getString(cursor.getColumnIndex("student_ID"));
+                String studentName = cursor.getString(cursor.getColumnIndex("student_name"));
+                boolean attendanceStatus = cursor.getInt(cursor.getColumnIndex("attendance_status")) > 0;
+                String reason = cursor.getString(cursor.getColumnIndex("reason"));
+
+                attendanceList.add(new AttendanceListRowData(attendanceID, studentID, studentName, attendanceStatus, reason));
+            }
+            cursor.close();
+        }
+        return attendanceList;
+
+    }
+
 
 }
+
+
 
 
 

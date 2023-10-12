@@ -34,7 +34,7 @@ public class AttendanceViewAdapter extends RecyclerView.Adapter<AttendanceViewAd
     public void onBindViewHolder(@NonNull AttendanceViewAdapter.ViewHolder holder, int position) {
         holder.title.setText(attendanceList.get(position).getStudentName());
         holder.reasonTextView.setText(attendanceList.get(position).getReason());
-        holder.attendanceCheckBox.setChecked(attendanceList.get(position).isAttendance());
+        holder.attendanceCheckBox.setChecked(attendanceList.get(position).getAttendance());
         holder.attendanceCheckBox.setEnabled(false);
     }
 
