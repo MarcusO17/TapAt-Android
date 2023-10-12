@@ -4,6 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AttendanceViewFragment">
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/exportascsv"
+        android:text="@string/exportaspdf"
+        android:backgroundTint="#4B494B"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentEnd="true"
+        />
 
     <EditText
         android:layout_width="match_parent"
@@ -11,6 +20,7 @@
         android:id="@+id/attendanceviewsearchbar"
         android:padding="10dp"
         android:hint="Search"
+        android:layout_below="@id/exportascsv"
         android:background="@drawable/scroll_frame"/>
 
     <androidx.recyclerview.widget.RecyclerView
