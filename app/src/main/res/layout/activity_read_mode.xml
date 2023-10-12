@@ -5,13 +5,14 @@
     android:id="@+id/nfcContent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_picture"
     tools:context=".NFCReaderLogic">
 
     <TextView
         android:id="@+id/tagContentText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Scan Now!"
+        android:layout_width="260dp"
+        android:layout_height="250dp"
+        android:background="@drawable/nfc_card"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,6 +26,8 @@
         android:text="Write Mode"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:backgroundTint="#0Dffffff"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

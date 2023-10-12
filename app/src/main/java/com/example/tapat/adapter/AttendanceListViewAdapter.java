@@ -29,13 +29,13 @@ public class AttendanceListViewAdapter extends RecyclerView.Adapter<AttendanceLi
 
     @NonNull
     @Override
-    public AttendanceListViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.attendance_recycler_view_item, parent, false);
-        return new AttendanceListViewAdapter.ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AttendanceListViewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         holder.title.setText(attendanceList.get(position).getStudentName());
         if(attendanceList.get(position).getAttendance()) {

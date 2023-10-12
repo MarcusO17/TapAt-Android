@@ -192,7 +192,7 @@ public class dbHelper extends SQLiteOpenHelper {
         Cursor cursor;
 
         cursor = db.rawQuery("SELECT * FROM "+ table + " "+
-                                "where email = ? and password = ?",new String[] {email,password});
+                "where email = ? and password = ?",new String[] {email,password});
 
         if(cursor!=null && cursor.getCount()>0) {
             cursor.close();
@@ -252,31 +252,31 @@ public class dbHelper extends SQLiteOpenHelper {
             return namesList.toArray(new String[]{});
         }
         if(cursor != null){
-                switch (className) {
-                    case "Students":
-                        while (cursor.moveToNext()) {
-                            String studentID = cursor.getString(cursor.getColumnIndex("student_ID"));
-                            String studentName = cursor.getString(cursor.getColumnIndex("student_name"));
-                            namesList.add(studentID + " : " + studentName);
-                        }
-                        break;
-                    case "Lecturers":
-                        while (cursor.moveToNext()) {
-                            String lecturerID = cursor.getString(cursor.getColumnIndex("lecturer_ID"));
-                            String lecturerName = cursor.getString(cursor.getColumnIndex("lecturer_name"));
-                            namesList.add(lecturerID + " : " + lecturerName);
-                        }
-                        break;
-                    case "Courses":
-                        while (cursor.moveToNext()) {
-                            String courseID = cursor.getString(cursor.getColumnIndex("course_ID"));
-                            String courseName = cursor.getString(cursor.getColumnIndex("course_name"));
-                            namesList.add(courseID + " : " + courseName);
-                        }
-                        break;
-                }
-            cursor.close();
+            switch (className) {
+                case "Students":
+                    while (cursor.moveToNext()) {
+                        String studentID = cursor.getString(cursor.getColumnIndex("student_ID"));
+                        String studentName = cursor.getString(cursor.getColumnIndex("student_name"));
+                        namesList.add(studentID + " : " + studentName);
+                    }
+                    break;
+                case "Lecturers":
+                    while (cursor.moveToNext()) {
+                        String lecturerID = cursor.getString(cursor.getColumnIndex("lecturer_ID"));
+                        String lecturerName = cursor.getString(cursor.getColumnIndex("lecturer_name"));
+                        namesList.add(lecturerID + " : " + lecturerName);
+                    }
+                    break;
+                case "Courses":
+                    while (cursor.moveToNext()) {
+                        String courseID = cursor.getString(cursor.getColumnIndex("course_ID"));
+                        String courseName = cursor.getString(cursor.getColumnIndex("course_name"));
+                        namesList.add(courseID + " : " + courseName);
+                    }
+                    break;
             }
+            cursor.close();
+        }
         //if cursor gets results
         return namesList.toArray(new String[]{});
     }
@@ -392,8 +392,8 @@ public class dbHelper extends SQLiteOpenHelper {
                 if(cursor!=null && cursor.moveToFirst())
                     for(int i= 0; i < cursor.getColumnCount(); i++)
                         rowInfo.add(cursor.getString(i));
-                }
-                break;
+            }
+            break;
             default:{
                 return new String[]{};
             }
@@ -541,20 +541,20 @@ public class dbHelper extends SQLiteOpenHelper {
             Log.e("Query Failed : ", e.toString());
             return classData;
         }
-            if (cursor != null) {
-                while (cursor.moveToNext()) {
-                    String attendanceID = cursor.getString(cursor.getColumnIndex("attendance_ID"));
-                    classCount += 1;
-                    classData.add(new ClassListItem(Integer.toString(classCount), attendanceID));
-                }
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                String attendanceID = cursor.getString(cursor.getColumnIndex("attendance_ID"));
+                classCount += 1;
+                classData.add(new ClassListItem(Integer.toString(classCount), attendanceID));
             }
+        }
 
 
         return classData;
     }
 
     public String getNamefromID(String className,String ID) {
-       String name = "";
+        String name = "";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
         switch (className) {
