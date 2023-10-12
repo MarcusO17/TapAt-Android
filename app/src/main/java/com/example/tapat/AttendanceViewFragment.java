@@ -79,7 +79,8 @@ public class AttendanceViewFragment extends Fragment {
                 filter(editable.toString());
             }
         });
-        /*
+
+        exportasCSVButton = view.findViewById(R.id.exportascsv);
         exportasCSVButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,7 +107,7 @@ public class AttendanceViewFragment extends Fragment {
                 dialog.show();
             }
         });
-    */
+
 
         if (args != null) {
             className = args.getString("class_id");
