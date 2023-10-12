@@ -2,14 +2,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/background_picture">
 
     <!-- Header -->
     <RelativeLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#202123">
+        android:background="@drawable/background_header">
 
         <Button
             android:id="@+id/buttonA"
@@ -44,12 +45,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/header">
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:background="#343541">
+            android:background="@drawable/background_picture">
 
             <!-- Display Fragment Title -->
 
@@ -57,10 +57,13 @@
                 android:id="@+id/displayFragmentTitleTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:fontFamily="@font/julius_sans_one"
                 android:gravity="center"
                 android:text="NFC Reader"
-                android:textSize="20sp"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                android:textStyle="bold"/>
 
             <!-- Add your UI elements for displaying admin information here -->
             <LinearLayout

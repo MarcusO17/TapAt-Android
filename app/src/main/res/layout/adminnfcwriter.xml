@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_picture"
     tools:ignore="ExtraText">
 
     <!-- Header -->
@@ -10,7 +11,7 @@
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#202123">
+        android:background="@drawable/background_header">
 
         <Button
             android:id="@+id/buttonA"
@@ -45,21 +46,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/header">
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:background="#343541">
+            android:background="@drawable/background_picture">
 
             <TextView
                 android:id="@+id/textViewNFCWriter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="AdminNFCWriter"
+                android:fontFamily="@font/julius_sans_one"
                 android:gravity="center"
+                android:text="AdminNFCWriter"
                 android:textColor="@color/white"
-                android:textSize="20sp" />
+                android:textSize="30sp" />
 
             <!-- Search Bar -->
             <EditText
@@ -80,7 +82,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="8"
                 android:layout_margin="10dp"
-                android:background="#08ffffff" />
+                android:background="@drawable/scroll_frame" />
 
         </LinearLayout>
     </FrameLayout>

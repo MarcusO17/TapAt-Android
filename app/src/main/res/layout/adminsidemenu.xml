@@ -10,29 +10,31 @@
 
     <LinearLayout
         android:id="@+id/headSection"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="100dp"
         android:layout_weight="2"
+        android:background="@drawable/side_navigation_header"
         android:orientation="vertical"
-        android:padding="16dp"
-        android:background="#202123">
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/adminNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:fontFamily="@font/julius_sans_one"
             android:text="Admin Name"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="#ffffff"/>
+            android:textColor="#ffffff"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/adminRoleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Admin"
-            android:textSize="14sp"
-            android:textColor="#ffffff"/>
+            android:textColor="#ffffff"
+            android:textSize="18sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -41,59 +43,51 @@
         android:layout_height="wrap_content"
         android:layout_weight="7"
         android:orientation="vertical"
-        android:background="#343541">
+        android:background="#FFFFFF">
 
         <!-- Dashboard -->
         <Button
             android:id="@+id/dashboardButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@android:color/transparent"
+            android:backgroundTint="#206B9C"
             android:layout_margin="5dp"
-            android:textColor="#ffffff"
             app:cornerRadius="5dp"
-            app:strokeColor="#1AFFFFFF"
-            app:strokeWidth="1dp"
-            android:text="Dashboard" />
+            android:text="Dashboard"
+            android:textColor="#FFFFFF"/>
 
         <!-- Student -->
         <Button
             android:id="@+id/studentButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@android:color/transparent"
+            android:backgroundTint="#206B9C"
             android:layout_margin="5dp"
-            android:textColor="#ffffff"
             app:cornerRadius="5dp"
-            app:strokeColor="#1AFFFFFF"
-            app:strokeWidth="1dp"
-            android:text="Student" />
+            android:text="Student"
+            android:textColor="#FFFFFF"/>
 
         <!-- Lecturer -->
         <Button
             android:id="@+id/lecturerButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@android:color/transparent"
+            android:backgroundTint="#206B9C"
             android:layout_margin="5dp"
-            android:textColor="#ffffff"
             app:cornerRadius="5dp"
-            app:strokeColor="#1AFFFFFF"
-            app:strokeWidth="1dp"
-            android:text="Lecturer" />
+            android:text="Lecturer"
+            android:textColor="#FFFFFF"/>
 
         <!-- Course -->
         <Button
             android:id="@+id/courseButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@android:color/transparent"
+            android:backgroundTint="#206B9C"
             android:layout_margin="5dp"
-            android:textColor="#ffffff"
             app:cornerRadius="5dp"
-            app:strokeColor="#1AFFFFFF"
-            app:strokeWidth="1dp"
-            android:text="Course" />
+            android:text="Course"
+            android:textColor="#FFFFFF"/>
 
         <!-- NFC Reader -->
         <Button
@@ -101,13 +95,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:backgroundTint="@android:color/transparent"
+            android:backgroundTint="#206B9C"
             android:insetTop="4dp"
             android:text="NFC Reader"
-            android:textColor="#ffffff"
             app:cornerRadius="5dp"
-            app:strokeColor="#1AFFFFFF"
-            app:strokeWidth="1dp" />
+            android:textColor="#FFFFFF"/>
 
         <!-- NFC Writer -->
         <Button
@@ -115,12 +107,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:backgroundTint="@android:color/transparent"
+            android:backgroundTint="#206B9C"
             android:text="NFC Writer"
-            android:textColor="#ffffff"
             app:cornerRadius="5dp"
-            app:strokeColor="#1AFFFFFF"
-            app:strokeWidth="1dp" />
+            android:textColor="#FFFFFF"/>
+
     </LinearLayout>
 
     <LinearLayout
@@ -130,7 +121,7 @@
         android:layout_gravity="bottom"
         android:layout_weight="1"
         android:orientation="horizontal"
-        android:background="#343541">
+        android:background="#FFFFFF">
 
         <!-- Logout -->
         <Button
@@ -138,13 +129,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:backgroundTint="@android:color/transparent"
+            android:backgroundTint="#4B494B"
             android:layout_margin="5dp"
-            android:textColor="#ffffff"
             app:cornerRadius="5dp"
             app:strokeColor="#1AFFFFFF"
             app:strokeWidth="1dp"
-            android:text="Logout" />
+            android:text="Log Out"
+            android:textColor="@color/white"/>
 
     </LinearLayout>
 

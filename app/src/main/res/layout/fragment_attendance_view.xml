@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/exportascsv"
         android:text="@string/exportaspdf"
-        android:backgroundTint="#4B494B"
+        android:backgroundTint="#206B9C"
         android:layout_marginRight="10dp"
         android:layout_alignParentEnd="true"
         />

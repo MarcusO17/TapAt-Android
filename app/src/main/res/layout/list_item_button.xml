@@ -17,14 +17,16 @@
 
     <Button
         android:id="@+id/buttonItem"
-        android:layout_width="match_parent"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginVertical="3dp"
+        android:backgroundTint="#206B9C"
         android:clickable="true"
         android:focusable="true"
-        android:textSize="18sp"
-        android:textColor="@color/white"
-        android:backgroundTint="@android:color/transparent"
+        android:fontFamily="@font/red_hat_text"
         android:text="Button Text"
-        android:layout_marginVertical="3dp"/>
+        android:textColor="@color/white"
+        android:textSize="18sp" />
 
 </LinearLayout>
