@@ -13,7 +13,7 @@
         android:id="@+id/button_add_class"
         android:text="@string/addclassbutton"
         android:layout_alignParentEnd="true"
-        android:backgroundTint="#4B494B"
+        android:backgroundTint="#206B9C"
         />
 
     <!-- Recycler View here -->

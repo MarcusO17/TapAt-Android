@@ -14,7 +14,7 @@
         android:id="@+id/attendance_taking_button"
         android:text="@string/starttakingattendance"
         android:layout_alignParentEnd="true"
-        android:backgroundTint="#4B494B"
+        android:backgroundTint="#206B9C"
         android:textColor="@color/white"
         android:textSize="15sp"
         />
@@ -24,7 +24,7 @@
         android:id="@+id/submit_attendance_button"
         android:text="@string/submit"
         android:layout_toLeftOf="@+id/attendance_taking_button"
-        android:backgroundTint="#4B494B"
+        android:backgroundTint="#206B9C"
         android:textColor="@color/white"
         android:textSize="15sp"
         />
