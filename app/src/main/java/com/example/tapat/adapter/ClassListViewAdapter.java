@@ -32,7 +32,7 @@ public class ClassListViewAdapter extends RecyclerView.Adapter<ClassListViewAdap
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_item_classlist, parent, false);
         return new ViewHolder(view, onclickListener);
     }
 
@@ -42,8 +42,10 @@ public class ClassListViewAdapter extends RecyclerView.Adapter<ClassListViewAdap
 
         String className = classList.get(position).getClassName();
         String classID = classList.get(position).getClassID();
+        String datetime = classList.get(position).getDatetime();
 
-        holder.title.setText(classID + "-" + className);
+        holder.title.setText(classID + " - " + className);
+        holder.datetime.setText("Date : "+datetime);
     }
 
     @Override
@@ -53,10 +55,12 @@ public class ClassListViewAdapter extends RecyclerView.Adapter<ClassListViewAdap
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView title;
+        TextView datetime;
         OnClickListener onClickListener;
         public ViewHolder(@NonNull View itemView, OnClickListener onClickListener) {
             super(itemView);
             title = itemView.findViewById(R.id.recycle_view_item_title);
+            datetime = itemView.findViewById(R.id.recycle_view_item_datetime);
             this.onClickListener = onClickListener;
 
             itemView.setOnClickListener(this);

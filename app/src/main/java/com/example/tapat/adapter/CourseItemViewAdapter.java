@@ -43,7 +43,7 @@ public class CourseItemViewAdapter extends RecyclerView.Adapter<CourseItemViewAd
         String coursename = courseItemList.get(position).getName();
         String coursecode = courseItemList.get(position).getCourseCode();
 
-        holder.title.setText(coursecode + "-" + coursename);
+        holder.title.setText(coursecode + " - " + coursename);
 
 
     }

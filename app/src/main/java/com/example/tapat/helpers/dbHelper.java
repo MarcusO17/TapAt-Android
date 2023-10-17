@@ -499,7 +499,7 @@ public class dbHelper extends SQLiteOpenHelper {
         Cursor cursor = null;
 
 
-        cursor = db.rawQuery("SELECT studen t_ID FROM course_students where course_ID = ?", new String[]{courseID});
+        cursor = db.rawQuery("SELECT student_ID FROM course_students where course_ID = ?", new String[]{courseID});
         if(cursor!=null){
             while(cursor.moveToNext()){
                 studentCourseID = cursor.getString(cursor.getColumnIndex("student_ID"));
@@ -536,7 +536,7 @@ public class dbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
         try {
-            cursor = db.rawQuery("SELECT attendance_ID FROM attendance where course_ID = ? ORDER BY datetime", new String[]{courseID});
+            cursor = db.rawQuery("SELECT attendance_ID,datetime FROM attendance where course_ID = ? ORDER BY datetime", new String[]{courseID});
         }catch(SQLiteException e){
             Log.e("Query Failed : ", e.toString());
             return classData;
@@ -544,8 +544,9 @@ public class dbHelper extends SQLiteOpenHelper {
         if (cursor != null) {
             while (cursor.moveToNext()) {
                 String attendanceID = cursor.getString(cursor.getColumnIndex("attendance_ID"));
+                String datetime = cursor.getString(cursor.getColumnIndex("datetime"));
                 classCount += 1;
-                classData.add(new ClassListItem(Integer.toString(classCount), attendanceID));
+                classData.add(new ClassListItem(Integer.toString(classCount), attendanceID,datetime));
             }
         }
 

@@ -5,10 +5,19 @@ import java.io.Serializable;
 public class ClassListItem implements Serializable {
     String className;
     String classID;
+    String datetime;
 
-    public ClassListItem(String className, String classID) {
+    public ClassListItem(String className, String classID, String datetime) {
         this.className = "Class " + className;
         this.classID = classID;
+        this.datetime = datetime;
+    }
+
+    public String getDatetime() {
+        return datetime;
+    }
+    public void setDatetime(String datetime) {
+        this.datetime = datetime;
     }
 
     public String getClassName() {
