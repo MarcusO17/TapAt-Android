@@ -92,7 +92,8 @@ public class ClassListFragment extends Fragment implements CourseItemViewAdapter
                         Integer size = classList.size()+1;
                         String className = "Class " + size;
                         String classID = "AT" + courseCode + size;
-                        ClassListItem tempclass = new ClassListItem(className, classID);
+                        String datetime ="";
+                        ClassListItem tempclass = new ClassListItem(className, classID,datetime);
                         classList.add(tempclass);
                         adapter.notifyDataSetChanged();
 
