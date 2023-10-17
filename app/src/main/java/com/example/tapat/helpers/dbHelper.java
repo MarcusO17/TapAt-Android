@@ -499,7 +499,7 @@ public class dbHelper extends SQLiteOpenHelper {
         Cursor cursor = null;
 
 
-        cursor = db.rawQuery("SELECT student_ID FROM course_students where course_ID = ?", new String[]{courseID});
+        cursor = db.rawQuery("SELECT studen t_ID FROM course_students where course_ID = ?", new String[]{courseID});
         if(cursor!=null){
             while(cursor.moveToNext()){
                 studentCourseID = cursor.getString(cursor.getColumnIndex("student_ID"));
