@@ -96,29 +96,29 @@ public class dbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //Creating Admin Table
         db.execSQL("CREATE TABLE " + Admin.TABLE_NAME+ " ( "
-                + Admin.COL_1 + " TEXT PRIMARY KEY, "
-                + Admin.COL_2 + " TEXT  NOT NULL,"
+                + Admin.COL_1 + " TEXT PRIMARY KEY CHECK (admin_ID like 'A%'),"
+                + Admin.COL_2 + " TEXT  NOT NULL UNIQUE,"
                 + Admin.COL_3 + " TEXT  NOT NULL"
                 + " )");
 
         //Creating Lecturer Table
         db.execSQL("CREATE TABLE " + Lecturer.TABLE_NAME+ " ( "
-                + Lecturer.COL_1 + " TEXT PRIMARY KEY, "
+                + Lecturer.COL_1 + " TEXT PRIMARY KEY CHECK (lecturer_ID like 'L%') "
                 + Lecturer.COL_2 + " TEXT NOT NULL,"
-                + Lecturer.COL_3 + " TEXT  NOT NULL,"
+                + Lecturer.COL_3 + " TEXT  NOT NULL UNIQUE,"
                 + Lecturer.COL_4 + " TEXT  NOT NULL"
                 + " )");
 
         //Creating Student Table
         db.execSQL("CREATE TABLE " + Student.TABLE_NAME+ " ( "
-                + Student.COL_1 + " TEXT PRIMARY KEY, "
+                + Student.COL_1 + " TEXT PRIMARY KEY CHECK (student_ID like 'P%'),"
                 + Student.COL_2 + " TEXT NOT NULL,"
                 + Student.COL_3 + " TEXT NOT NULL"
                 + " )");
 
         //Creating Course Table
         db.execSQL("CREATE TABLE " + Course.TABLE_NAME+ " ( "
-                + Course.COL_1 + " TEXT PRIMARY KEY, "
+                + Course.COL_1 + " TEXT PRIMARY KEY CHECK (course_ID like 'C%')"
                 + Course.COL_2 + " TEXT  NOT NULL,"
                 + Course.COL_3 + " TEXT NOT NULL,"
                 + Course.COL_4 + " TEXT NOT NULL,"
@@ -127,7 +127,7 @@ public class dbHelper extends SQLiteOpenHelper {
 
         //Creating Attendance Table
         db.execSQL("CREATE TABLE " + Attendance.TABLE_NAME+ " ( "
-                + Attendance.COL_1 + " TEXT PRIMARY KEY, "
+                + Attendance.COL_1 + " TEXT PRIMARY KEY CHECK (attendance_ID like 'AT%' "
                 + Attendance.COL_2 + " TEXT NOT NULL,"
                 + Attendance.COL_3 + " DATETIME NOT NULL,"
                 + " FOREIGN KEY (course_ID) REFERENCES courses(course_ID)"
