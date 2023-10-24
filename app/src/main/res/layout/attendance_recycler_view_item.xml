@@ -1,43 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingTop="10dp"
-    android:background="@drawable/background_header"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp"
-    android:paddingBottom="10dp"
-    android:weightSum="100">
+    android:layout_height="100dp"
+    android:orientation="vertical"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginTop="15dp"
+    android:layout_marginBottom="5dp"
+    android:background="@drawable/recycler_item_background"
+    android:elevation="7dp">
 
     <TextView
+        android:id="@+id/recycle_view_attendance_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/black"
-        android:id="@+id/recycle_view_attendance_title"
-        android:text="PLACEHOLDER"
-        android:layout_weight="70"
-        android:layout_marginRight="10dp"
         android:layout_gravity="center_vertical"
-        />
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="70"
+        android:backgroundTint="@color/black"
+        android:fontFamily="@font/jost_light"
+        android:text="PLACEHOLDER"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
 
     <Spinner
+        android:id="@+id/reasondropdownbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/reasondropdownbox"
-        android:background="@color/white"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="190dp"
+        android:layout_marginTop="38dp"
         android:layout_weight="20"
-        android:layout_marginRight="10dp"
-        android:layout_gravity="center_vertical"/>
+        android:background="@color/white" />
 
     <CheckBox
-        android:background="@color/white"
+        android:id="@+id/attendancecheckbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/attendancecheckbox"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="280dp"
+        android:layout_marginTop="25dp"
         android:layout_weight="10"
-        android:layout_gravity="center_vertical"/>
+        android:background="@color/white" />
 
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+</RelativeLayout>

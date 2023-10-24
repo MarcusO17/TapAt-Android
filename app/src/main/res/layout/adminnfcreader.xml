@@ -57,10 +57,11 @@
                 android:id="@+id/displayFragmentTitleTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="120dp"
+                android:layout_marginBottom="20dp"
                 android:fontFamily="@font/julius_sans_one"
                 android:gravity="center"
-                android:text="NFC Reader"
+                android:text="Admin NFC Reader"
                 android:textColor="@color/white"
                 android:textSize="30sp"
                 android:textStyle="bold"/>
@@ -90,8 +91,9 @@
 
                     <TextView
                         android:id="@+id/nameText"
+                        android:background="@drawable/search_bar_background"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="40dp"
                         android:layout_weight="2"
                         android:text="Pending..."
                         android:textSize="20sp"
@@ -115,8 +117,9 @@
 
                     <TextView
                         android:id="@+id/idText"
+                        android:background="@drawable/search_bar_background"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="40dp"
                         android:layout_weight="2"
                         android:text="Pending..."
                         android:textSize="20sp"
@@ -141,8 +144,9 @@
 
                     <TextView
                         android:id="@+id/programText"
+                        android:background="@drawable/search_bar_background"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="40dp"
                         android:layout_weight="2"
                         android:text="Pending..."
                         android:textSize="20sp"

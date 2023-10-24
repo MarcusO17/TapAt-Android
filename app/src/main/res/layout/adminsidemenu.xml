@@ -1,19 +1,19 @@
 <!-- adminsidemenu.xml -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/sideMenu"
-    android:layout_width="wrap_content"
+    android:layout_width="240dp"
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:minWidth="240dp"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/headSection"
         android:layout_width="250dp"
-        android:layout_height="100dp"
+        android:layout_height="180dp"
         android:layout_weight="2"
-        android:background="@drawable/side_navigation_header"
+        android:background="@color/black"
         android:orientation="vertical"
         android:padding="16dp">
 
@@ -24,104 +24,105 @@
             android:layout_marginTop="70dp"
             android:fontFamily="@font/julius_sans_one"
             android:text="Admin Name"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="30sp"
-            android:textStyle="bold" />
+            />
 
         <TextView
             android:id="@+id/adminRoleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="110dp"
             android:text="Admin"
-            android:textColor="#ffffff"
-            android:textSize="18sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/navigationSection"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="7"
-        android:orientation="vertical"
-        android:background="#FFFFFF">
-
-        <!-- Dashboard -->
-        <Button
-            android:id="@+id/dashboardButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#206B9C"
-            android:layout_margin="5dp"
-            app:cornerRadius="5dp"
-            android:text="Dashboard"
-            android:textColor="#FFFFFF"/>
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:fontFamily="@font/jost_light"/>
+    </RelativeLayout>
 
         <!-- Student -->
         <Button
             android:id="@+id/studentButton"
-            android:layout_width="match_parent"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:backgroundTint="#206B9C"
-            android:layout_margin="5dp"
-            app:cornerRadius="5dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="200dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:backgroundTint="@color/white"
+            android:fontFamily="@font/jost_light"
             android:text="Student"
-            android:textColor="#FFFFFF"/>
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:textAlignment="textStart"
+            app:cornerRadius="5dp" />
 
         <!-- Lecturer -->
         <Button
             android:id="@+id/lecturerButton"
-            android:layout_width="match_parent"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:backgroundTint="#206B9C"
-            android:layout_margin="5dp"
-            app:cornerRadius="5dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="260dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:backgroundTint="@color/white"
+            android:fontFamily="@font/jost_light"
             android:text="Lecturer"
-            android:textColor="#FFFFFF"/>
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:textAlignment="textStart"
+            app:cornerRadius="5dp" />
 
         <!-- Course -->
         <Button
             android:id="@+id/courseButton"
-            android:layout_width="match_parent"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:backgroundTint="#206B9C"
-            android:layout_margin="5dp"
-            app:cornerRadius="5dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="320dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:backgroundTint="@color/white"
+            android:fontFamily="@font/jost_light"
             android:text="Course"
-            android:textColor="#FFFFFF"/>
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:textAlignment="textStart"
+            app:cornerRadius="5dp" />
 
         <!-- NFC Reader -->
         <Button
             android:id="@+id/nfcReaderButton"
-            android:layout_width="match_parent"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:backgroundTint="#206B9C"
-            android:insetTop="4dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="380dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:backgroundTint="@color/white"
+            android:fontFamily="@font/jost_light"
             android:text="NFC Reader"
-            app:cornerRadius="5dp"
-            android:textColor="#FFFFFF"/>
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:textAlignment="textStart"
+            app:cornerRadius="5dp" />
 
         <!-- NFC Writer -->
         <Button
             android:id="@+id/nfcWriterButton"
-            android:layout_width="match_parent"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:backgroundTint="#206B9C"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="440dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:backgroundTint="@color/white"
+            android:fontFamily="@font/jost_light"
             android:text="NFC Writer"
-            app:cornerRadius="5dp"
-            android:textColor="#FFFFFF"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/logoutSection"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        android:background="#FFFFFF">
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:textAlignment="textStart"
+            app:cornerRadius="5dp"/>
 
         <!-- Logout -->
         <Button
@@ -129,14 +130,61 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:backgroundTint="#4B494B"
-            android:layout_margin="5dp"
-            app:cornerRadius="5dp"
-            app:strokeColor="#1AFFFFFF"
-            app:strokeWidth="1dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="720dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:backgroundTint="@color/black"
+            android:fontFamily="@font/jost_light"
             android:text="Log Out"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            app:cornerRadius="5dp" />
 
-    </LinearLayout>
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="200dp"
+        app:srcCompat="@drawable/student_icon" />
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="255dp"
+        app:srcCompat="@drawable/lecturer_icon" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="325dp"
+        app:srcCompat="@drawable/course_icon" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="382dp"
+        app:srcCompat="@drawable/nfcreader_icon" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="440dp"
+        app:srcCompat="@drawable/nfcwriter_icon" />
+
+
+
+
+
+</RelativeLayout>
+
+</RelativeLayout>

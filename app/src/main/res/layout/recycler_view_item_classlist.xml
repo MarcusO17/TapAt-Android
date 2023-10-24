@@ -12,8 +12,6 @@
     android:elevation="7dp"
     >
 
-    1
-
     <TextView
         android:id="@+id/recycle_view_item_title"
         android:layout_width="290dp"

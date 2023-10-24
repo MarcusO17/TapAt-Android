@@ -22,45 +22,40 @@
     <!-- Add your buttons for Student, Lecturer, Course here -->
     <Button
         android:id="@+id/studentButton"
+        android:background="@drawable/button_background"
         android:layout_width="300dp"
         android:layout_height="110dp"
         android:layout_gravity="center"
         android:layout_margin="10dp"
-        android:backgroundTint="#0Dffffff"
         android:text="Student"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
+        android:fontFamily="@font/jost_light"
         android:textSize="20sp"
-        app:cornerRadius="20dp"
-        app:strokeColor="@color/white"
-        app:strokeWidth="2dp" />
+        />
 
     <Button
         android:id="@+id/lecturerButton"
+        android:background="@drawable/button_background"
         android:layout_width="300dp"
         android:layout_height="110dp"
         android:layout_margin="10dp"
         android:layout_gravity="center"
         android:text="Lecturer"
         android:textSize="20sp"
-        android:textColor="@color/white"
-        android:backgroundTint="#0Dffffff"
-        app:cornerRadius="20dp"
-        app:strokeColor="@color/white"
-        app:strokeWidth="3dp" />
+        android:textColor="@color/black"
+        android:fontFamily="@font/jost_light" />
 
     <Button
         android:id="@+id/courseButton"
+        android:background="@drawable/button_background"
         android:layout_width="300dp"
         android:layout_height="110dp"
         android:layout_margin="10dp"
         android:layout_gravity="center"
         android:text="Course"
         android:textSize="20sp"
-        android:textColor="@color/white"
-        android:backgroundTint="#0Dffffff"
-        app:cornerRadius="20dp"
-        app:strokeColor="@color/white"
-        app:strokeWidth="3dp" />
+        android:textColor="@color/black"
+        android:fontFamily="@font/jost_light" />
 
     <!-- Create a horizontal LinearLayout for NFC Reader and NFC Writer buttons -->
     <LinearLayout
@@ -72,29 +67,28 @@
 
         <Button
             android:id="@+id/nfcReaderButton"
+            android:background="@drawable/button_background"
             android:layout_width="140dp"
             android:layout_height="110dp"
             android:layout_marginRight="10dp"
             android:backgroundTint="#0Dffffff"
             android:text="NFC Reader"
-            android:textColor="@color/white"
             android:textSize="20sp"
-            app:cornerRadius="20dp"
-            app:strokeColor="@color/white"
-            app:strokeWidth="3dp" />
+            android:textColor="@color/black"
+            android:fontFamily="@font/jost_light"/>
 
         <Button
             android:id="@+id/nfcWriterButton"
+            android:background="@drawable/button_background"
             android:layout_width="140dp"
             android:layout_height="110dp"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
             android:backgroundTint="#0Dffffff"
             android:text="NFC Writer"
-            android:textColor="@color/white"
             android:textSize="20sp"
-            app:cornerRadius="20dp"
-            app:strokeColor="@color/white"
-            app:strokeWidth="3dp" />
+            android:textColor="@color/black"
+            android:fontFamily="@font/jost_light"/>
+
     </LinearLayout>
 </LinearLayout>

@@ -1,35 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingTop="10dp"
-    android:background="@drawable/background_header"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp"
-    android:paddingBottom="10dp"
-    android:weightSum="100">
+    android:layout_height="100dp"
+    android:orientation="vertical"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginTop="15dp"
+    android:layout_marginBottom="5dp"
+    android:background="@drawable/recycler_item_background"
+    android:elevation="7dp">
 
     <TextView
+        android:id="@+id/attendance_view_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/black"
-        android:id="@+id/attendance_view_title"
-        android:text="PLACEHOLDER"
-        android:layout_weight="70"
-        android:layout_marginRight="10dp"
         android:layout_gravity="center_vertical"
-        />
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="70"
+        android:fontFamily="@font/jost_light"
+        android:backgroundTint="@color/black"
+        android:text="PLACEHOLDER"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/reasontextview"
         android:background="@color/white"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="190dp"
+        android:layout_marginTop="38dp"
         android:layout_weight="20"
-        android:layout_marginRight="10dp"
-        android:layout_gravity="center_vertical"/>
+        />
 
     <CheckBox
         android:background="@color/white"
@@ -37,6 +42,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/attendanceviewcheckbox"
         android:layout_weight="10"
-        android:layout_gravity="center_vertical"/>
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="280dp"
+        android:layout_marginTop="25dp"/>
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+</RelativeLayout>
