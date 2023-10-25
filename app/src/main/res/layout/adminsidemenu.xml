@@ -39,13 +39,30 @@
             android:fontFamily="@font/jost_light"/>
     </RelativeLayout>
 
-        <!-- Student -->
+    <!-- Dashboard -->
+        <Button
+            android:id="@+id/dashboardButton"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="200dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:backgroundTint="@color/white"
+            android:fontFamily="@font/jost_light"
+            android:text="Dashborad"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:textAlignment="textStart"
+            app:cornerRadius="5dp" />
+
+    <!-- Student -->
         <Button
             android:id="@+id/studentButton"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="60dp"
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="260dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
             android:backgroundTint="@color/white"
@@ -62,7 +79,7 @@
             android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="60dp"
-            android:layout_marginTop="260dp"
+            android:layout_marginTop="320dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
             android:backgroundTint="@color/white"
@@ -79,7 +96,7 @@
             android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="60dp"
-            android:layout_marginTop="320dp"
+            android:layout_marginTop="380dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
             android:backgroundTint="@color/white"
@@ -96,7 +113,7 @@
             android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="60dp"
-            android:layout_marginTop="380dp"
+            android:layout_marginTop="440dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
             android:backgroundTint="@color/white"
@@ -113,7 +130,7 @@
             android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="60dp"
-            android:layout_marginTop="440dp"
+            android:layout_marginTop="500dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
             android:backgroundTint="@color/white"
@@ -147,6 +164,14 @@
         android:layout_height="50dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="200dp"
+        app:srcCompat="@drawable/baseline_home_24" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="260dp"
         app:srcCompat="@drawable/student_icon" />
 
     <ImageView
@@ -154,7 +179,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="255dp"
+        android:layout_marginTop="315dp"
         app:srcCompat="@drawable/lecturer_icon" />
 
     <ImageView
@@ -162,7 +187,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="325dp"
+        android:layout_marginTop="382dp"
         app:srcCompat="@drawable/course_icon" />
 
     <ImageView
@@ -170,7 +195,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="382dp"
+        android:layout_marginTop="440dp"
         app:srcCompat="@drawable/nfcreader_icon" />
 
     <ImageView
@@ -178,7 +203,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="440dp"
+        android:layout_marginTop="500dp"
         app:srcCompat="@drawable/nfcwriter_icon" />
 
 
