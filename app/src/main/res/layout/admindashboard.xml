@@ -12,79 +12,141 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="100dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="20dp"
         android:autoSizeTextType="none"
         android:fontFamily="@font/julius_sans_one"
         android:text="Dashboard"
         android:textColor="@color/white"
         android:textSize="45dp" />
 
-    <!-- Add your buttons for Student, Lecturer, Course here -->
-    <Button
-        android:id="@+id/studentButton"
-        android:background="@drawable/button_background"
-        android:layout_width="300dp"
-        android:layout_height="110dp"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        android:text="Student"
-        android:textColor="@color/black"
-        android:fontFamily="@font/jost_light"
-        android:textSize="20sp"
-        />
-
-    <Button
-        android:id="@+id/lecturerButton"
-        android:background="@drawable/button_background"
-        android:layout_width="300dp"
-        android:layout_height="110dp"
-        android:layout_margin="10dp"
-        android:layout_gravity="center"
-        android:text="Lecturer"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:fontFamily="@font/jost_light" />
-
-    <Button
-        android:id="@+id/courseButton"
-        android:background="@drawable/button_background"
-        android:layout_width="300dp"
-        android:layout_height="110dp"
-        android:layout_margin="10dp"
-        android:layout_gravity="center"
-        android:text="Course"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:fontFamily="@font/jost_light" />
-
-    <!-- Create a horizontal LinearLayout for NFC Reader and NFC Writer buttons -->
     <LinearLayout
-        android:layout_width="300dp"
-        android:layout_height="110dp"
-        android:layout_margin="10dp"
-        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
         android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:src="@drawable/student_image" />
+
+        <Button
+            android:id="@+id/studentButton"
+            android:layout_width="220dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:backgroundTint="#F3FCFF"
+            android:fontFamily="@font/jost_light"
+            android:text="Student"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:src="@drawable/lecturer_image" />
+
+        <Button
+            android:id="@+id/lecturerButton"
+            android:layout_width="220dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:backgroundTint="#F3FCFF"
+            android:fontFamily="@font/jost_light"
+            android:text="Lecturer"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:src="@drawable/course_image" />
+
+        <Button
+            android:id="@+id/courseButton"
+            android:layout_width="220dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:backgroundTint="#F3FCFF"
+            android:fontFamily="@font/jost_light"
+            android:text="Course"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:src="@drawable/nfcreader_image" />
 
         <Button
             android:id="@+id/nfcReaderButton"
-            android:background="@drawable/button_background"
-            android:layout_width="140dp"
-            android:layout_height="110dp"
-            android:layout_marginRight="10dp"
-            android:backgroundTint="#0Dffffff"
+            android:layout_width="220dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:backgroundTint="#F3FCFF"
+            android:fontFamily="@font/jost_light"
             android:text="NFC Reader"
-            android:textSize="20sp"
             android:textColor="@color/black"
-            android:fontFamily="@font/jost_light"/>
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:src="@drawable/nfcwriter_image"
+            />
 
         <Button
             android:id="@+id/nfcWriterButton"
-            android:background="@drawable/button_background"
-            android:layout_width="140dp"
-            android:layout_height="110dp"
+            android:backgroundTint="#F3FCFF"
+            android:layout_width="220dp"
+            android:layout_height="70dp"
+            android:layout_margin="10dp"
             android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:backgroundTint="#0Dffffff"
             android:text="NFC Writer"
             android:textSize="20sp"
             android:textColor="@color/black"
