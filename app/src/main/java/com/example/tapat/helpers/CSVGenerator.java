@@ -25,9 +25,9 @@ public class CSVGenerator {
     public static void generateCSV(Activity activity, List<AttendanceListRowData> attendanceList, String courseName, String classID) {
 
 
-        String filename = classID + "-" + courseName + "-" + "attendanceList.csv";
+        String filename = classID + "-" + courseName.trim() + "-" + "attendanceList.csv";
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+        if (android.os.Build.VERSION.SDK_INT > 29) {
             try {
                 Uri downloadsDir = MediaStore.Downloads.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY);
 
