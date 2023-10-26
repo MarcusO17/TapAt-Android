@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.tapat.model.AttendanceListRowData;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
@@ -25,19 +26,38 @@ public class CSVGenerator {
 
 
         String filename = classID + "-" + courseName + "-" + "attendanceList.csv";
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+            try {
+                Uri downloadsDir = MediaStore.Downloads.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY);
+
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(MediaStore.Downloads.DISPLAY_NAME, filename);
+                contentValues.put(MediaStore.Downloads.MIME_TYPE, "text/csv");
+                Uri newFileUri = activity.getContentResolver().insert(downloadsDir, contentValues);
+
+                ParcelFileDescriptor pfd = activity.getContentResolver().openFileDescriptor(newFileUri, "w");
+
+                FileWriter csvWriter = new FileWriter(pfd.getFileDescriptor());
+                writeCSVContents(csvWriter, attendanceList);
+            }catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+        } else {
+            try {
+                File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+                File file = new File(dir, filename);
+                FileWriter csvWriter = new FileWriter(file);
+                writeCSVContents(csvWriter, attendanceList);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+    public static void writeCSVContents(FileWriter csvWriter, List<AttendanceListRowData> attendanceList) {
         try {
-            Uri downloadsDir = MediaStore.Downloads.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY);
-
-            ContentValues contentValues = new ContentValues();
-            contentValues.put(MediaStore.Downloads.DISPLAY_NAME, filename);
-            contentValues.put(MediaStore.Downloads.MIME_TYPE, "text/csv");
-            Uri newFileUri = activity.getContentResolver().insert(downloadsDir, contentValues);
-
-            ParcelFileDescriptor pfd = activity.getContentResolver().openFileDescriptor(newFileUri, "w");
-
-
-            //writing to the file at destination
-            FileWriter csvWriter = new FileWriter(pfd.getFileDescriptor());
 
             //header of the csv
             csvWriter.write("Name,Attendance,Reason\n");
@@ -60,9 +80,8 @@ public class CSVGenerator {
 
             Log.d("CSVGenerator", "CSV generated at downloads folder" );
 
-
         } catch (IOException e) {
-            throw new RuntimeException(e);
+        throw new RuntimeException(e);
         }
     }
 }
