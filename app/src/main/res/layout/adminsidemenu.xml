@@ -159,7 +159,7 @@
             app:cornerRadius="5dp" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/imageView"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="20dp"
@@ -167,7 +167,6 @@
         app:srcCompat="@drawable/baseline_home_24" />
 
     <ImageView
-        android:id="@+id/imageView5"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="20dp"
@@ -175,7 +174,6 @@
         app:srcCompat="@drawable/student_icon" />
 
     <ImageView
-        android:id="@+id/imageView4"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="20dp"
@@ -183,7 +181,6 @@
         app:srcCompat="@drawable/lecturer_icon" />
 
     <ImageView
-        android:id="@+id/imageView8"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="25dp"
@@ -191,7 +188,6 @@
         app:srcCompat="@drawable/course_icon" />
 
     <ImageView
-        android:id="@+id/imageView7"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="25dp"
@@ -199,17 +195,12 @@
         app:srcCompat="@drawable/nfcreader_icon" />
 
     <ImageView
-        android:id="@+id/imageView6"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="28dp"
         android:layout_marginTop="500dp"
         app:srcCompat="@drawable/nfcwriter_icon" />
 
-
-
-
-
 </RelativeLayout>
 
-</RelativeLayout>
+
