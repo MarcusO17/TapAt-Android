@@ -1,6 +1,12 @@
 package com.example.tapat.helpers;
 
+import android.app.Activity;
+import android.content.ContentValues;
+import android.net.Uri;
 import android.os.Environment;
+import android.os.ParcelFileDescriptor;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -15,23 +21,23 @@ public class CSVGenerator {
     public CSVGenerator() {
     }
 
-    public static String getCSVPath(String courseName, String classID) {
-        String documentFileDir = Environment.getExternalStorageDirectory().getPath();
+    public static void generateCSV(Activity activity, List<AttendanceListRowData> attendanceList, String courseName, String classID) {
+
+
         String filename = classID + "-" + courseName + "-" + "attendanceList.csv";
-        String documentFilePath = documentFileDir + "/" + filename;
-
-        return documentFilePath;
-    }
-    public static void generateCSV(List<AttendanceListRowData> attendanceList, String courseName, String classID) {
-
-
-        String documentFileDir = Environment.getExternalStorageDirectory().getPath();
-        String filename = classID + "-" + courseName + "-" + "attendanceList.csv";
-        String documentFilePath = documentFileDir + "/" + filename;
-
         try {
-            //creating file at destination
-            FileWriter csvWriter = new FileWriter(documentFilePath);
+            Uri downloadsDir = MediaStore.Downloads.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY);
+
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(MediaStore.Downloads.DISPLAY_NAME, filename);
+            contentValues.put(MediaStore.Downloads.MIME_TYPE, "text/csv");
+            Uri newFileUri = activity.getContentResolver().insert(downloadsDir, contentValues);
+
+            ParcelFileDescriptor pfd = activity.getContentResolver().openFileDescriptor(newFileUri, "w");
+
+
+            //writing to the file at destination
+            FileWriter csvWriter = new FileWriter(pfd.getFileDescriptor());
 
             //header of the csv
             csvWriter.write("Name,Attendance,Reason\n");
@@ -50,7 +56,9 @@ public class CSVGenerator {
                 csvWriter.write(name + "," + attendance + "," + reason +"\n");
             }
 
-            Log.d("CSVGenerator", "CSV generated at "+ documentFilePath);
+            csvWriter.close();
+
+            Log.d("CSVGenerator", "CSV generated at downloads folder" );
 
 
         } catch (IOException e) {
