@@ -46,8 +46,13 @@ public class CSVGenerator {
 
         } else {
             try {
-                File dir = new File(getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), filename);
+                File dir = new File(activity.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), filename);
                 File file = new File(dir, filename);
+
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+
                 FileWriter csvWriter = new FileWriter(file);
                 writeCSVContents(csvWriter, attendanceList);
             } catch (IOException e) {
