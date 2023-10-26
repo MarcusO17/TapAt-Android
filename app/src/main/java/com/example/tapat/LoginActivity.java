@@ -38,9 +38,9 @@ public class LoginActivity extends AppCompatActivity {
 
         int currentApiVersion = android.os.Build.VERSION.SDK_INT;
 
-        if (checkPermissionForReadExtertalStorage() == false) {
+        if (checkPermissionForReadExternalStorage() == false) {
             try {
-                requestPermissionForReadExtertalStorage();
+                requestPermissionForReadExternalStorage();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -87,14 +87,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-    public boolean checkPermissionForReadExtertalStorage() {
+    public boolean checkPermissionForReadExternalStorage() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             int result = this.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
             return result == PackageManager.PERMISSION_GRANTED;
         }
         return false;
     }
-    public void requestPermissionForReadExtertalStorage() throws Exception {
+    public void requestPermissionForReadExternalStorage() throws Exception {
         try {
             ActivityCompat.requestPermissions((Activity) this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     STORAGE_PERMISSION_REQUEST_CODE);
