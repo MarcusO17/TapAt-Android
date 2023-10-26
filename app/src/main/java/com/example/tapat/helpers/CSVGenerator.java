@@ -46,7 +46,7 @@ public class CSVGenerator {
 
         } else {
             try {
-                File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+                File dir = new File(getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), filename);
                 File file = new File(dir, filename);
                 FileWriter csvWriter = new FileWriter(file);
                 writeCSVContents(csvWriter, attendanceList);
