@@ -7,20 +7,22 @@
     android:layout_marginRight="15dp"
     android:layout_marginTop="15dp"
     android:layout_marginBottom="5dp"
-    android:background="@drawable/recycler_item_background"
+    android:background="@android:color/transparent"
     android:elevation="7dp">
 
-    <TextView
+    <Button
         android:id="@+id/buttonItem"
-        android:layout_width="match_parent"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@color/black"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginBottom="15dp"
+        android:backgroundTint="@color/white"
         android:fontFamily="@font/jost_light"
         android:text="Button Text"
-        android:textColor="@color/black"
-        android:textSize="30sp"
         android:textAlignment="center"
-        />
+        android:textColor="@color/black"
+        android:textSize="25dp" />
 
 </RelativeLayout>
