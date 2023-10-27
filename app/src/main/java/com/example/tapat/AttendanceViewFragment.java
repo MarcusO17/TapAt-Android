@@ -91,8 +91,9 @@ public class AttendanceViewFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         CSVGenerator csvGenerator = new CSVGenerator();
-                        csvGenerator.generateCSV(attendanceList,courseName,classID);
-                        String toastString = csvGenerator.getCSVPath(courseName, classID);
+                        csvGenerator.generateCSV(getActivity(),attendanceList,courseName,classID);
+                        String toastString = "FILE IS GENERATED AT DOWNLOADS FOLDER";
+                        Log.d("TOAST STRING", toastString);
                         Toast.makeText(getActivity(),toastString, Toast.LENGTH_LONG).show();
                     }
                 });
