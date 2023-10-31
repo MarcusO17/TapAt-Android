@@ -168,24 +168,6 @@ public class AttendanceListFragment extends Fragment {
             Log.d("ClassListFragment", "course_ID: " + courseID);
         }
 
-        //query the shit here
-        /* TESTING PRE-DB
-        StudentItem studentItem1 = new StudentItem("Ali", "P21011234");
-        StudentItem studentItem2 = new StudentItem("Abu", "P21010001");
-        StudentItem studentItem3 = new StudentItem("John","P21011002");
-        StudentItem studentItem4 = new StudentItem("Felix","P21011003");
-
-        AttendanceListRowData row1 = new AttendanceListRowData(studentItem1.getStudentName(),false,"");
-        AttendanceListRowData row2 = new AttendanceListRowData(studentItem2.getStudentName(),false,"");
-        AttendanceListRowData row3 = new AttendanceListRowData(studentItem3.getStudentName(),false,"");
-        AttendanceListRowData row4 = new AttendanceListRowData(studentItem4.getStudentName(),false,"");
-
-        attendanceList.add(row1);
-        attendanceList.add(row2);
-        attendanceList.add(row3);
-        attendanceList.add(row4);
-        */
-
         studentsInClass = db.getCourseStudents(courseID);
 
         for(StudentItem student: studentsInClass){
@@ -203,7 +185,7 @@ public class AttendanceListFragment extends Fragment {
     public void onResume() {
         super.onResume();
         TextView title = getActivity().findViewById(R.id.fragmentholdertitle);
-        title.setText("Attendance List");
+        title.setText(className + " - " + classID);
 
         Log.d("ROW ITEM", "IN ON RESUME");
         for (AttendanceListRowData student: attendanceList) {
