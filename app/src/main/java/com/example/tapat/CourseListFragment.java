@@ -37,6 +37,7 @@ public class CourseListFragment extends Fragment implements CourseItemViewAdapte
         //init DB
         db = new dbHelper(getContext());
 
+        // the recycler view is made and the contents of the recycler view is populated using the adapter
         RecyclerView courseListRecyclerView = view.findViewById(R.id.courselistrecyclerview);
         LinearLayoutManager courseListLayout = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         courseListRecyclerView.setLayoutManager(courseListLayout);
@@ -56,7 +57,7 @@ public class CourseListFragment extends Fragment implements CourseItemViewAdapte
         super.onPause();
         courseList.clear();
     }
-
+    // on resume is triggered when back is pressed. update title to match the current page
     @Override
     public void onResume() {
         super.onResume();
@@ -64,6 +65,7 @@ public class CourseListFragment extends Fragment implements CourseItemViewAdapte
         title.setText("Course List");
     }
 
+    // this function is triggered when the button in the recycler view is triggered
     @Override
     public void onClickListener(int position) {
 
@@ -71,6 +73,7 @@ public class CourseListFragment extends Fragment implements CourseItemViewAdapte
         TextView title = getActivity().findViewById(R.id.fragmentholdertitle);
         title.setText(courseList.get(position).getCourseCode() + " - " + courseList.get(position).getName());
 
+        // sending data to class list fragment
         Bundle args = new Bundle();
         args.putString("course_code",courseList.get(position).getCourseCode());
         args.putString("course_name",courseList.get(position).getName());
@@ -79,6 +82,7 @@ public class CourseListFragment extends Fragment implements CourseItemViewAdapte
 
         classListFragment.setArguments(args);
 
+        // trigger fragment transaction to switch fragments, add to back stack for back buttons
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.classlistframelayout, classListFragment);
