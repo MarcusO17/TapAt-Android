@@ -147,7 +147,7 @@ public class AttendanceViewFragment extends Fragment {
     public void onResume() {
         super.onResume();
         TextView title = getActivity().findViewById(R.id.fragmentholdertitle);
-        title.setText("Attendance List");
+        title.setText(className +" - " + classID);
     }
     private void filter(String text){
         ArrayList<AttendanceListRowData> filteredList= new ArrayList<>();

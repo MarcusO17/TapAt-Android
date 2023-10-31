@@ -44,22 +44,6 @@ public class CourseListFragment extends Fragment implements CourseItemViewAdapte
 
         sessionInfo = args.getString("sessionID");
 
-        //query the shit here
-        /*
-        CourseItem course1 = new CourseItem("Android Development Skill", "A202SGI");
-        CourseItem course2 = new CourseItem("Data Science", "INT5005CEM");
-        CourseItem course3 = new CourseItem("Software Engineering","INT5001CEM");
-        CourseItem course4 = new CourseItem("Software Engineering","INT5001CEM");
-        CourseItem course5 = new CourseItem("Software Engineering","INT5001CEM");
-        CourseItem course6 = new CourseItem("Software Engineering","INT5001CEM");
-
-        courseList.add(course1);
-        courseList.add(course2);
-        courseList.add(course3);
-        courseList.add(course4);
-        courseList.add(course5);
-        courseList.add(course6);
-        */
         courseList = db.getCourses(sessionInfo);
         CourseItemViewAdapter courseItemAdapter = new CourseItemViewAdapter(courseList, this);
 

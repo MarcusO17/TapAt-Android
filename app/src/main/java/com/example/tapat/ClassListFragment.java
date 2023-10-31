@@ -63,16 +63,6 @@ public class ClassListFragment extends Fragment implements CourseItemViewAdapter
             Log.d("ClassListFragment","course code: " + courseCode);
         }
 
-        // use the coursename and coursecode to query the items here
-        /*
-        ClassListItem class1 = new ClassListItem("Class 1", "c1");
-        ClassListItem class2 = new ClassListItem("Class 2", "c2");
-        ClassListItem class3 = new ClassListItem("Class 3", "c3");
-
-        classList.add(class1);
-        classList.add(class2);
-        classList.add(class3);
-        */
         classList = db.getClasses(courseCode);
 
         Log.d("ClassListFragment","classList size: " + classList.size());
@@ -139,7 +129,7 @@ public class ClassListFragment extends Fragment implements CourseItemViewAdapter
     public void onResume() {
         super.onResume();
         TextView title = getActivity().findViewById(R.id.fragmentholdertitle);
-        title.setText("Class List");
+        title.setText(courseCode + " - " + courseName);
     }
 
     @Override
