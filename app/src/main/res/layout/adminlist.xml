@@ -11,7 +11,7 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="30dp"
         android:layout_marginBottom="20dp"
         android:fontFamily="@font/julius_sans_one"
         android:gravity="center"
@@ -23,10 +23,10 @@
     <!-- Search Bar -->
     <EditText
         android:id="@+id/searchEditText"
-        android:layout_width="380dp"
+        android:layout_width="350dp"
         android:layout_height="60dp"
         android:layout_gravity="center"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/search_bar_background"
         android:backgroundTint="@color/white"
         android:hint="Search"
@@ -38,22 +38,25 @@
     <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="450dp"
+        android:layout_width="350dp"
+        android:layout_height="400dp"
         android:layout_margin="10dp"
+        android:layout_gravity="center"
         android:layout_marginBottom="10dp" />
 
     <!-- Add Button -->
     <Button
         android:id="@+id/addButton"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
         android:layout_margin="10dp"
+        android:layout_gravity="center"
         android:text="Add"
         android:textColor="@color/black"
         android:backgroundTint="@color/white"
-        android:fontFamily="@font/red_hat_text"
+        android:fontFamily="@font/jost_light"
+        app:cornerRadius="15dp"
         android:textStyle="bold"
-        android:textSize="22sp"/>
+        android:textSize="18sp"/>
 
 </LinearLayout>

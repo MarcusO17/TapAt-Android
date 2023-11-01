@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="60dp"
         android:layout_marginBottom="20dp"
         android:autoSizeTextType="none"
         android:fontFamily="@font/julius_sans_one"
@@ -40,6 +40,7 @@
             android:layout_margin="10dp"
             android:backgroundTint="#F3FCFF"
             android:fontFamily="@font/jost_light"
+            app:cornerRadius="15dp"
             android:text="Student"
             android:textColor="@color/black"
             android:textSize="20sp" />
@@ -67,6 +68,7 @@
             android:layout_margin="10dp"
             android:backgroundTint="#F3FCFF"
             android:fontFamily="@font/jost_light"
+            app:cornerRadius="15dp"
             android:text="Lecturer"
             android:textColor="@color/black"
             android:textSize="20sp" />
@@ -94,6 +96,7 @@
             android:layout_margin="10dp"
             android:backgroundTint="#F3FCFF"
             android:fontFamily="@font/jost_light"
+            app:cornerRadius="15dp"
             android:text="Course"
             android:textColor="@color/black"
             android:textSize="20sp" />
@@ -121,6 +124,7 @@
             android:layout_margin="10dp"
             android:backgroundTint="#F3FCFF"
             android:fontFamily="@font/jost_light"
+            app:cornerRadius="15dp"
             android:text="NFC Reader"
             android:textColor="@color/black"
             android:textSize="20sp" />
@@ -148,6 +152,7 @@
             android:layout_margin="10dp"
             android:layout_gravity="center"
             android:text="NFC Writer"
+            app:cornerRadius="15dp"
             android:textSize="20sp"
             android:textColor="@color/black"
             android:fontFamily="@font/jost_light"/>

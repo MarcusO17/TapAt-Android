@@ -15,7 +15,7 @@
         android:layout_alignParentEnd="true"
         android:textColor="@color/black"
         android:backgroundTint="@color/white"
-        android:fontFamily="@font/red_hat_text"
+        android:fontFamily="@font/jost_light"
         android:textStyle="bold"
         android:textSize="17sp"
         />
@@ -27,7 +27,7 @@
         android:layout_toLeftOf="@+id/attendance_taking_button"
         android:textColor="@color/black"
         android:backgroundTint="@color/white"
-        android:fontFamily="@font/red_hat_text"
+        android:fontFamily="@font/jost_light"
         android:textStyle="bold"
         android:textSize="17dp"
         />

@@ -25,6 +25,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="24dp"
+            android:background="@color/white"
             android:weightSum="4">
 
             <TextView
@@ -43,6 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="ID"
+                android:textColor="@color/black"
                 android:padding="16dp" />
 
             <EditText
@@ -52,6 +54,7 @@
                 android:hint="@string/input_password"
                 android:layout_marginTop="12dp"
                 android:inputType="textPassword"
+                android:textColor="@color/black"
                 android:layout_weight="1"
                 android:padding="16dp"/>
 
@@ -62,6 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/login"
+                android:textColor="#ffffff"
                 android:layout_marginTop="16dp"
                 android:layout_weight="1"
                 android:backgroundTint="#4B494B"
