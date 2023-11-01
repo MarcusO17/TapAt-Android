@@ -14,19 +14,15 @@
     <Button
         android:id="@+id/buttonItem"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="15dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
         android:backgroundTint="@color/white"
         android:fontFamily="@font/jost_light"
-        android:textStyle="bold"
         android:text="Button Text"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="20dp"
-        app:cornerRadius="15dp"
-        />
+        android:textStyle="bold"
+        app:cornerRadius="10dp" />
 
 </RelativeLayout>
