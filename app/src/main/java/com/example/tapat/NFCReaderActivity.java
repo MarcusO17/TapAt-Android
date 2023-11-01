@@ -64,7 +64,7 @@ public class NFCReaderActivity extends AppCompatActivity {
                 builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        //send to information to database
+                        //send information back to attendance list fragment
                         Intent intent = new Intent("com.example.tapat.ACTION_NFC_DATA");
                         intent.putStringArrayListExtra("attendedList", studentAttendedList);
                         sendBroadcast(intent);
