@@ -11,7 +11,7 @@
         android:text="@string/exportaspdf"
         android:layout_marginRight="10dp"
         android:layout_alignParentEnd="true"
-        android:textColor="@color/black"
+        android:textColor="#5A5656"
         android:backgroundTint="@color/white"
         android:fontFamily="@font/jost_light"
         android:textStyle="bold"
@@ -26,8 +26,8 @@
         android:hint="Search"
         android:inputType="text"
         android:padding="10dp"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black"
+        android:textColor="#5A5656"
+        android:textColorHint="#5A5656"
         android:background="@drawable/search_bar_background"/>
 
     <androidx.recyclerview.widget.RecyclerView

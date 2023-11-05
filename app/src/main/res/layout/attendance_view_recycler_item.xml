@@ -22,7 +22,7 @@
         android:fontFamily="@font/jost_light"
         android:backgroundTint="@color/black"
         android:text="PLACEHOLDER"
-        android:textColor="@color/black"
+        android:textColor="#5A5656"
         android:textSize="20sp" />
 
     <TextView

@@ -27,7 +27,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:textColor="@color/black"
+        android:textColor="#5A5656"
         android:backgroundTint="@color/white"
         android:fontFamily="@font/red_hat_text"
         android:textStyle="bold"

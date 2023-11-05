@@ -16,7 +16,7 @@
         android:autoSizeTextType="none"
         android:fontFamily="@font/julius_sans_one"
         android:text="Dashboard"
-        android:textColor="@color/white"
+        android:textColor="#5A5656"
         android:textSize="45dp" />
 
     <LinearLayout
@@ -42,7 +42,7 @@
             android:fontFamily="@font/jost_light"
             app:cornerRadius="15dp"
             android:text="Student"
-            android:textColor="@color/black"
+            android:textColor="#5A5656"
             android:textSize="20sp" />
 
     </LinearLayout>
@@ -70,7 +70,7 @@
             android:fontFamily="@font/jost_light"
             app:cornerRadius="15dp"
             android:text="Lecturer"
-            android:textColor="@color/black"
+            android:textColor="#5A5656"
             android:textSize="20sp" />
 
     </LinearLayout>
@@ -98,7 +98,7 @@
             android:fontFamily="@font/jost_light"
             app:cornerRadius="15dp"
             android:text="Course"
-            android:textColor="@color/black"
+            android:textColor="#5A5656"
             android:textSize="20sp" />
 
     </LinearLayout>
@@ -126,7 +126,7 @@
             android:fontFamily="@font/jost_light"
             app:cornerRadius="15dp"
             android:text="NFC Reader"
-            android:textColor="@color/black"
+            android:textColor="#5A5656"
             android:textSize="20sp" />
 
     </LinearLayout>
@@ -154,7 +154,7 @@
             android:text="NFC Writer"
             app:cornerRadius="15dp"
             android:textSize="20sp"
-            android:textColor="@color/black"
+            android:textColor="#5A5656"
             android:fontFamily="@font/jost_light"/>
 
     </LinearLayout>

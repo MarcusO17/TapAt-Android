@@ -17,14 +17,14 @@
             android:id="@+id/buttonA"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
             android:backgroundTint="@android:color/transparent"
             android:padding="0dp"
             app:cornerRadius="5dp"
             app:icon="@drawable/baseline_menu_24"
             app:iconSize="50dp"
-            app:iconTint="@color/white"
-            />
+            app:iconTint="@color/white" />
 
         <Button
             android:id="@+id/profileButton"
@@ -62,7 +62,7 @@
                 android:fontFamily="@font/julius_sans_one"
                 android:gravity="center"
                 android:text="Admin NFC Writer"
-                android:textColor="@color/white"
+                android:textColor="#5A5656"
                 android:textSize="30sp"
                 android:textStyle="bold"/>
 
@@ -78,8 +78,8 @@
                 android:hint="Search"
                 android:inputType="text"
                 android:padding="10dp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black" />
+                android:textColor="#5A5656"
+                android:textColorHint="#5A5656" />
 
             <!-- RecyclerView -->
             <androidx.recyclerview.widget.RecyclerView

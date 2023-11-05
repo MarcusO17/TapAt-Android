@@ -16,7 +16,7 @@
         android:fontFamily="@font/julius_sans_one"
         android:gravity="center"
         android:text="Fragment Title"
-        android:textColor="@color/white"
+        android:textColor="#5A5656"
         android:textSize="25sp"
         android:textStyle="bold" />
 
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:text="Edit"
             android:layout_margin="10dp"
-            android:textColor="@color/black"
+            android:textColor="#5A5656"
             android:backgroundTint="@color/white"
             android:fontFamily="@font/jost_light"
             android:textStyle="bold"

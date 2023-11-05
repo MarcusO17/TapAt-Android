@@ -28,9 +28,9 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="50dp"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/class_icon"
-        android:layout_marginStart="20dp"/>
+        app:srcCompat="@drawable/subject_icon"
+        android:layout_marginStart="16dp"/>
 
 </RelativeLayout>

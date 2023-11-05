@@ -39,9 +39,9 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="50dp"
+        android:layout_width="65dp"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/teacher_icon"
-        android:layout_marginStart="23dp"/>
+        app:srcCompat="@drawable/class_icon"
+        android:layout_marginStart="18dp"/>
 
 </RelativeLayout>

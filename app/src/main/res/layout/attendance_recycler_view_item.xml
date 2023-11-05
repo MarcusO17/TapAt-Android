@@ -22,7 +22,7 @@
         android:backgroundTint="@color/black"
         android:fontFamily="@font/jost_light"
         android:text="PLACEHOLDER"
-        android:textColor="@color/black"
+        android:textColor="#5A5656"
         android:textSize="20sp" />
 
     <Spinner

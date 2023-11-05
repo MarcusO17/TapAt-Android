@@ -20,7 +20,7 @@
         android:fontFamily="@font/jost_light"
         android:text="Button Text"
         android:textAlignment="center"
-        android:textColor="@color/black"
+        android:textColor="#5A5656"
         android:textSize="20dp"
         android:textStyle="bold"
         app:cornerRadius="10dp" />
