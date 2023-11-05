@@ -110,10 +110,12 @@ public class AdminDisplayInfo extends Fragment {
         return view;
     }
 
+    //generate ui based on data
     private void generateUI() {
         containerLayout.removeAllViews(); // Clear any existing UI elements
 
         if ("Student".equals(fragmentTitle)) {
+            //load data of that particular student
             String[] studentData = db.getSingularData("Student",buttonName);
             if (studentData != null) {
                 EditText nameEditText = createEditText("Name");
@@ -138,6 +140,7 @@ public class AdminDisplayInfo extends Fragment {
                 containerLayout.addView(editSection("Program",programSpinner));
             }
         } else if ("Lecturer".equals(fragmentTitle)) {
+            //load data of that particular lecturer
             String[] lecturerData = db.getSingularData("Lecturer",buttonName);
             if (lecturerData != null) {
                 EditText nameEditText = createEditText("Name");
@@ -172,8 +175,8 @@ public class AdminDisplayInfo extends Fragment {
                 containerLayout.addView(editSection("Password",passwordEditText));
             }
         } else if ("Course".equals(fragmentTitle)) {
+            //load data of that particular course
             String[] courseData = db.getSingularData("Course",buttonName);
-            //query
             String[] lecturerIdArray = db.getID("Lecturer");
             if (courseData != null) {
                 EditText courseNameEditText = createEditText("Course Name");
@@ -310,7 +313,7 @@ public class AdminDisplayInfo extends Fragment {
         saveButton.setVisibility(View.GONE);
         cancelButton.setVisibility(View.GONE);
 
-        // If you want to discard changes, you can reload the original data
+        // Reload the original data (regenerate the ui)
         generateUI();
     }
   
@@ -396,6 +399,7 @@ public class AdminDisplayInfo extends Fragment {
         return 0; // Default to the first item if not found
     }
 
+    // Function to replace fragments
     private void replaceFragment(Fragment fragment) {
         getActivity().getSupportFragmentManager()
                 .beginTransaction()

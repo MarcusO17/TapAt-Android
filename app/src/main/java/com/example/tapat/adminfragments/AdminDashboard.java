@@ -36,7 +36,6 @@ public class AdminDashboard extends Fragment {
         studentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Handle Student button click
                 // Replace the fragment with AdminListFragment and pass data
                 replaceFragment(AdminList.newInstance("Student"));
             }
@@ -45,7 +44,6 @@ public class AdminDashboard extends Fragment {
         lecturerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Handle Lecturer button click
                 // Replace the fragment with AdminListFragment and pass data
                 replaceFragment(AdminList.newInstance("Lecturer"));
             }
@@ -54,7 +52,6 @@ public class AdminDashboard extends Fragment {
         courseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Handle Course button click
                 // Replace the fragment with AdminListFragment and pass data
                 replaceFragment(AdminList.newInstance("Course"));
             }
@@ -63,6 +60,7 @@ public class AdminDashboard extends Fragment {
         nfcReaderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Replace the activity with AdminNFCReader and pass data
                 Intent readnfcIntent = new Intent(requireContext(), AdminNFCReader.class);
                 startActivity(readnfcIntent);
             }
@@ -71,6 +69,7 @@ public class AdminDashboard extends Fragment {
         nfcWriterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Replace the activity with AdminNFCwriter and pass data
                 Intent writenfcIntent = new Intent(requireContext(), AdminNFCwriter.class);
                 startActivity(writenfcIntent);
             }
@@ -79,6 +78,7 @@ public class AdminDashboard extends Fragment {
         return view;
     }
 
+    // Function to replace fragments
     private void replaceFragment(Fragment fragment) {
         getActivity().getSupportFragmentManager()
                 .beginTransaction()

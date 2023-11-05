@@ -139,6 +139,7 @@ public class AdminCreate extends Fragment {
             containerLayout.addView(editSection("Password",passwordEditText));
 
         } else if ("Course".equals(fragmentTitle)) {
+            // Create UI for Course
             EditText courseNameEditText = new EditText(requireContext());
             courseNameEditText.setHint("Course Name");
             courseNameEditText.setTextColor(Color.parseColor("#ffffff"));
@@ -293,6 +294,7 @@ public class AdminCreate extends Fragment {
         }
     }
 
+    // Function to replace fragments
     private void replaceFragment(Fragment fragment) {
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
