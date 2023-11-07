@@ -12,8 +12,6 @@
     android:elevation="7dp"
     >
 
-    1
-
     <TextView
         android:id="@+id/recycle_view_item_title"
         android:layout_width="290dp"
@@ -21,7 +19,7 @@
         android:layout_centerVertical="true"
         android:layout_marginStart="90dp"
         android:background="@android:color/transparent"
-        android:fontFamily="@font/jost"
+        android:fontFamily="@font/jost_light"
         android:letterSpacing="0.1"
         android:textColor="@color/black"
         android:textSize="20sp" />
@@ -34,16 +32,16 @@
         android:layout_below="@id/recycle_view_item_title"
         android:layout_marginStart="90dp"
         android:background="@android:color/transparent"
-        android:fontFamily="@font/jost"
+        android:fontFamily="@font/jost_light"
         android:letterSpacing="0.05"
         android:textColor="@color/black"
         android:textSize="20sp" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="50dp"
+        android:layout_width="65dp"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/teacher_icon"
-        android:layout_marginStart="23dp"/>
+        app:srcCompat="@drawable/class_icon"
+        android:layout_marginStart="18dp"/>
 
 </RelativeLayout>

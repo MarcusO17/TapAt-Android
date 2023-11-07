@@ -25,6 +25,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="24dp"
+            android:background="@color/white"
             android:weightSum="4">
 
             <TextView
@@ -34,7 +35,7 @@
                 android:fontFamily="@font/julius_sans_one"
                 android:text="@string/login"
                 android:textAlignment="center"
-                android:textColor="#4B494B"
+                android:textColor="#5A5656"
                 android:textSize="36dp" />
 
             <EditText
@@ -43,6 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="ID"
+                android:textColor="#5A5656"
                 android:padding="16dp" />
 
             <EditText
@@ -52,6 +54,7 @@
                 android:hint="@string/input_password"
                 android:layout_marginTop="12dp"
                 android:inputType="textPassword"
+                android:textColor="#5A5656"
                 android:layout_weight="1"
                 android:padding="16dp"/>
 
@@ -62,9 +65,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/login"
+                android:textColor="#ffffff"
                 android:layout_marginTop="16dp"
                 android:layout_weight="1"
-                android:backgroundTint="#4B494B"
+                android:backgroundTint="#5A5656"
                 />
         </LinearLayout>
     </androidx.cardview.widget.CardView>

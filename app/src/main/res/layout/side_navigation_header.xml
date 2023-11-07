@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="150dp"
     android:orientation="vertical"
-    android:background="@drawable/side_navigation_header"
+    android:background="#5A5656"
     android:padding="20dp"
     android:gravity="bottom">
 
@@ -14,13 +14,15 @@
         android:fontFamily="@font/julius_sans_one"
         android:text="Lecturer Name!"
         android:textColor="#FFFFFF"
+        android:textStyle="bold"
         android:textSize="30dp" />
 
     <TextView
         android:id="@+id/side_navigation_user_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/julius_sans_one"
+        android:fontFamily="@font/jost_light"
+        android:textStyle="bold"
         android:text="Lecturer"
         android:textColor="#FFFFFF"
         android:textSize="20dp" />

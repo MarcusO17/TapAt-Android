@@ -21,16 +21,16 @@
         android:layout_centerVertical="true"
         android:layout_marginStart="90dp"
         android:background="@android:color/transparent"
-        android:fontFamily="@font/jost"
+        android:fontFamily="@font/jost_light"
         android:letterSpacing="0.1"
         android:textColor="@color/black"
         android:textSize="20sp" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="50dp"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/class_icon"
-        android:layout_marginStart="20dp"/>
+        app:srcCompat="@drawable/subject_icon"
+        android:layout_marginStart="16dp"/>
 
 </RelativeLayout>

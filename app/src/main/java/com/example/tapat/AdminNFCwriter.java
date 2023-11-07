@@ -79,7 +79,6 @@ public class AdminNFCwriter extends AppCompatActivity {
         navigationSection.setVisibility(View.GONE);
 
         // Initialize buttons
-        Button profileButton = findViewById(R.id.profileButton);
         Button dashboardButton = findViewById(R.id.dashboardButton);
         Button studentButton = findViewById(R.id.studentButton);
         Button lecturerButton = findViewById(R.id.lecturerButton);
@@ -98,18 +97,6 @@ public class AdminNFCwriter extends AppCompatActivity {
             }
         });
 
-        // Set click listener for profileButton
-        profileButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), AdminActivity.class);
-                // Pass any necessary data to AdminActivity using extras
-                intent.putExtra("fragmentToLoad", "Profile");
-                startActivity(intent);
-                // Close the current activity
-                finish();
-            }
-        });
 
         // Set click listener for dashboardButton
         dashboardButton.setOnClickListener(new View.OnClickListener() {

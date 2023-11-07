@@ -1,32 +1,28 @@
 <!-- list_item_button.xml -->
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:focusable="false"
-    android:focusableInTouchMode="false"
+    android:layout_height="80dp"
     android:orientation="vertical"
-    android:paddingTop="10dp">
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#80ffffff"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginVertical="0dp"/>
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginTop="15dp"
+    android:layout_marginBottom="5dp"
+    android:background="@android:color/transparent"
+    android:elevation="7dp">
 
     <Button
         android:id="@+id/buttonItem"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginVertical="3dp"
-        android:backgroundTint="#206B9C"
-        android:clickable="true"
-        android:focusable="true"
-        android:fontFamily="@font/red_hat_text"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/white"
+        android:fontFamily="@font/jost_light"
         android:text="Button Text"
-        android:textColor="@color/white"
-        android:textSize="18sp" />
+        android:textAlignment="center"
+        android:textColor="#5A5656"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:cornerRadius="10dp" />
 
-</LinearLayout>
+</RelativeLayout>
