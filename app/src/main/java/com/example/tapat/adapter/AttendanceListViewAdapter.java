@@ -101,6 +101,11 @@ public class AttendanceListViewAdapter extends RecyclerView.Adapter<AttendanceLi
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.dismiss();
+
+                                String selectedItem = dropDownBox.getSelectedItem().toString();
+                                if (selectedItem == "MC" && attendanceCheckBox.isChecked()) {
+                                    dropDownBox.setSelection(0);
+                                }
                             }
                         });
 
@@ -129,6 +134,10 @@ public class AttendanceListViewAdapter extends RecyclerView.Adapter<AttendanceLi
                         if (adapterView.getSelectedItem() != null){
                             String selectedItem = adapterView.getSelectedItem().toString();
                             rowData.setReason(selectedItem);
+                            if (selectedItem == "MC") {
+                                attendanceCheckBox.setChecked(false);
+                                rowData.setAttendance(attendanceCheckBox.isChecked());
+                            }
                         }
                     }
                 }
