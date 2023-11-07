@@ -46,7 +46,6 @@ public class AdminActivity extends AppCompatActivity {
         navigationSection.setVisibility(View.GONE);
 
         // Initialize buttons
-        Button profileButton = findViewById(R.id.profileButton);
         Button dashboardButton = findViewById(R.id.dashboardButton);
         Button studentButton = findViewById(R.id.studentButton);
         Button lecturerButton = findViewById(R.id.lecturerButton);
@@ -62,16 +61,6 @@ public class AdminActivity extends AppCompatActivity {
                 if (isMenuExpanded) {
                     toggleMenu();
                 }
-            }
-        });
-
-        // Set click listener for profileButton
-        profileButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Handle profile button click
-                // Replace the fragment with UserProfile
-                replaceFragment(new UserProfile());
             }
         });
 
@@ -149,9 +138,7 @@ public class AdminActivity extends AppCompatActivity {
             }
         });
 
-        if ("Profile".equals(fragmentToLoad)) {
-            replaceFragment(new UserProfile());
-        } else if ("Student".equals(fragmentToLoad)) {
+        if ("Student".equals(fragmentToLoad)) {
             replaceFragment(AdminList.newInstance("Student"));
         } else if ("Lecturer".equals(fragmentToLoad)) {
             replaceFragment(AdminList.newInstance("Lecturer"));
