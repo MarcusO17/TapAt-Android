@@ -327,9 +327,13 @@ public class AdminDisplayInfo extends Fragment {
             String id = ((EditText) ((LinearLayout) containerLayout.getChildAt(1)).getChildAt(1)).getText().toString();
             String program = ((Spinner) ((LinearLayout) containerLayout.getChildAt(2)).getChildAt(1)).getSelectedItem().toString();
             String[] studentData = {id,name,program};
-          //Change Student
+            Character data = studentData[0].charAt(0);
+            Character valid = 'P';
+            //Change Student
             if(studentData[0].equals("") || studentData[1].equals("")){
                 Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
+            }else if(data != valid){
+                Toast.makeText(getContext(), "StudentID must Start with P", Toast.LENGTH_SHORT).show();
             }else if(!db.updateStudentData(studentData,buttonName)) {
                 // Add studentData to the student array
                 Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
@@ -343,9 +347,13 @@ public class AdminDisplayInfo extends Fragment {
             String email = ((EditText) ((LinearLayout) containerLayout.getChildAt(2)).getChildAt(1)).getText().toString();
             String password = ((EditText) ((LinearLayout) containerLayout.getChildAt(3)).getChildAt(1)).getText().toString();
             String[] lecturerData = {id,name, email, password};
+            Character data = lecturerData[0].charAt(0);
+            Character valid = 'L';
             // Change lecturerData on the lecturer array
             if(lecturerData[0].equals("") || lecturerData[1].equals("")){
                 Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
+            }else if(data != valid){
+                Toast.makeText(getContext(), "LecturerID must Start with L", Toast.LENGTH_SHORT).show();
             }else if(!db.updateLecturerData(lecturerData,buttonName)) {
                 // Add studentData to the student array
                 Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
@@ -359,9 +367,13 @@ public class AdminDisplayInfo extends Fragment {
             String lecturerid = ((Spinner) ((LinearLayout) containerLayout.getChildAt(2)).getChildAt(1)).getSelectedItem().toString();
             String program = ((Spinner) ((LinearLayout) containerLayout.getChildAt(3)).getChildAt(1)).getSelectedItem().toString();
             String[] courseData = {courseid, lecturerid,coursename, program};
+            Character data = courseData[0].charAt(0);
+            Character valid = 'C';
             // Change course data
-            if(courseData[0].equals("") || courseData[1].equals("")){
-                Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
+            if(courseData[0].equals("") || courseData[1].equals("")) {
+                Toast.makeText(getContext(), "Insert Failed!", Toast.LENGTH_SHORT).show();
+            }else if(data != valid){
+                Toast.makeText(getContext(), "CourseID must Start with C", Toast.LENGTH_SHORT).show();
             }else if(!db.updateCourseData(courseData,buttonName)) {
                 // Add studentData to the student array
                 Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
