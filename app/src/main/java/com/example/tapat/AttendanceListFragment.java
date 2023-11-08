@@ -47,6 +47,7 @@ public class AttendanceListFragment extends Fragment {
     String className;
     String courseID;
     String classID;
+    String courseName;
     dbHelper db;
     Button attendanceTakingButton;
     Button submitButton;
@@ -170,9 +171,11 @@ public class AttendanceListFragment extends Fragment {
             className = args.getString("class_id");
             classID = args.getString("class_name");
             courseID = args.getString("course_ID");
+            courseName = args.getString("course_name");
             Log.d("ClassListFragment", "class name: " + className);
             Log.d("ClassListFragment", "class id: " + classID);
             Log.d("ClassListFragment", "course_ID: " + courseID);
+
         }
 
         studentsInClass = db.getCourseStudents(courseID);
@@ -196,7 +199,7 @@ public class AttendanceListFragment extends Fragment {
     public void onResume() {
         super.onResume();
         TextView title = getActivity().findViewById(R.id.fragmentholdertitle);
-        title.setText(className + " - " + classID);
+        title.setText(courseName + " - " + classID);
 
         Log.d("ROW ITEM", "IN ON RESUME");
         for (AttendanceListRowData student: attendanceList) {

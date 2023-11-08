@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 import android.app.Dialog;
 import android.text.Editable;
@@ -383,8 +384,8 @@ public class AdminNFCwriter extends AppCompatActivity {
         nfcDialog = new Dialog(this);
         nfcDialog.setContentView(R.layout.nfc_dialog);
 
-        TextView nfcStatusTextView = nfcDialog.findViewById(R.id.nfcStatusTextView);
-        nfcStatusTextView.setText(initialMessage);
+        ImageView nfcStatusTextView = nfcDialog.findViewById(R.id.nfcStatusTextView);
+        //nfcStatusTextView.setText(initialMessage);
 
         nfcDialog.setCanceledOnTouchOutside(false);
         nfcDialog.show();
@@ -392,9 +393,7 @@ public class AdminNFCwriter extends AppCompatActivity {
 
     private void updateNfcDialogStatus(String message) {
         if (nfcDialog != null && nfcDialog.isShowing()) {
-            TextView nfcStatusTextView = nfcDialog.findViewById(R.id.nfcStatusTextView);
-            if (nfcStatusTextView != null) {
-                nfcStatusTextView.setText(message);
+            ImageView nfcStatusTextView = nfcDialog.findViewById(R.id.nfcStatusTextView);
                 nfcStatusTextView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -406,7 +405,6 @@ public class AdminNFCwriter extends AppCompatActivity {
                 if ("Tag Written!".equals(message) || "Failed to Write".equals(message)) {
                     nfcDialog.setCanceledOnTouchOutside(true);
                 }
-            }
         }
     }
     private void toggleMenu() {

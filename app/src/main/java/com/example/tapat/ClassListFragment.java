@@ -94,13 +94,14 @@ public class ClassListFragment extends Fragment implements CourseItemViewAdapter
 
                         // go to the attendance list fragment, setting title of fragment holder
                         TextView title = getActivity().findViewById(R.id.fragmentholdertitle);
-                        title.setText(classID + " - " + className);
+                        title.setText(courseName + " - " + className);
 
                         // send data to attendance list fragment
                         Bundle args = new Bundle();
                         args.putString("class_id",classID);
                         args.putString("class_name",className);
                         args.putString("course_ID",courseCode);
+                        args.putString("course_name", courseName);
 
                         AttendanceListFragment attendanceListFragment = new AttendanceListFragment();
 
@@ -146,13 +147,14 @@ public class ClassListFragment extends Fragment implements CourseItemViewAdapter
 
         //set title in fragment holder
         TextView title = getActivity().findViewById(R.id.fragmentholdertitle);
-        title.setText(classList.get(position).getClassID() + " - " + classList.get(position).getClassName());
+        title.setText(courseName + " - " + classList.get(position).getClassName());
 
         // send data to attendance view fragment
         Bundle args = new Bundle();
         args.putString("class_id",classList.get(position).getClassID());
         args.putString("class_name",classList.get(position).getClassName());
         args.putString("course_name", courseName);
+
 
         AttendanceViewFragment attendanceviewFragment = new AttendanceViewFragment();
 
