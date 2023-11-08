@@ -73,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 } else {
                     /* toast to alert the user that the login has failed*/
-                    String errorText = "";
+                    String errorText = "Invalid Credentials!";
                     if (email.equals("")) {
                         errorText = "Login Failed: Invalid Credentials";
                     } else if (password.equals("")) {
@@ -82,6 +82,9 @@ public class LoginActivity extends AppCompatActivity {
                     Toast loginToastError = Toast.makeText(view.getContext(), errorText, Toast.LENGTH_SHORT);
                     View loginToastView = loginToastError.getView();
                     loginToastError.show();
+                    emailInputField.setText("");
+                    passwordInputField.setText("");
+
 
                 }
             }
