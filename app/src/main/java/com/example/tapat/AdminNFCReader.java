@@ -246,12 +246,14 @@ public class AdminNFCReader extends AppCompatActivity {
         //Conditions for NFC Tag(Now Empty)
         IntentFilter[] intentFilters = new IntentFilter[]{};
 
+        //Start Scanning
         nfcAdapter.enableForegroundDispatch(this, pendingIntent, intentFilters, null);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        //Stop Scanning
         nfcAdapter.disableForegroundDispatch(this);
     }
 
@@ -273,7 +275,10 @@ public class AdminNFCReader extends AppCompatActivity {
 
         String tagContent =null;
         try {
+            // Extract payload (data) from the NdefRecord
             byte[] payload = ndefRecord.getPayload();
+
+            //Process into string
             String textEncoding = ((payload[0] & 128) == 0) ? "UTF-8" : "UTF-16";
             int languageSize = payload[0] & 0063;
             tagContent = new String(payload, languageSize + 1, payload.length - languageSize - 1, textEncoding);

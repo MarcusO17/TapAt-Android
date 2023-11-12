@@ -330,6 +330,7 @@ public class AdminNFCwriter extends AppCompatActivity {
     //DOCUMENTATION NEEDED !! TBC 7/9/2023. Everything below
     private void writeNdefMessage(Tag tag, NdefMessage ndefMessage){
         try{
+            // If tag is empty
             if(tag == null){
                 Toast.makeText(this, "Tag cannot be null!", Toast.LENGTH_SHORT).show();
                 return;
@@ -341,6 +342,7 @@ public class AdminNFCwriter extends AppCompatActivity {
                 formatTag(tag,ndefMessage);
             }else{
                 ndef.connect();
+                //Check if NDEF message is writable
                 if(!ndef.isWritable()){
                     Toast.makeText(this, "Tag is not writable!", Toast.LENGTH_SHORT).show();
                     ndef.close();
@@ -364,9 +366,10 @@ public class AdminNFCwriter extends AppCompatActivity {
         }
     }
 
-    //Uhoh DOCU AND EXPLAINATION NEEDED!!!
+
     private NdefRecord createTextRecord(String content){
         try{
+            //Converts content into NDEF formatable, bytecode for storage
             byte[] language;
             language = Locale.getDefault().getLanguage().getBytes("UTF-8");
 
@@ -391,6 +394,7 @@ public class AdminNFCwriter extends AppCompatActivity {
         NdefMessage ndefMessage = new NdefMessage(new NdefRecord[]{ndefRecord});
         return ndefMessage;
     }
+
 
     private void showNfcDialog(String initialMessage) {
         nfcDialog = new Dialog(this);
