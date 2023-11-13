@@ -22,9 +22,12 @@ public class dbHelper extends SQLiteOpenHelper {
      **********************************     TABLES!       ******************************************
      ***********************************************************************************************
      */
+
+    //DB name and current version
     private static final String DATABASE_NAME = "TapAt.db";
     private static final int DATABASE_VERSION = 9;
 
+    //Admin Table
     static class Admin{
         private static final String TABLE_NAME = "admins";
         private static final String COL_1 = "admin_ID";
@@ -32,6 +35,7 @@ public class dbHelper extends SQLiteOpenHelper {
         private static final String COL_3 = "admin_password";
     }
 
+    //Lecturer Table
     static class Lecturer{
         private static final String TABLE_NAME = "lecturers";
         private static final String COL_1 = "lecturer_ID";
@@ -40,6 +44,7 @@ public class dbHelper extends SQLiteOpenHelper {
         private static final String COL_4 = "lecturer_password";
     }
 
+    //Student Table
     static class Student{
         private static final String TABLE_NAME = "students";
         private static final String COL_1 = "student_ID";
@@ -47,6 +52,7 @@ public class dbHelper extends SQLiteOpenHelper {
         private static final String COL_3 = "programme_code";
     }
 
+    //Course Table
     static class Course{
         private static final String TABLE_NAME = "courses";
         private static final String COL_1 = "course_ID";
@@ -55,6 +61,7 @@ public class dbHelper extends SQLiteOpenHelper {
         private static final String COL_4 = "programme_code";
     }
 
+    //Attendance Table
     static class Attendance{
         private static final String TABLE_NAME = "attendance";
         private static final String COL_1 = "attendance_ID";
@@ -62,6 +69,7 @@ public class dbHelper extends SQLiteOpenHelper {
         private static final String COL_3 = "datetime";
 
     }
+    //AttendanceStudents Table
     static class AttendanceStudents{
         private static final String TABLE_NAME = "attendance_students";
         private static final String COL_1 = "attendance_ID";
@@ -70,6 +78,7 @@ public class dbHelper extends SQLiteOpenHelper {
         private static final String COL_4 = "reason";
     }
 
+    //CourseStudents Table
     static class CourseStudents{
         private static final String TABLE_NAME = "course_students";
         private static final String COL_1= "course_ID";
@@ -85,13 +94,14 @@ public class dbHelper extends SQLiteOpenHelper {
      */
 
 
-
+    //init
     public dbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         SQLiteDatabase db = this.getWritableDatabase();
     }
 
 
+    //onCreate app db
     @Override
     public void onCreate(SQLiteDatabase db) {
         //Creating Admin Table
@@ -150,6 +160,7 @@ public class dbHelper extends SQLiteOpenHelper {
                 + " FOREIGN KEY (course_ID) REFERENCES courses(course_ID),"
                 + " FOREIGN KEY (student_ID) REFERENCES students(student_ID)"
                 + " )");
+        //Insert Admin Acc
         insertAdmin(db);
 
     }
@@ -173,6 +184,7 @@ public class dbHelper extends SQLiteOpenHelper {
      ********************************     DB METHODS     ******************************************
      ***********************************************************************************************
      */
+
     /**
      *  Inserts Admin Account into DB
      *
@@ -187,6 +199,10 @@ public class dbHelper extends SQLiteOpenHelper {
 
 
 
+    /**
+     *  Checks for a valid password and email in users table
+     *
+     */
     public boolean userAuthControl(String table,String email,String password){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor;
@@ -202,6 +218,10 @@ public class dbHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     *  gets the userID from email to be used as sessionID
+     *
+     */
     public String getIDfromEmail(String table,String email){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor;
@@ -213,6 +233,11 @@ public class dbHelper extends SQLiteOpenHelper {
             return "";
         }
     }
+
+    /**
+     *  creates temporary view table to gather the cumulative users
+     *
+     */
 
     public String userAuthorization(String email,String password) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -281,6 +306,11 @@ public class dbHelper extends SQLiteOpenHelper {
         return namesList.toArray(new String[]{});
     }
 
+    /**
+     * get ALL IDs in table
+     * @param className - which table to be queried
+     * @return ID list
+     */
     public String[] getID(String className){
         List<String> idList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -319,6 +349,12 @@ public class dbHelper extends SQLiteOpenHelper {
         }
         return idList.toArray(new String[]{});
     }
+
+    /**
+     * insert data into students table
+     * @param student. array of details
+     * @return success?
+     */
     public boolean insertStudentData(String[] student){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -333,6 +369,11 @@ public class dbHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * Insert data into lecturer table
+     * @param lecturer -details of lecturer
+     * @return success?
+     */
     public boolean insertLecturerData(String[] lecturer){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -348,6 +389,11 @@ public class dbHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * insert data into Course table
+     * @param course - array of course details
+     * @return
+     */
     public boolean insertCourseData(String[] course){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -363,6 +409,12 @@ public class dbHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * Gets a specific user information
+     * @param className - name of class
+     * @param buttonName - ID of user
+     * @return array of user details
+     */
     public String[] getSingularData(String className, String buttonName){
         List<String> rowInfo = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -401,6 +453,12 @@ public class dbHelper extends SQLiteOpenHelper {
         return rowInfo.toArray(new String[]{});
     }
 
+    /**
+     * update row of student data
+     * @param student - data to be updated with
+     * @param target - targetID
+     * @return success?
+     */
     public boolean updateStudentData(String[] student,String target){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv= new ContentValues();
@@ -415,6 +473,13 @@ public class dbHelper extends SQLiteOpenHelper {
             return false;
         }
     }
+
+    /**
+     * update row of lecturer data
+     * @param lecturer - lecturer data to be updated with
+     * @param target - targetID
+     * @return success?
+     */
     public boolean updateLecturerData(String[] lecturer,String target){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -431,6 +496,12 @@ public class dbHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * update row of Course Data
+     * @param course - course data to be updated with
+     * @param target - targetID
+     * @return success?
+     */
     public boolean updateCourseData(String[] course,String target){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -466,6 +537,10 @@ public class dbHelper extends SQLiteOpenHelper {
     }
     */
 
+    /**
+     * get list of ALL students and place into array of objects
+     * @return array
+     */
     public List<StudentItem> getStudents() {
         List<StudentItem> studentData = new ArrayList<>();
 
@@ -488,6 +563,11 @@ public class dbHelper extends SQLiteOpenHelper {
         return studentData;
     }
 
+    /**
+     * get students specific to a course
+     * @param courseID - the course to be queried
+     * @return array
+     */
     public List<StudentItem> getCourseStudents(String courseID) {
         List<String> studentIDData = new ArrayList<>();
         List<StudentItem> studentData = new ArrayList<>();
@@ -512,6 +592,11 @@ public class dbHelper extends SQLiteOpenHelper {
         return studentData;
     }
 
+    /**
+     * get Courses specific to the lecturer
+     * @param lecturerID - lecturer target
+     * @return courseData
+     */
     public List<CourseItem> getCourses(String lecturerID){
         List<CourseItem> courseData = new ArrayList<>();
 
@@ -530,6 +615,12 @@ public class dbHelper extends SQLiteOpenHelper {
         return courseData;
     }
 
+
+    /**
+     * getClasses of a course
+     * @param courseID - targeted Course
+     * @return classData
+     */
     public List<ClassListItem> getClasses(String courseID){
         List<ClassListItem> classData = new ArrayList<>();
         int classCount = 0;
@@ -554,6 +645,12 @@ public class dbHelper extends SQLiteOpenHelper {
         return classData;
     }
 
+    /**
+     * get username from ID
+     * @param className - which table to be queried
+     * @param ID - target ID
+     * @return username
+     */
     public String getNamefromID(String className,String ID) {
         String name = "";
         SQLiteDatabase db = this.getReadableDatabase();
@@ -590,6 +687,9 @@ public class dbHelper extends SQLiteOpenHelper {
         return name;
     }
 
+    /**
+     * add course student table.
+     */
     public void populateCourseStudents() {
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = null;
@@ -611,6 +711,10 @@ public class dbHelper extends SQLiteOpenHelper {
                 "    SELECT DISTINCT programme_code FROM courses " + ");");
     }
 
+    /**
+     * insert attendancestudent data
+     * @param attendanceList
+     */
     public void insertAttendanceStudentsData(ArrayList<AttendanceListRowData> attendanceList){
         SQLiteDatabase db = this.getWritableDatabase();
         db.beginTransaction();
@@ -628,6 +732,10 @@ public class dbHelper extends SQLiteOpenHelper {
         db.endTransaction();
     }
 
+    /**
+     * insert attendance data
+     * @param attendanceRow -data
+     */
     public boolean insertAttendanceData(String[] attendanceRow){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -642,6 +750,11 @@ public class dbHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * get previous attendanceData
+     * @param classID
+     * @return
+     */
     public ArrayList<AttendanceListRowData> getPastAttendanceData (String classID){
         SQLiteDatabase db = this.getWritableDatabase();
         ArrayList<AttendanceListRowData> attendanceList = new ArrayList<AttendanceListRowData>();
