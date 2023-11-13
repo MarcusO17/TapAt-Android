@@ -136,7 +136,7 @@ public class AttendanceListFragment extends Fragment {
 
                         //Initialising classData info for indexing
                         //Getting data
-                        DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD hh:mm");
+                        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
                         String date = dateFormat.format(Calendar.getInstance().getTime());
 
                         String[] classData = new String[]{className,courseID,date};
