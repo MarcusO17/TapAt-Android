@@ -47,6 +47,7 @@ public class AttendanceListFragment extends Fragment {
     String className;
     String courseID;
     String classID;
+    String courseName;
     dbHelper db;
     Button attendanceTakingButton;
     Button submitButton;
@@ -61,7 +62,10 @@ public class AttendanceListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // this is used to received a list of students who have attended from NFCReaderActivity
+        // broadcast receiver is used to receive data from another activity (from activity to fragment)
         receiver = new BroadcastReceiver() {
+            // checking if the data receive is the one sent from the activity using the string identifier
             @Override
             public void onReceive(Context context, Intent intent) {
                 if ("com.example.tapat.ACTION_NFC_DATA".equals(intent.getAction())) {
@@ -69,6 +73,7 @@ public class AttendanceListFragment extends Fragment {
                 }
             }
         };
+        // this filter specifies so that it only receives from this identifier
         IntentFilter intentFilter = new IntentFilter("com.example.tapat.ACTION_NFC_DATA");
         requireActivity().registerReceiver(receiver, intentFilter);
     }
@@ -89,14 +94,15 @@ public class AttendanceListFragment extends Fragment {
         attendanceTakingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                // pass a list of students to the NFCReaderActivity for validation during scanning
                 Intent intent = new Intent(getContext(), NFCReaderActivity.class);
                 ArrayList<StudentItem> studentList = new ArrayList<>(studentsInClass);
                 intent.putExtra("student_list", studentList);
                 startActivity(intent);
             }
         });
-
+        // search bar updates recyclerview by notifying the adapter
+        // search bar will trigger update every text change
         searchBar.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -114,7 +120,8 @@ public class AttendanceListFragment extends Fragment {
             }
         });
 
-
+        // builds confirmation dialog, if yes send the information to database, then trigger back manually
+        // to avoid double dialog box bug
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -152,42 +159,28 @@ public class AttendanceListFragment extends Fragment {
             }
         });
 
+        // the recycler view is made and the contents of the recycler view is populated using the adapter
         RecyclerView attendanceListRecyclerView = view.findViewById(R.id.attendancelistrecyclerview);
         LinearLayoutManager attendanceListLayout = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         attendanceListRecyclerView.setLayoutManager(attendanceListLayout);
 
         Bundle args = getArguments();
 
-
+        // receiving data
         if (args != null) {
             className = args.getString("class_id");
             classID = args.getString("class_name");
             courseID = args.getString("course_ID");
+            courseName = args.getString("course_name");
             Log.d("ClassListFragment", "class name: " + className);
             Log.d("ClassListFragment", "class id: " + classID);
             Log.d("ClassListFragment", "course_ID: " + courseID);
+
         }
-
-        //query the shit here
-        /* TESTING PRE-DB
-        StudentItem studentItem1 = new StudentItem("Ali", "P21011234");
-        StudentItem studentItem2 = new StudentItem("Abu", "P21010001");
-        StudentItem studentItem3 = new StudentItem("John","P21011002");
-        StudentItem studentItem4 = new StudentItem("Felix","P21011003");
-
-        AttendanceListRowData row1 = new AttendanceListRowData(studentItem1.getStudentName(),false,"");
-        AttendanceListRowData row2 = new AttendanceListRowData(studentItem2.getStudentName(),false,"");
-        AttendanceListRowData row3 = new AttendanceListRowData(studentItem3.getStudentName(),false,"");
-        AttendanceListRowData row4 = new AttendanceListRowData(studentItem4.getStudentName(),false,"");
-
-        attendanceList.add(row1);
-        attendanceList.add(row2);
-        attendanceList.add(row3);
-        attendanceList.add(row4);
-        */
 
         studentsInClass = db.getCourseStudents(courseID);
 
+        // adding students in the list
         for(StudentItem student: studentsInClass){
             attendanceList.add(new AttendanceListRowData(className,student.getStudentID(),student.getStudentName(),false,""));
             Log.d("GETTING ATTENDANCE LIST", student.getStudentID() + " " + student.getStudentName());
@@ -199,11 +192,14 @@ public class AttendanceListFragment extends Fragment {
 
         return view;
     }
+
+    // this is trigger when the NFCReader is closed and this fragment is resumed
+    // update the recycler view buttons on screen with information from NFCReaderActivity
     @Override
     public void onResume() {
         super.onResume();
         TextView title = getActivity().findViewById(R.id.fragmentholdertitle);
-        title.setText("Attendance List");
+        title.setText(courseName + " - " + classID);
 
         Log.d("ROW ITEM", "IN ON RESUME");
         for (AttendanceListRowData student: attendanceList) {
@@ -230,6 +226,7 @@ public class AttendanceListFragment extends Fragment {
         super.onPause();
     }
 
+    // search bar filtering recyclerview function
     private void filter(String text){
         ArrayList<AttendanceListRowData> filteredList= new ArrayList<>();
         for (AttendanceListRowData item: attendanceList) {
@@ -239,6 +236,7 @@ public class AttendanceListFragment extends Fragment {
         }
         attendanceListAdapter.filteredList(filteredList);
     }
+    // used in back button function in fragment holder activity to trigger back confrimation dialog
     public void showExitConfirmationDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setCancelable(true);

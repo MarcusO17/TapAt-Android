@@ -16,16 +16,16 @@
             android:id="@+id/buttonA"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:padding = "0dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
             android:backgroundTint="@android:color/transparent"
+            android:padding="0dp"
             app:cornerRadius="5dp"
             app:icon="@drawable/baseline_menu_24"
             app:iconSize="50dp"
-            app:strokeColor="#FFFFFF"
-            app:strokeWidth="1dp" />
+            app:iconTint="@color/white" />
 
     </RelativeLayout>
-
 
     <!-- Fragment Container -->
     <FrameLayout
@@ -44,11 +44,12 @@
                 android:id="@+id/displayFragmentTitleTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="120dp"
+                android:layout_marginBottom="20dp"
                 android:fontFamily="@font/julius_sans_one"
                 android:gravity="center"
-                android:text="NFC Reader"
-                android:textColor="@color/white"
+                android:text="Admin NFC Reader"
+                android:textColor="#5A5656"
                 android:textSize="30sp"
                 android:textStyle="bold"/>
 
@@ -73,16 +74,17 @@
                         android:layout_weight="1"
                         android:text="Name"
                         android:textSize="20sp"
-                        android:textColor="#ffffff" />
+                        android:textColor="#5A5656"/>
 
                     <TextView
                         android:id="@+id/nameText"
+                        android:background="@drawable/search_bar_background"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="40dp"
                         android:layout_weight="2"
                         android:text="Pending..."
-                        android:textSize="20sp"
-                        android:textColor="#ffffff" />
+                        android:textSize="18sp"
+                        android:textColor="#5A5656" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -98,16 +100,17 @@
                         android:layout_weight="1"
                         android:text="ID"
                         android:textSize="20sp"
-                        android:textColor="#ffffff" />
+                        android:textColor="#5A5656" />
 
                     <TextView
                         android:id="@+id/idText"
+                        android:background="@drawable/search_bar_background"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="40dp"
                         android:layout_weight="2"
                         android:text="Pending..."
-                        android:textSize="20sp"
-                        android:textColor="#ffffff" />
+                        android:textSize="18sp"
+                        android:textColor="#5A5656" />
 
                 </LinearLayout>
 
@@ -124,16 +127,17 @@
                         android:layout_weight="1"
                         android:text="Program"
                         android:textSize="20sp"
-                        android:textColor="#ffffff" />
+                        android:textColor="#5A5656" />
 
                     <TextView
                         android:id="@+id/programText"
+                        android:background="@drawable/search_bar_background"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="40dp"
                         android:layout_weight="2"
                         android:text="Pending..."
-                        android:textSize="20sp"
-                        android:textColor="#ffffff" />
+                        android:textSize="18sp"
+                        android:textColor="#5A5656" />
 
                 </LinearLayout>
             </LinearLayout>

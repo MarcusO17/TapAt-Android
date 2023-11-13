@@ -12,7 +12,7 @@
         android:id="@+id/tagContentText"
         android:layout_width="260dp"
         android:layout_height="250dp"
-        android:background="@drawable/nfc_card"
+        android:background="@drawable/card"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +27,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:backgroundTint="#0Dffffff"
+        android:textColor="#5A5656"
+        android:backgroundTint="@color/white"
+        android:fontFamily="@font/red_hat_text"
+        android:textStyle="bold"
+        android:textSize="17sp"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,13 +17,13 @@
             android:id="@+id/buttonA"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:padding = "0dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
             android:backgroundTint="@android:color/transparent"
+            android:padding="0dp"
             app:cornerRadius="5dp"
             app:icon="@drawable/baseline_menu_24"
             app:iconSize="50dp"
-            app:strokeColor="#FFFFFF"
-            app:strokeWidth="1dp" />
     </RelativeLayout>
 
 
@@ -42,33 +42,38 @@
                 android:id="@+id/textViewNFCWriter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_marginTop="60dp"
+                android:layout_marginBottom="20dp"
                 android:fontFamily="@font/julius_sans_one"
                 android:gravity="center"
-                android:text="AdminNFCWriter"
-                android:textColor="@color/white"
-                android:textSize="30sp" />
+                android:text="Admin NFC Writer"
+                android:textColor="#5A5656"
+                android:textSize="30sp"
+                android:textStyle="bold"/>
 
             <!-- Search Bar -->
             <EditText
                 android:id="@+id/searchEditText"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_width="350dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/search_bar_background"
+                android:backgroundTint="@color/white"
                 android:hint="Search"
-                android:layout_margin="10dp"
-                android:textColor="@color/white"
-                android:textColorHint="#66ffffff"
-                android:inputType="text"/>
+                android:inputType="text"
+                android:padding="10dp"
+                android:textColor="#5A5656"
+                android:textColorHint="#5A5656" />
 
             <!-- RecyclerView -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="8"
+                android:layout_width="350dp"
+                android:layout_height="500dp"
                 android:layout_margin="10dp"
-                android:background="@drawable/scroll_frame" />
+                android:layout_gravity="center"
+                />
 
         </LinearLayout>
     </FrameLayout>

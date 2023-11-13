@@ -23,6 +23,7 @@ import org.w3c.dom.Text;
 
 import java.util.Stack;
 
+// this class holds all the fragments that in the lecturer view
 public class FragmentHolderActivity extends AppCompatActivity {
 
     NavigationView sideNavigationView;
@@ -32,12 +33,15 @@ public class FragmentHolderActivity extends AppCompatActivity {
     dbHelper db;
     String sessionID = "";
     ImageButton backButton;
+    // this is a function for back button
+    // when the button is triggered the stack is popped, then the top is the stack is the current fragment
     @Override
     public void onBackPressed() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment currentFragment = fragmentManager.findFragmentById(R.id.classlistframelayout);
         Log.d("Fragment Type", currentFragment.getClass().getName());
         if (fragmentManager.getBackStackEntryCount() >1) {
+            //dialog triggered for attendancelistfragment
             if (currentFragment instanceof AttendanceListFragment) {
                 Log.d("inside on backpress", "it should trigger exit confirmation dialog");
                 ((AttendanceListFragment) currentFragment).showExitConfirmationDialog();
@@ -78,6 +82,7 @@ public class FragmentHolderActivity extends AppCompatActivity {
         args.putString("sessionID",sessionID);
         courseListFragment.setArguments(args);
 
+        //showing the first fragment at the beginning
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.classlistframelayout, courseListFragment);
@@ -93,13 +98,15 @@ public class FragmentHolderActivity extends AppCompatActivity {
         View sidebarHeader = sideNavigationView.getHeaderView(0);
         sideNavigationUsername = sidebarHeader.findViewById(R.id.side_navigation_user_name);
         sideNavigationUsername.setText(db.getNamefromID("Lecturer",sessionID));
+
+        // function for opening the side navigation bar
         sideNavigationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sideNavigationLayout.openDrawer(GravityCompat.START);
             }
         });
-
+        // setting side navigation bar buttons
         sideNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             public boolean onNavigationItemSelected(MenuItem item) {
                 // Handle navigation item clicks here

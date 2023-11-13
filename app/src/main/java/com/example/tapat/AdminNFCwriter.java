@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 import android.app.Dialog;
 import android.text.Editable;
@@ -318,6 +319,7 @@ public class AdminNFCwriter extends AppCompatActivity {
     //DOCUMENTATION NEEDED !! TBC 7/9/2023. Everything below
     private void writeNdefMessage(Tag tag, NdefMessage ndefMessage){
         try{
+            // If tag is empty
             if(tag == null){
                 Toast.makeText(this, "Tag cannot be null!", Toast.LENGTH_SHORT).show();
                 return;
@@ -329,6 +331,7 @@ public class AdminNFCwriter extends AppCompatActivity {
                 formatTag(tag,ndefMessage);
             }else{
                 ndef.connect();
+                //Check if NDEF message is writable
                 if(!ndef.isWritable()){
                     Toast.makeText(this, "Tag is not writable!", Toast.LENGTH_SHORT).show();
                     ndef.close();
@@ -352,9 +355,10 @@ public class AdminNFCwriter extends AppCompatActivity {
         }
     }
 
-    //Uhoh DOCU AND EXPLAINATION NEEDED!!!
+
     private NdefRecord createTextRecord(String content){
         try{
+            //Converts content into NDEF formatable, bytecode for storage
             byte[] language;
             language = Locale.getDefault().getLanguage().getBytes("UTF-8");
 
@@ -380,12 +384,13 @@ public class AdminNFCwriter extends AppCompatActivity {
         return ndefMessage;
     }
 
+
     private void showNfcDialog(String initialMessage) {
         nfcDialog = new Dialog(this);
         nfcDialog.setContentView(R.layout.nfc_dialog);
 
-        TextView nfcStatusTextView = nfcDialog.findViewById(R.id.nfcStatusTextView);
-        nfcStatusTextView.setText(initialMessage);
+        ImageView nfcStatusTextView = nfcDialog.findViewById(R.id.nfcStatusTextView);
+        //nfcStatusTextView.setText(initialMessage);
 
         nfcDialog.setCanceledOnTouchOutside(false);
         nfcDialog.show();
@@ -393,9 +398,7 @@ public class AdminNFCwriter extends AppCompatActivity {
 
     private void updateNfcDialogStatus(String message) {
         if (nfcDialog != null && nfcDialog.isShowing()) {
-            TextView nfcStatusTextView = nfcDialog.findViewById(R.id.nfcStatusTextView);
-            if (nfcStatusTextView != null) {
-                nfcStatusTextView.setText(message);
+            ImageView nfcStatusTextView = nfcDialog.findViewById(R.id.nfcStatusTextView);
                 nfcStatusTextView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -407,7 +410,6 @@ public class AdminNFCwriter extends AppCompatActivity {
                 if ("Tag Written!".equals(message) || "Failed to Write".equals(message)) {
                     nfcDialog.setCanceledOnTouchOutside(true);
                 }
-            }
         }
     }
     private void toggleMenu() {

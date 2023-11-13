@@ -189,7 +189,7 @@ public class AdminNFCReader extends AppCompatActivity {
     private void contentDialog(String message){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(message);
-        builder.setTitle("Scan Successful!");
+        builder.setTitle("Scanned");
 
 
         AlertDialog dialog = builder.create();
@@ -210,19 +210,19 @@ public class AdminNFCReader extends AppCompatActivity {
         // Initialize and handle NFC Reader related UI components and functionality here
         String[] studentData = db.getSingularData("Student",message);
 
-        if(studentData!=null){
-            TextView nameView = findViewById(R.id.nameText);
-            nameView.setText(studentData[1]);
+            try {
+                TextView nameView = findViewById(R.id.nameText);
+                nameView.setText(studentData[1]);
 
-            TextView idView = findViewById(R.id.idText);
-            idView.setText(studentData[0]);
+                TextView idView = findViewById(R.id.idText);
+                idView.setText(studentData[0]);
 
-            TextView programView = findViewById(R.id.programText);
-            programView.setText(studentData[2]);
-        }else{
-            Toast.makeText(AdminNFCReader.this,"Error!",Toast.LENGTH_SHORT).show();
-        }
-
+                TextView programView = findViewById(R.id.programText);
+                programView.setText(studentData[2]);
+            }catch (Exception e) {
+                Log.d("NFC","Something went wrong");
+                Toast.makeText(AdminNFCReader.this,"Error!",Toast.LENGTH_SHORT).show();
+         }
     }
 
     @Override
@@ -235,12 +235,14 @@ public class AdminNFCReader extends AppCompatActivity {
         //Conditions for NFC Tag(Now Empty)
         IntentFilter[] intentFilters = new IntentFilter[]{};
 
+        //Start Scanning
         nfcAdapter.enableForegroundDispatch(this, pendingIntent, intentFilters, null);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        //Stop Scanning
         nfcAdapter.disableForegroundDispatch(this);
     }
 
@@ -262,7 +264,10 @@ public class AdminNFCReader extends AppCompatActivity {
 
         String tagContent =null;
         try {
+            // Extract payload (data) from the NdefRecord
             byte[] payload = ndefRecord.getPayload();
+
+            //Process into string
             String textEncoding = ((payload[0] & 128) == 0) ? "UTF-8" : "UTF-16";
             int languageSize = payload[0] & 0063;
             tagContent = new String(payload, languageSize + 1, payload.length - languageSize - 1, textEncoding);

@@ -52,6 +52,7 @@ public class NFCReaderActivity extends AppCompatActivity {
             studentIDList.add(student.getStudentID());
         }
 
+        //Get NFCAdapter
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         stopScanningButton = (Button) findViewById(R.id.stopscanningbutton);
 
@@ -64,11 +65,11 @@ public class NFCReaderActivity extends AppCompatActivity {
                 builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        //send to information to database
+                        //send information back to attendance list fragment
                         Intent intent = new Intent("com.example.tapat.ACTION_NFC_DATA");
                         intent.putStringArrayListExtra("attendedList", studentAttendedList);
                         sendBroadcast(intent);
-
+                        //End Activity
                         finish();
                     }
                 });
@@ -87,7 +88,10 @@ public class NFCReaderActivity extends AppCompatActivity {
 
     @Override
     protected void onNewIntent(Intent intent) {
+
         super.onNewIntent(intent);
+
+        // Extract NDEF messages from the received intent
         Parcelable[] parcelables = intent.getParcelableArrayExtra(nfcAdapter.EXTRA_NDEF_MESSAGES);
         if (parcelables != null && parcelables.length > 0) {
             contentMessage = readTextFromTag((NdefMessage) parcelables[0]);
@@ -160,12 +164,15 @@ public class NFCReaderActivity extends AppCompatActivity {
         //Conditions for NFC Tag(Now Empty)
         IntentFilter[] intentFilters = new IntentFilter[]{};
 
+        //Start Scanning
         nfcAdapter.enableForegroundDispatch(this, pendingIntent, intentFilters, null);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+
+        //Stop Scanning
         nfcAdapter.disableForegroundDispatch(this);
 
     }
@@ -175,7 +182,7 @@ public class NFCReaderActivity extends AppCompatActivity {
 
         if (ndefRecords != null && ndefRecords.length > 0) {
             NdefRecord ndefRecord = ndefRecords[0];
-
+            //Get the payload converted into text
             String tagContent = getTextfromNdefRecord(ndefRecord);
             return tagContent;
         } else {
@@ -188,9 +195,11 @@ public class NFCReaderActivity extends AppCompatActivity {
 
         String tagContent = null;
         try {
+            // Extract payload (data) from the NdefRecord
             byte[] payload = ndefRecord.getPayload();
             String textEncoding = ((payload[0] & 128) == 0) ? "UTF-8" : "UTF-16";
             int languageSize = payload[0] & 0063;
+            // Extract text content from the payload, considering language size and text encoding
             tagContent = new String(payload, languageSize + 1, payload.length - languageSize - 1, textEncoding);
         } catch (IndexOutOfBoundsException e) {
             Log.e("getTextNdefRecord", e.getMessage(), e);

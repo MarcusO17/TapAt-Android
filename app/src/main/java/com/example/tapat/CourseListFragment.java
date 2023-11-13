@@ -37,6 +37,7 @@ public class CourseListFragment extends Fragment implements CourseItemViewAdapte
         //init DB
         db = new dbHelper(getContext());
 
+        // the recycler view is made and the contents of the recycler view is populated using the adapter
         RecyclerView courseListRecyclerView = view.findViewById(R.id.courselistrecyclerview);
         LinearLayoutManager courseListLayout = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         courseListRecyclerView.setLayoutManager(courseListLayout);
@@ -44,22 +45,6 @@ public class CourseListFragment extends Fragment implements CourseItemViewAdapte
 
         sessionInfo = args.getString("sessionID");
 
-        //query the shit here
-        /*
-        CourseItem course1 = new CourseItem("Android Development Skill", "A202SGI");
-        CourseItem course2 = new CourseItem("Data Science", "INT5005CEM");
-        CourseItem course3 = new CourseItem("Software Engineering","INT5001CEM");
-        CourseItem course4 = new CourseItem("Software Engineering","INT5001CEM");
-        CourseItem course5 = new CourseItem("Software Engineering","INT5001CEM");
-        CourseItem course6 = new CourseItem("Software Engineering","INT5001CEM");
-
-        courseList.add(course1);
-        courseList.add(course2);
-        courseList.add(course3);
-        courseList.add(course4);
-        courseList.add(course5);
-        courseList.add(course6);
-        */
         courseList = db.getCourses(sessionInfo);
         CourseItemViewAdapter courseItemAdapter = new CourseItemViewAdapter(courseList, this);
 
@@ -72,7 +57,7 @@ public class CourseListFragment extends Fragment implements CourseItemViewAdapte
         super.onPause();
         courseList.clear();
     }
-
+    // on resume is triggered when back is pressed. update title to match the current page
     @Override
     public void onResume() {
         super.onResume();
@@ -80,6 +65,7 @@ public class CourseListFragment extends Fragment implements CourseItemViewAdapte
         title.setText("Course List");
     }
 
+    // this function is triggered when the button in the recycler view is triggered
     @Override
     public void onClickListener(int position) {
 
@@ -87,6 +73,7 @@ public class CourseListFragment extends Fragment implements CourseItemViewAdapte
         TextView title = getActivity().findViewById(R.id.fragmentholdertitle);
         title.setText(courseList.get(position).getCourseCode() + " - " + courseList.get(position).getName());
 
+        // sending data to class list fragment
         Bundle args = new Bundle();
         args.putString("course_code",courseList.get(position).getCourseCode());
         args.putString("course_name",courseList.get(position).getName());
@@ -95,6 +82,7 @@ public class CourseListFragment extends Fragment implements CourseItemViewAdapte
 
         classListFragment.setArguments(args);
 
+        // trigger fragment transaction to switch fragments, add to back stack for back buttons
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.classlistframelayout, classListFragment);

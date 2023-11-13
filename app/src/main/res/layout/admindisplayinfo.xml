@@ -16,8 +16,8 @@
         android:fontFamily="@font/julius_sans_one"
         android:gravity="center"
         android:text="Fragment Title"
-        android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textColor="#5A5656"
+        android:textSize="25sp"
         android:textStyle="bold" />
 
     <!-- Add your UI elements for displaying admin information here -->
@@ -44,11 +44,11 @@
             android:layout_height="wrap_content"
             android:text="Edit"
             android:layout_margin="10dp"
-            android:textColor="@color/white"
-            android:backgroundTint="#0Dffffff"
-            app:cornerRadius="10dp"
-            app:strokeColor="#1AFFFFFF"
-            app:strokeWidth="3dp"/>
+            android:textColor="#5A5656"
+            android:backgroundTint="@color/white"
+            android:fontFamily="@font/jost_light"
+            android:textStyle="bold"
+            android:textSize="17sp"/>
 
         <!-- Save button (initially hidden) -->
         <Button

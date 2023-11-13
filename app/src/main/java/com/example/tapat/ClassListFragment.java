@@ -47,6 +47,7 @@ public class ClassListFragment extends Fragment implements CourseItemViewAdapter
         db = new dbHelper(getContext());
         addClassButton = view.findViewById(R.id.button_add_class);
 
+        // the recycler view is made and the contents of the recycler view is populated using the adapter
         RecyclerView classListRecyclerView = view.findViewById(R.id.classlistrecyclerview);
         LinearLayoutManager classListLayout = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         classListRecyclerView.setHasFixedSize(true);
@@ -63,16 +64,6 @@ public class ClassListFragment extends Fragment implements CourseItemViewAdapter
             Log.d("ClassListFragment","course code: " + courseCode);
         }
 
-        // use the coursename and coursecode to query the items here
-        /*
-        ClassListItem class1 = new ClassListItem("Class 1", "c1");
-        ClassListItem class2 = new ClassListItem("Class 2", "c2");
-        ClassListItem class3 = new ClassListItem("Class 3", "c3");
-
-        classList.add(class1);
-        classList.add(class2);
-        classList.add(class3);
-        */
         classList = db.getClasses(courseCode);
 
         Log.d("ClassListFragment","classList size: " + classList.size());
@@ -80,15 +71,19 @@ public class ClassListFragment extends Fragment implements CourseItemViewAdapter
         ClassListViewAdapter adapter = new ClassListViewAdapter(getContext(),classList, this::onClickListener);
         classListRecyclerView.setAdapter(adapter);
 
+        //  triggered when add class button is pressed
         addClassButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                // show dialog confirmation box
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setCancelable(true);
                 builder.setMessage("Create New Class?");
                 builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
+                        // add new object into the list, then trigger update to the adapter to update recycler view
                         Integer size = classList.size()+1;
                         String className = "Class " + size;
                         String classID = "AT" + courseCode + size;
@@ -97,18 +92,22 @@ public class ClassListFragment extends Fragment implements CourseItemViewAdapter
                         classList.add(tempclass);
                         adapter.notifyDataSetChanged();
 
+                        // go to the attendance list fragment, setting title of fragment holder
                         TextView title = getActivity().findViewById(R.id.fragmentholdertitle);
-                        title.setText(classID + " - " + className);
+                        title.setText(courseName + " - " + className);
 
+                        // send data to attendance list fragment
                         Bundle args = new Bundle();
                         args.putString("class_id",classID);
                         args.putString("class_name",className);
                         args.putString("course_ID",courseCode);
+                        args.putString("course_name", courseName);
 
                         AttendanceListFragment attendanceListFragment = new AttendanceListFragment();
 
                         attendanceListFragment.setArguments(args);
 
+                        // trigger fragment transaction to switch fragments, add to back stack for back buttons
                         FragmentManager fragmentManager = getParentFragmentManager();
                         FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
                         fragmentTransaction.replace(R.id.classlistframelayout, attendanceListFragment);
@@ -135,27 +134,33 @@ public class ClassListFragment extends Fragment implements CourseItemViewAdapter
     public void onPause() {
         super.onPause();
     }
+    // on resume is triggered when back is pressed. update title to match the current page
     @Override
     public void onResume() {
         super.onResume();
         TextView title = getActivity().findViewById(R.id.fragmentholdertitle);
-        title.setText("Class List");
+        title.setText(courseCode + " - " + courseName);
     }
-
+    // this function is triggered when the button in the recycler view is triggered
     @Override
     public void onClickListener(int position) {
-        TextView title = getActivity().findViewById(R.id.fragmentholdertitle);
-        title.setText(classList.get(position).getClassID() + " - " + classList.get(position).getClassName());
 
+        //set title in fragment holder
+        TextView title = getActivity().findViewById(R.id.fragmentholdertitle);
+        title.setText(courseName + " - " + classList.get(position).getClassName());
+
+        // send data to attendance view fragment
         Bundle args = new Bundle();
         args.putString("class_id",classList.get(position).getClassID());
         args.putString("class_name",classList.get(position).getClassName());
         args.putString("course_name", courseName);
 
+
         AttendanceViewFragment attendanceviewFragment = new AttendanceViewFragment();
 
         attendanceviewFragment.setArguments(args);
 
+        // trigger fragment transaction to switch fragments, add to back stack for back buttons
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.classlistframelayout, attendanceviewFragment);

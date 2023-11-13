@@ -9,25 +9,31 @@
         android:layout_height="wrap_content"
         android:id="@+id/exportascsv"
         android:text="@string/exportaspdf"
-        android:backgroundTint="#206B9C"
         android:layout_marginRight="10dp"
         android:layout_alignParentEnd="true"
-        />
+        android:textColor="#5A5656"
+        android:backgroundTint="@color/white"
+        android:fontFamily="@font/jost_light"
+        android:textStyle="bold"
+        android:textSize="17sp"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:id="@+id/attendanceviewsearchbar"
-        android:padding="10dp"
-        android:hint="Search"
         android:layout_below="@id/exportascsv"
-        android:background="@drawable/scroll_frame"/>
+        android:backgroundTint="@color/white"
+        android:hint="Search"
+        android:inputType="text"
+        android:padding="10dp"
+        android:textColor="#5A5656"
+        android:textColorHint="#5A5656"
+        android:background="@drawable/search_bar_background"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/attendanceviewrecyclerview"
-        android:background="@drawable/scroll_frame"
         android:layout_below="@+id/attendanceviewsearchbar"
         />
 
