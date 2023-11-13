@@ -28,6 +28,7 @@ import java.io.UnsupportedEncodingException;
 
 public class AdminNFCReader extends AppCompatActivity {
 
+    //Init NFC Adapter
     NfcAdapter nfcAdapter;
     String contentMessage;
 
@@ -46,7 +47,7 @@ public class AdminNFCReader extends AppCompatActivity {
         //Start NFC Adapter
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
-        // Initialize the navigationSection and buttonA
+        // Initialize the navigationSection
         navigationSection = findViewById(R.id.navigationSection);
         overlayView = findViewById(R.id.navigationSection);
         buttonA = findViewById(R.id.buttonA);
@@ -146,6 +147,7 @@ public class AdminNFCReader extends AppCompatActivity {
             public void onClick(View view) {
                 Intent writenfcIntent = new Intent(AdminNFCReader.this, AdminNFCwriter.class);
                 startActivity(writenfcIntent);
+                // Close the current activity
                 finish();
             }
         });
@@ -155,6 +157,7 @@ public class AdminNFCReader extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent loginIntent = new Intent(AdminNFCReader.this, LoginActivity.class);
+                // Clean up the activity
                 loginIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(loginIntent);
             }

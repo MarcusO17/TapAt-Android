@@ -63,7 +63,7 @@ public class AdminNFCwriter extends AppCompatActivity {
         //Start NFC Adapter
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
-        // Initialize the navigationSection and buttonA
+        // Initialize the navigationSection
         navigationSection = findViewById(R.id.navigationSection);
         overlayView = findViewById(R.id.navigationSection);
         buttonA = findViewById(R.id.buttonA);
@@ -97,7 +97,6 @@ public class AdminNFCwriter extends AppCompatActivity {
                 }
             }
         });
-
 
         // Set click listener for dashboardButton
         dashboardButton.setOnClickListener(new View.OnClickListener() {
@@ -154,6 +153,7 @@ public class AdminNFCwriter extends AppCompatActivity {
             public void onClick(View view) {
                 Intent readnfcIntent = new Intent(AdminNFCwriter.this, AdminNFCReader.class);
                 startActivity(readnfcIntent);
+                // Close the current activity
                 finish();
             }
         });
@@ -170,6 +170,7 @@ public class AdminNFCwriter extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent loginIntent = new Intent(AdminNFCwriter.this, LoginActivity.class);
+                // Clean up the activity
                 loginIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(loginIntent);
             }

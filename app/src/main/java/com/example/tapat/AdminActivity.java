@@ -26,7 +26,7 @@ public class AdminActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.adminactivity);
 
-        // Initialize the navigationSection and buttonA
+        // Initialize the navigationSection
         navigationSection = findViewById(R.id.navigationSection);
         overlayView = findViewById(R.id.navigationSection);
         buttonA = findViewById(R.id.buttonA);

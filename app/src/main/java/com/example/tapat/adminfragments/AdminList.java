@@ -146,7 +146,6 @@ public class AdminList extends Fragment {
         requireActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragmentContainer, adminDisplayInfoFragment)
-                .addToBackStack(null)
                 .commit();
     }
 
@@ -160,7 +159,6 @@ public class AdminList extends Fragment {
         // Replace the current fragment with AdminCreate
         FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragmentContainer, adminCreateFragment);
-        transaction.addToBackStack(null);
         transaction.commit();
     }
 }

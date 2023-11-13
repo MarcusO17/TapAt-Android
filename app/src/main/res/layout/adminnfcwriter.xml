@@ -24,8 +24,6 @@
             app:cornerRadius="5dp"
             app:icon="@drawable/baseline_menu_24"
             app:iconSize="50dp"
-            app:iconTint="@color/white" />
-
     </RelativeLayout>
 
 

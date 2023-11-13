@@ -139,6 +139,7 @@ public class AdminCreate extends Fragment {
             containerLayout.addView(editSection("Password",passwordEditText));
 
         } else if ("Course".equals(fragmentTitle)) {
+            // Create UI for Course
             EditText courseNameEditText = new EditText(requireContext());
             courseNameEditText.setHint("Course Name");
             courseNameEditText.setTextColor(Color.parseColor("#ffffff"));
@@ -247,9 +248,13 @@ public class AdminCreate extends Fragment {
             String id = ((EditText) ((LinearLayout) containerLayout.getChildAt(1)).getChildAt(1)).getText().toString();
             String program = ((Spinner) ((LinearLayout) containerLayout.getChildAt(2)).getChildAt(1)).getSelectedItem().toString();
             String[] studentData = {id, name, program};
+            Character data = studentData[0].charAt(0);
+            Character valid = 'P';
             //Error Handling
             if(studentData[0].equals("") || studentData[1].equals("")){
                 Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
+            }else if(data != valid){
+                Toast.makeText(getContext(), "StudentID must Start with P", Toast.LENGTH_SHORT).show();
             }else if(!db.insertStudentData(studentData)) {
             // Add studentData to the student array
                 Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
@@ -264,8 +269,12 @@ public class AdminCreate extends Fragment {
             String email =((EditText) ((LinearLayout) containerLayout.getChildAt(2)).getChildAt(1)).getText().toString();
             String password = ((EditText) ((LinearLayout) containerLayout.getChildAt(3)).getChildAt(1)).getText().toString();
             String[] lecturerData = { id,name, email, password};
+            Character data = lecturerData[0].charAt(0);
+            Character valid = 'L';
             if(lecturerData[0].equals("") || lecturerData[1].equals("")){
                 Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
+            }else if(data != valid){
+                Toast.makeText(getContext(), "LecturerID must Start with L", Toast.LENGTH_SHORT).show();
             }else if(!db.insertLecturerData(lecturerData)) {
                 // Add studentData to the student array
                 Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
@@ -281,9 +290,13 @@ public class AdminCreate extends Fragment {
             String lecturerID = ((Spinner) ((LinearLayout) containerLayout.getChildAt(2)).getChildAt(1)).getSelectedItem().toString();
             String program = ((Spinner) ((LinearLayout) containerLayout.getChildAt(3)).getChildAt(1)).getSelectedItem().toString();
             String[] courseData = {courseID,lecturerID,courseName,program};
+            Character data = courseData[0].charAt(0);
+            Character valid = 'C';
             // Handle adding a course (if needed)
             if(courseData[0].equals("") || courseData[2].equals("")){
                 Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
+            }else if(data != valid){
+                Toast.makeText(getContext(), "CourseID must Start with C", Toast.LENGTH_SHORT).show();
             }else if(!db.insertCourseData(courseData)) {
                 // Add studentData to the student array
                 Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
@@ -293,11 +306,11 @@ public class AdminCreate extends Fragment {
         }
     }
 
+    // Function to replace fragments
     private void replaceFragment(Fragment fragment) {
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragmentContainer, fragment)
-                .addToBackStack(null)
                 .commit();
     }
 }
