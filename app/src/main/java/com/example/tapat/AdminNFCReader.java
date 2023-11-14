@@ -166,7 +166,7 @@ public class AdminNFCReader extends AppCompatActivity {
         // Set the title in the TextView
         TextView textView = findViewById(R.id.displayFragmentTitleTextView);
         if (textView != null) {
-            textView.setText("AdminNFCReader");
+            textView.setText("NFC Reader");
         }
 
     }

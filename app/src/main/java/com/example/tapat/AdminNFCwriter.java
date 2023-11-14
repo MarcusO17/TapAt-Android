@@ -179,7 +179,7 @@ public class AdminNFCwriter extends AppCompatActivity {
         // Set the title in the TextView
         TextView textView = findViewById(R.id.textViewNFCWriter);
         if (textView != null) {
-            textView.setText("AdminNFCWriter");
+            textView.setText("NFC Writer");
         }
 
         // Initialize the dbHelper

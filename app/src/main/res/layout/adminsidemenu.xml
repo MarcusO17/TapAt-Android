@@ -24,7 +24,7 @@
             android:layout_weight="2"
             android:layout_marginTop="70dp"
             android:fontFamily="@font/julius_sans_one"
-            android:text="Admin Name"
+            android:text="Admin"
             android:textColor="@color/white"
             android:textSize="28sp"
             android:textStyle="bold"
