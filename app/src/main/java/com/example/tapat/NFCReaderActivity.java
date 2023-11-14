@@ -94,15 +94,23 @@ public class NFCReaderActivity extends AppCompatActivity {
         // Extract NDEF messages from the received intent
         Parcelable[] parcelables = intent.getParcelableArrayExtra(nfcAdapter.EXTRA_NDEF_MESSAGES);
         if (parcelables != null && parcelables.length > 0) {
+            //Reading Text from Tags
             contentMessage = readTextFromTag((NdefMessage) parcelables[0]);
-            Log.d("SCANNED INFO", contentMessage);
+
+            Log.d("SCANNED INFO", contentMessage); //Logging
+
+            //Processing the Acquired Message from Tag
             String[] studentInfo = contentMessage.split(":");
             String studentID = studentInfo[0].trim();
             Log.d("Student ID List Info", studentIDList.size()+"");
+
             for (String i : studentIDList) {
-                Log.d("inside array", i);
+                Log.d("inside array", i); //Check if in Array
             }
+
+            //If inside valid students!
             if (studentIDList.contains(studentID)) {
+                //Display
                 contentDialog(contentMessage);
                 studentAttendedList.add(studentID);
             }else {
