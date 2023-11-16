@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -243,15 +244,19 @@ public class AdminCreate extends Fragment {
     private void handleAddButtonClick() {
         // Handle the logic for adding data to the respective arrays
         if ("Student".equals(fragmentTitle)) {
-          
+            Character data = null;
             String name = ((EditText) ((LinearLayout) containerLayout.getChildAt(0)).getChildAt(1)).getText().toString();
             String id = ((EditText) ((LinearLayout) containerLayout.getChildAt(1)).getChildAt(1)).getText().toString();
             String program = ((Spinner) ((LinearLayout) containerLayout.getChildAt(2)).getChildAt(1)).getSelectedItem().toString();
             String[] studentData = {id, name, program};
-            Character data = studentData[0].charAt(0);
+            try {
+                data = studentData[0].charAt(0);
+            }catch (StringIndexOutOfBoundsException e){
+                Log.d("String empty", e.toString());
+            }
             Character valid = 'P';
             //Error Handling
-            if(studentData[0].equals("") || studentData[1].equals("")){
+                if(studentData[0].equals("") || studentData[1].equals("")){
                 Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
             }else if(data != valid){
                 Toast.makeText(getContext(), "StudentID must Start with P", Toast.LENGTH_SHORT).show();
@@ -263,14 +268,19 @@ public class AdminCreate extends Fragment {
             replaceFragment(AdminList.newInstance("Student"));
 
         } else if ("Lecturer".equals(fragmentTitle)) {
-
+            Character data = null;
             String name = ((EditText) ((LinearLayout) containerLayout.getChildAt(0)).getChildAt(1)).getText().toString();
             String id = ((EditText) ((LinearLayout) containerLayout.getChildAt(1)).getChildAt(1)).getText().toString();
             String email =((EditText) ((LinearLayout) containerLayout.getChildAt(2)).getChildAt(1)).getText().toString();
             String password = ((EditText) ((LinearLayout) containerLayout.getChildAt(3)).getChildAt(1)).getText().toString();
             String[] lecturerData = { id,name, email, password};
-            Character data = lecturerData[0].charAt(0);
+            try {
+                data = lecturerData[0].charAt(0);
+            }catch (StringIndexOutOfBoundsException e){
+                Log.d("String empty", e.toString());
+            }
             Character valid = 'L';
+
             if(lecturerData[0].equals("") || lecturerData[1].equals("")){
                 Toast.makeText(getContext(),"Insert Failed!",Toast.LENGTH_SHORT).show();
             }else if(data != valid){
@@ -284,13 +294,17 @@ public class AdminCreate extends Fragment {
 
 
         } else if ("Course".equals(fragmentTitle)) {
-          
+            Character data = null;
             String courseName = ((EditText) ((LinearLayout) containerLayout.getChildAt(0)).getChildAt(1)).getText().toString();
             String courseID= ((EditText) ((LinearLayout) containerLayout.getChildAt(1)).getChildAt(1)).getText().toString();
             String lecturerID = ((Spinner) ((LinearLayout) containerLayout.getChildAt(2)).getChildAt(1)).getSelectedItem().toString();
             String program = ((Spinner) ((LinearLayout) containerLayout.getChildAt(3)).getChildAt(1)).getSelectedItem().toString();
             String[] courseData = {courseID,lecturerID,courseName,program};
-            Character data = courseData[0].charAt(0);
+            try {
+               data = courseData[0].charAt(0);
+            }catch (StringIndexOutOfBoundsException e){
+               Log.d("String empty", e.toString());
+            }
             Character valid = 'C';
             // Handle adding a course (if needed)
             if(courseData[0].equals("") || courseData[2].equals("")){

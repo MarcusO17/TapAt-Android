@@ -3,6 +3,7 @@ package com.example.tapat.adminfragments;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -323,11 +324,16 @@ public class AdminDisplayInfo extends Fragment {
         buttonName = getArguments().getString(ARG_BUTTON_NAME);
 
         if ("Student".equals(fragmentTitle)) {
+            Character data = null;
             String name = ((EditText) ((LinearLayout) containerLayout.getChildAt(0)).getChildAt(1)).getText().toString();
             String id = ((EditText) ((LinearLayout) containerLayout.getChildAt(1)).getChildAt(1)).getText().toString();
             String program = ((Spinner) ((LinearLayout) containerLayout.getChildAt(2)).getChildAt(1)).getSelectedItem().toString();
             String[] studentData = {id,name,program};
-            Character data = studentData[0].charAt(0);
+            try {
+                data = studentData[0].charAt(0);
+            }catch (StringIndexOutOfBoundsException e){
+                Log.d("String empty", e.toString());
+            }
             Character valid = 'P';
             //Change Student
             if(studentData[0].equals("") || studentData[1].equals("")){
@@ -342,12 +348,17 @@ public class AdminDisplayInfo extends Fragment {
             replaceFragment(AdminList.newInstance("Student"));
 
         } else if ("Lecturer".equals(fragmentTitle)) {
+            Character data = null;
             String name = ((EditText) ((LinearLayout) containerLayout.getChildAt(0)).getChildAt(1)).getText().toString();
             String id = ((EditText) ((LinearLayout) containerLayout.getChildAt(1)).getChildAt(1)).getText().toString();
             String email = ((EditText) ((LinearLayout) containerLayout.getChildAt(2)).getChildAt(1)).getText().toString();
             String password = ((EditText) ((LinearLayout) containerLayout.getChildAt(3)).getChildAt(1)).getText().toString();
             String[] lecturerData = {id,name, email, password};
-            Character data = lecturerData[0].charAt(0);
+            try {
+                data = lecturerData[0].charAt(0);
+            }catch (StringIndexOutOfBoundsException e){
+                Log.d("String empty", e.toString());
+            }
             Character valid = 'L';
             // Change lecturerData on the lecturer array
             if(lecturerData[0].equals("") || lecturerData[1].equals("")){
@@ -362,12 +373,17 @@ public class AdminDisplayInfo extends Fragment {
             replaceFragment(AdminList.newInstance("Lecturer"));
 
         } else if ("Course".equals(fragmentTitle)) {
+            Character data = null;
             String coursename = ((EditText) ((LinearLayout) containerLayout.getChildAt(0)).getChildAt(1)).getText().toString();
             String courseid = ((EditText) ((LinearLayout) containerLayout.getChildAt(1)).getChildAt(1)).getText().toString();
             String lecturerid = ((Spinner) ((LinearLayout) containerLayout.getChildAt(2)).getChildAt(1)).getSelectedItem().toString();
             String program = ((Spinner) ((LinearLayout) containerLayout.getChildAt(3)).getChildAt(1)).getSelectedItem().toString();
             String[] courseData = {courseid, lecturerid,coursename, program};
-            Character data = courseData[0].charAt(0);
+            try {
+                data = courseData[0].charAt(0);
+            }catch (StringIndexOutOfBoundsException e){
+                Log.d("String empty", e.toString());
+            }
             Character valid = 'C';
             // Change course data
             if(courseData[0].equals("") || courseData[1].equals("")) {
