@@ -106,14 +106,14 @@ public class dbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //Creating Admin Table
         db.execSQL("CREATE TABLE " + Admin.TABLE_NAME+ " ( "
-                + Admin.COL_1 + " TEXT PRIMARY KEY, "
+                + Admin.COL_1 + " TEXT PRIMARY KEY check(admin_ID Like 'A%'),"
                 + Admin.COL_2 + " TEXT  NOT NULL,"
                 + Admin.COL_3 + " TEXT  NOT NULL"
                 + " )");
 
         //Creating Lecturer Table
         db.execSQL("CREATE TABLE " + Lecturer.TABLE_NAME+ " ( "
-                + Lecturer.COL_1 + " TEXT PRIMARY KEY, "
+                + Lecturer.COL_1 + " TEXT PRIMARY KEY check(lecturer_ID Like 'L%'), "
                 + Lecturer.COL_2 + " TEXT NOT NULL,"
                 + Lecturer.COL_3 + " TEXT  NOT NULL,"
                 + Lecturer.COL_4 + " TEXT  NOT NULL"
@@ -121,14 +121,14 @@ public class dbHelper extends SQLiteOpenHelper {
 
         //Creating Student Table
         db.execSQL("CREATE TABLE " + Student.TABLE_NAME+ " ( "
-                + Student.COL_1 + " TEXT PRIMARY KEY, "
+                + Student.COL_1 + " TEXT PRIMARY KEY check(student_ID Like 'S%'), "
                 + Student.COL_2 + " TEXT NOT NULL,"
                 + Student.COL_3 + " TEXT NOT NULL"
                 + " )");
 
         //Creating Course Table
         db.execSQL("CREATE TABLE " + Course.TABLE_NAME+ " ( "
-                + Course.COL_1 + " TEXT PRIMARY KEY, "
+                + Course.COL_1 + " TEXT PRIMARY KEY check(course_ID Like 'C%'),"
                 + Course.COL_2 + " TEXT  NOT NULL,"
                 + Course.COL_3 + " TEXT NOT NULL,"
                 + Course.COL_4 + " TEXT NOT NULL,"
@@ -250,7 +250,7 @@ public class dbHelper extends SQLiteOpenHelper {
         }
         if (userAuthControl("users", email, password)) {
             validSessionID = getIDfromEmail("users", email);
-            db.execSQL("DROP VIEW users");
+            db.execSQL("DROP VIEW users") ;
             return validSessionID;
         } else {
             return "";
